@@ -126,7 +126,8 @@ public class BookingSummaryActivity extends AppCompatActivity {
         if (reservation.getId() == null) return;
 
         btnCancelBooking.setEnabled(false);
-        ApiClient.put("/Reservation/" + reservation.getId() + "/cancel", "{}", new ApiClient.ApiCallback() {
+        // Bug Fix: cancel uses POST (not PUT) — matches C# API /reservations/{id}/cancel endpoint
+        ApiClient.post("/reservations/" + reservation.getId() + "/cancel", "{}", new ApiClient.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 btnCancelBooking.setEnabled(true);

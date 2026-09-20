@@ -47,8 +47,9 @@ public class BookingActivity extends AppCompatActivity {
     private List<MicrogridNode> nodesList;
     private DatabaseHelper dbHelper;
 
-    // Simulated active prosumer NIC
-    private final String PROSUMER_NIC = "200012345678";
+    // TODO (Member 2): Replace with authenticated user NIC from JWT session / Auth SharedPreferences
+    // For now, reads from SharedPreferences with a fallback placeholder value
+    private String PROSUMER_NIC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,10 @@ public class BookingActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
         selectedCalendar = Calendar.getInstance();
+
+        // TODO (Member 2): Replace this block with JWT session lookup when auth is ready
+        android.content.SharedPreferences prefs = getSharedPreferences("solar_session", MODE_PRIVATE);
+        PROSUMER_NIC = prefs.getString("prosumer_nic", "200012345678");
 
         spNodeSelector = findViewById(R.id.spNodeSelector);
         btnSelectDate = findViewById(R.id.btnSelectDate);
@@ -74,6 +79,8 @@ public class BookingActivity extends AppCompatActivity {
 
     private void setupNodeSpinner() {
         nodesList = new ArrayList<>();
+        // TODO (Member 3): Replace static node list with live API call: ApiClient.get("/microgridnodes", ...)
+        // Hardcoded nodes are placeholders until Member 3's MicrogridNode API is ready
         nodesList.add(new MicrogridNode("node-01", "NODE-COL-01", "Colombo North Solar Hub", "Western", 500));
         nodesList.add(new MicrogridNode("node-02", "NODE-COL-02", "Kaduwela Microgrid Substation", "Western", 350));
         nodesList.add(new MicrogridNode("node-03", "NODE-KND-01", "Kandy Central Solar Station", "Central", 400));
@@ -202,7 +209,7 @@ public class BookingActivity extends AppCompatActivity {
         btnSubmitBooking.setEnabled(false);
 
         // Send to central C# Web API
-        ApiClient.post("/Reservation", payload.toString(), new ApiClient.ApiCallback() {
+        ApiClient.post("/reservations", payload.toString(), new ApiClient.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 progressBar.setVisibility(View.GONE);
