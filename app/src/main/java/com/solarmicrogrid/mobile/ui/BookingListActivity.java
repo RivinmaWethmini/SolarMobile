@@ -43,7 +43,8 @@ public class BookingListActivity extends AppCompatActivity {
     private String currentFilter = "All";
     private DatabaseHelper dbHelper;
 
-    private final String PROSUMER_NIC = "200012345678";
+    // TODO (Member 2): Replace with authenticated user NIC from JWT session / Auth SharedPreferences
+    private String PROSUMER_NIC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,10 @@ public class BookingListActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
         allReservations = new ArrayList<>();
         displayedList = new ArrayList<>();
+
+        // TODO (Member 2): Replace with JWT session lookup when auth is ready
+        android.content.SharedPreferences prefs = getSharedPreferences("solar_session", MODE_PRIVATE);
+        PROSUMER_NIC = prefs.getString("prosumer_nic", "200012345678");
 
         etSearchBookings = findViewById(R.id.etSearchBookings);
         btnFilterAll = findViewById(R.id.btnFilterAll);
@@ -120,7 +125,7 @@ public class BookingListActivity extends AppCompatActivity {
         }
 
         // Fetch live records from C# Web API
-        ApiClient.get("/Reservation/prosumer/" + PROSUMER_NIC, new ApiClient.ApiCallback() {
+        ApiClient.get("/reservations/prosumer/" + PROSUMER_NIC, new ApiClient.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 pbLoading.setVisibility(View.GONE);

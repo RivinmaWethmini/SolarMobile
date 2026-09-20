@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
      * "plus a dashboard showing pending reservations and the count of approved future reservations, all read live from the API."
      */
     private void fetchLiveDashboardStats() {
-        ApiClient.get("/Reservation/stats", new ApiClient.ApiCallback() {
+        ApiClient.get("/reservations/stats", new ApiClient.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {

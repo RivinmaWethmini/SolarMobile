@@ -61,7 +61,7 @@ public class QrDisplayActivity extends AppCompatActivity {
 
     private void fetchAndRenderQr() {
         if (reservation.getId() != null) {
-            ApiClient.get("/Reservation/" + reservation.getId() + "/qr", new ApiClient.ApiCallback() {
+            ApiClient.get("/reservations/" + reservation.getId() + "/qr", new ApiClient.ApiCallback() {
                 @Override
                 public void onSuccess(String response) {
                     try {

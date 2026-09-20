@@ -50,18 +50,43 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         if (id != null && id.length() > 8) id = id.substring(id.length() - 8).toUpperCase();
         holder.tvCardId.setText("#" + id);
 
-        holder.tvCardStatus.setText(res.getStatus());
-        if ("Approved".equalsIgnoreCase(res.getStatus())) {
-            holder.tvCardStatus.setTextColor(context.getResources().getColor(R.color.emerald_approved));
-        } else if ("Cancelled".equalsIgnoreCase(res.getStatus()) || "Rejected".equalsIgnoreCase(res.getStatus())) {
-            holder.tvCardStatus.setTextColor(context.getResources().getColor(R.color.red_rejected));
+        String status = res.getStatus() != null ? res.getStatus() : "Pending";
+        holder.tvCardStatus.setText(status.toUpperCase());
+
+        int accentColor;
+        int badgeBgColor;
+        if ("Approved".equalsIgnoreCase(status)) {
+            accentColor = context.getResources().getColor(R.color.emerald_approved);
+            badgeBgColor = 0xFF10B981;
+            holder.tvCardStatus.setTextColor(0xFF0F172A);
+        } else if ("Cancelled".equalsIgnoreCase(status) || "Rejected".equalsIgnoreCase(status)) {
+            accentColor = context.getResources().getColor(R.color.red_rejected);
+            badgeBgColor = 0xFFEF4444;
+            holder.tvCardStatus.setTextColor(0xFFFFFFFF);
         } else {
-            holder.tvCardStatus.setTextColor(context.getResources().getColor(R.color.amber_pending));
+            // Pending
+            accentColor = context.getResources().getColor(R.color.amber_pending);
+            badgeBgColor = 0xFFF59E0B;
+            holder.tvCardStatus.setTextColor(0xFF0F172A);
         }
 
-        holder.tvCardNode.setText("Node: " + res.getNodeId());
-        holder.tvCardEnergy.setText("Capacity: " + res.getReservedEnergyKwh() + " kW/h");
-        holder.tvCardTime.setText("Time: " + res.getStartTime());
+        // Set left accent status bar color
+        if (holder.viewStatusBar != null) {
+            holder.viewStatusBar.setBackgroundColor(accentColor);
+        }
+        // Set status badge pill background
+        holder.tvCardStatus.setBackgroundColor(badgeBgColor);
+
+        holder.tvCardNode.setText(res.getNodeId() != null ? res.getNodeId() : "Unknown Node");
+        holder.tvCardEnergy.setText("⚡ " + res.getReservedEnergyKwh() + " kW/h");
+
+        // Format time: show just HH:MM if full ISO string
+        String startTime = res.getStartTime() != null ? res.getStartTime() : "";
+        if (startTime.contains("T")) {
+            String[] parts = startTime.split("T");
+            startTime = parts.length > 1 ? parts[1].substring(0, Math.min(5, parts[1].length())) : startTime;
+        }
+        holder.tvCardTime.setText(startTime);
 
         holder.btnCardAction.setOnClickListener(v -> {
             Intent intent = new Intent(context, BookingSummaryActivity.class);
@@ -84,6 +109,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
     static class BookingViewHolder extends RecyclerView.ViewHolder {
         TextView tvCardId, tvCardStatus, tvCardNode, tvCardEnergy, tvCardTime;
         Button btnCardAction;
+        View viewStatusBar;
 
         public BookingViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -93,6 +119,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             tvCardEnergy = itemView.findViewById(R.id.tvCardEnergy);
             tvCardTime = itemView.findViewById(R.id.tvCardTime);
             btnCardAction = itemView.findViewById(R.id.btnCardAction);
+            viewStatusBar = itemView.findViewById(R.id.viewStatusBar);
         }
     }
 }
