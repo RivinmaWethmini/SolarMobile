@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0F1D"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Energy Reservations"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View pending, approved &amp; history records"
+        android:textColor="@color/slate_text_dim"
+        android:textSize="12sp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Search Box -->
+    <EditText
+        android:id="@+id/etSearchBookings"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="#1E293B"
+        android:hint="Search by Node, ID or Status..."
+        android:textColorHint="#64748B"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        android:padding="10dp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Filter Buttons (All, Pending, Approved) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp">
+
+        <Button
+            android:id="@+id/btnFilterAll"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:text="All"
+            android:textSize="11sp"
+            android:backgroundTint="@color/accent_solar"
+            android:textColor="#0F172A"
+            android:layout_marginEnd="4dp"
+            app:cornerRadius="8dp" />
+
+        <Button
+            android:id="@+id/btnFilterPending"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:text="Pending"
+            android:textSize="11sp"
+            android:backgroundTint="#1E293B"
+            android:textColor="#FFFFFF"
+            android:layout_marginEnd="4dp"
+            app:cornerRadius="8dp" />
+
+        <Button
+            android:id="@+id/btnFilterApproved"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:text="Approved"
+            android:textSize="11sp"
+            android:backgroundTint="#1E293B"
+            android:textColor="#FFFFFF"
+            app:cornerRadius="8dp" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginBottom="10dp" />
+
+    <!-- RecyclerView for Bookings -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvBookings"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false" />
+
+</LinearLayout>

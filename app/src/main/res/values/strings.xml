@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Solar Microgrid</string>
+    <string name="member_role">Member 4: Energy Reservation &amp; QR Dispatch</string>
+    <string name="reserve_slot">Book Energy Slot</string>
+    <string name="my_bookings">My Reservations</string>
+    <string name="booking_history">Booking History</string>
+    <string name="select_node">Select Microgrid Node</string>
+    <string name="select_date">Select Booking Date</string>
+    <string name="select_start_time">Select Start Time</string>
+    <string name="select_end_time">Select End Time</string>
+    <string name="energy_kwh">Reserved Energy (kWh)</string>
+    <string name="total_price">Estimated Cost (LKR)</string>
+    <string name="submit_booking">Confirm &amp; Reserve Slot</string>
+    <string name="rule_7_days_note">Note: Reservations must be scheduled within 7 days from today.</string>
+    <string name="rule_12_hours_note">Note: Cancellations and modifications require at least 12 hours advance notice.</string>
+</resources>
