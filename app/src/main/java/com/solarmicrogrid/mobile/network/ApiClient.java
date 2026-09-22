@@ -23,8 +23,8 @@ import java.util.concurrent.Executors;
  */
 public class ApiClient {
 
-    // 10.0.2.2 points to host machine localhost from the Android Emulator
-    public static final String BASE_URL = "http://10.0.2.2:5298/api";
+    // `adb reverse tcp:5298 tcp:5298` exposes the PC's local API to a USB device.
+    public static final String BASE_URL = "http://127.0.0.1:5298/api";
 
     private static final ExecutorService executor = Executors.newFixedThreadPool(4);
     private static final Handler mainHandler = new Handler(Looper.getMainLooper());

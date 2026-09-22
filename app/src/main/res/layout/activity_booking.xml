@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#080D1A"
+    android:background="@color/bg_black"
     android:fillViewport="true">
 
     <LinearLayout
@@ -18,101 +18,83 @@
             android:orientation="vertical"
             android:paddingStart="22dp"
             android:paddingEnd="22dp"
-            android:paddingTop="48dp"
-            android:paddingBottom="22dp"
-            android:background="#0F172A">
+            android:paddingTop="44dp"
+            android:paddingBottom="24dp"
+            android:background="@color/bg_dark_surface">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="← Reserve Energy Slot"
-                android:textColor="@color/accent_solar"
-                android:textSize="13sp"
+                android:textColor="@color/yellow_primary"
+                android:textSize="12sp"
                 android:textAllCaps="true"
                 android:letterSpacing="0.08"
+                android:fontFamily="sans-serif-bold"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Booking"
-                android:textColor="#FFFFFF"
-                android:textSize="26sp"
+                android:text="Book Energy Slot"
+                android:textColor="@color/text_white"
+                android:textSize="28sp"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif-bold"
                 android:layout_marginTop="4dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select a node, date and time window"
-                android:textColor="#475569"
+                android:text="Select microgrid node, date, and schedule window"
+                android:textColor="@color/text_light_secondary"
                 android:textSize="12sp"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
 
-        <!-- Content -->
+        <!-- Form Body -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="18dp">
+            android:padding="20dp">
 
-            <!-- 7-Day Rule Warning -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="#1A1208"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="0dp"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="14dp"
-                    android:text="⚡ 7-Day Rule: Reservations must be scheduled within 7 days from today. Bookings beyond this window will be rejected by the server."
-                    android:textColor="#D97706"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="3dp" />
-            </androidx.cardview.widget.CardView>
-
-            <!-- Section: Node -->
+            <!-- Section: Microgrid Node -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MICROGRID NODE"
-                android:textColor="#475569"
-                android:textSize="10sp"
-                android:letterSpacing="0.12"
+                android:textColor="@color/text_light_muted"
+                android:textSize="11sp"
+                android:letterSpacing="0.1"
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
 
-            <androidx.cardview.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="#131D2E"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_dark_input"
                 android:layout_marginBottom="20dp">
 
                 <Spinner
                     android:id="@+id/spNodeSelector"
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
+                    android:layout_height="match_parent"
                     android:background="@null"
-                    android:padding="12dp"
-                    android:popupBackground="#1E293B" />
-            </androidx.cardview.widget.CardView>
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:popupBackground="@color/bg_dark_card" />
+            </FrameLayout>
 
-            <!-- Section: Date -->
+            <!-- Section: Reservation Date -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="RESERVATION DATE"
-                android:textColor="#475569"
-                android:textSize="10sp"
-                android:letterSpacing="0.12"
+                android:textColor="@color/text_light_muted"
+                android:textSize="11sp"
+                android:letterSpacing="0.1"
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
@@ -120,24 +102,26 @@
             <Button
                 android:id="@+id/btnSelectDate"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:backgroundTint="#131D2E"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_dark_input"
                 android:text="📅  Pick Date"
-                android:textColor="#CBD5E1"
+                android:textColor="@color/text_white"
                 android:textStyle="bold"
                 android:gravity="start|center_vertical"
                 android:paddingStart="18dp"
-                app:cornerRadius="12dp"
+                android:paddingEnd="18dp"
+                android:textSize="13sp"
+                app:backgroundTint="@null"
                 android:layout_marginBottom="20dp" />
 
-            <!-- Section: Time Pickers -->
+            <!-- Section: Time Slot Pickers -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TIME SLOT"
-                android:textColor="#475569"
-                android:textSize="10sp"
-                android:letterSpacing="0.12"
+                android:textColor="@color/text_light_muted"
+                android:textSize="11sp"
+                android:letterSpacing="0.1"
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
@@ -149,111 +133,81 @@
                 android:weightSum="2"
                 android:layout_marginBottom="20dp">
 
-                <LinearLayout
+                <Button
+                    android:id="@+id/btnSelectStartTime"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="54dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginEnd="8dp">
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_dark_input"
+                    android:text="🕒  09:00"
+                    android:textColor="@color/text_white"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    app:backgroundTint="@null" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Start"
-                        android:textColor="#64748B"
-                        android:textSize="11sp"
-                        android:layout_marginBottom="5dp" />
-
-                    <Button
-                        android:id="@+id/btnSelectStartTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:backgroundTint="#131D2E"
-                        android:text="🕘 09:00"
-                        android:textColor="#CBD5E1"
-                        android:textStyle="bold"
-                        app:cornerRadius="12dp" />
-                </LinearLayout>
-
-                <LinearLayout
+                <Button
+                    android:id="@+id/btnSelectEndTime"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="54dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="End"
-                        android:textColor="#64748B"
-                        android:textSize="11sp"
-                        android:layout_marginBottom="5dp" />
-
-                    <Button
-                        android:id="@+id/btnSelectEndTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:backgroundTint="#131D2E"
-                        android:text="🕚 11:00"
-                        android:textColor="#CBD5E1"
-                        android:textStyle="bold"
-                        app:cornerRadius="12dp" />
-                </LinearLayout>
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/bg_dark_input"
+                    android:text="🕒  11:00"
+                    android:textColor="@color/text_white"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    app:backgroundTint="@null" />
             </LinearLayout>
 
             <!-- Section: Energy Amount -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ENERGY AMOUNT (kW/h)"
-                android:textColor="#475569"
-                android:textSize="10sp"
-                android:letterSpacing="0.12"
+                android:text="ENERGY CAPACITY (KW/H)"
+                android:textColor="@color/text_light_muted"
+                android:textSize="11sp"
+                android:letterSpacing="0.1"
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
 
-            <androidx.cardview.widget.CardView
+            <EditText
+                android:id="@+id/etEnergyAmount"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="#131D2E"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                android:layout_marginBottom="28dp">
+                android:layout_height="54dp"
+                android:background="@drawable/bg_dark_input"
+                android:hint="Enter power in kW/h (e.g. 25.0)"
+                android:textColorHint="@color/text_light_muted"
+                android:textColor="@color/text_white"
+                android:inputType="numberDecimal"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="24dp" />
 
-                <EditText
-                    android:id="@+id/etEnergyAmount"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:background="@null"
-                    android:textColor="#FFFFFF"
-                    android:hint="e.g.  25.5"
-                    android:textColorHint="#334155"
-                    android:inputType="numberDecimal"
-                    android:padding="14dp"
-                    android:textSize="15sp" />
-            </androidx.cardview.widget.CardView>
-
-            <!-- Submit CTA Button -->
+            <!-- Submit Button (Yellow Pill) -->
             <Button
                 android:id="@+id/btnSubmitBooking"
                 android:layout_width="match_parent"
-                android:layout_height="58dp"
-                android:backgroundTint="@color/accent_solar"
-                android:text="Submit Reservation Request"
-                android:textColor="#0F172A"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_yellow_pill"
+                android:text="Confirm &amp; Reserve Slot"
+                android:textColor="@color/text_dark_primary"
                 android:textStyle="bold"
-                android:textSize="15sp"
-                app:cornerRadius="14dp" />
+                android:textSize="14sp"
+                android:fontFamily="sans-serif-bold"
+                app:backgroundTint="@null"
+                android:layout_marginBottom="16dp" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:visibility="gone"
-                android:layout_marginTop="16dp" />
+                android:indeterminateTint="@color/yellow_primary" />
 
         </LinearLayout>
     </LinearLayout>

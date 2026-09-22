@@ -127,6 +127,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_STATUS, status);
+        if ("Cancelled".equalsIgnoreCase(status) || "Rejected".equalsIgnoreCase(status)) {
+            values.put(COL_QR_PAYLOAD, "");
+        }
         db.update(TABLE_RESERVATIONS, values, COL_ID + " = ?", new String[]{id});
+    }
+
+    // Retrieve a single cached reservation by ID
+    public Reservation getReservationById(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_RESERVATIONS + " WHERE " + COL_ID + " = ?", new String[]{id});
+        Reservation res = null;
+        if (cursor.moveToFirst()) {
+            res = new Reservation();
+            res.setId(cursor.getString(cursor.getColumnIndexOrThrow(COL_ID)));
+            res.setProsumerId(cursor.getString(cursor.getColumnIndexOrThrow(COL_PROSUMER_ID)));
+            res.setProsumerNic(cursor.getString(cursor.getColumnIndexOrThrow(COL_PROSUMER_ID)));
+            res.setNodeId(cursor.getString(cursor.getColumnIndexOrThrow(COL_NODE_ID)));
+            res.setReservedEnergyKwh(cursor.getDouble(cursor.getColumnIndexOrThrow(COL_ENERGY_KWH)));
+            res.setStartTime(cursor.getString(cursor.getColumnIndexOrThrow(COL_START_TIME)));
+            res.setEndTime(cursor.getString(cursor.getColumnIndexOrThrow(COL_END_TIME)));
+            res.setStatus(cursor.getString(cursor.getColumnIndexOrThrow(COL_STATUS)));
+            res.setQrCodePayload(cursor.getString(cursor.getColumnIndexOrThrow(COL_QR_PAYLOAD)));
+        }
+        cursor.close();
+        return res;
     }
 }

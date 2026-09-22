@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="#0F172A"
-    app:cardCornerRadius="16dp"
-    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/bg_dark_card"
+    app:cardCornerRadius="18dp"
+    android:layout_marginBottom="12dp"
     app:cardElevation="0dp"
     android:foreground="?android:attr/selectableItemBackground">
 
@@ -14,20 +14,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!-- Left Accent Bar (status color) -->
+        <!-- Left Status Accent Line -->
         <View
             android:id="@+id/viewStatusBar"
             android:layout_width="4dp"
             android:layout_height="match_parent"
-            android:background="@color/amber_pending"
-            android:layout_marginEnd="0dp" />
+            android:background="@color/yellow_primary" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="14dp">
+            android:padding="16dp">
 
             <!-- Top Row: ID + Status Badge -->
             <LinearLayout
@@ -43,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="#RES-SAMPLE"
-                    android:textColor="@color/accent_solar"
+                    android:textColor="@color/yellow_primary"
                     android:fontFamily="monospace"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -53,14 +52,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pending"
-                    android:textColor="#0F172A"
+                    android:textColor="@color/text_dark_primary"
                     android:textSize="10sp"
                     android:textStyle="bold"
+                    android:fontFamily="sans-serif-bold"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:background="#F59E0B"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:background="@drawable/bg_yellow_pill"
                     android:textAllCaps="true"
                     android:letterSpacing="0.05" />
             </LinearLayout>
@@ -71,17 +71,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Colombo North Solar Hub"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/text_white"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="4dp" />
+                android:fontFamily="sans-serif-bold"
+                android:layout_marginBottom="6dp" />
 
             <!-- Energy + Time Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
 
                 <TextView
                     android:id="@+id/tvCardEnergy"
@@ -89,8 +91,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="⚡ 25.0 kW/h"
-                    android:textColor="@color/accent_solar"
-                    android:textSize="12sp"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-bold"
                     android:textStyle="bold" />
 
                 <TextView
@@ -98,8 +101,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="09:00 – 11:00"
-                    android:textColor="#475569"
-                    android:textSize="11sp" />
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="12sp"
+                    android:fontFamily="sans-serif-medium" />
             </LinearLayout>
 
             <!-- Action Button -->
@@ -113,12 +117,15 @@
                     android:id="@+id/btnCardAction"
                     android:layout_width="wrap_content"
                     android:layout_height="34dp"
-                    android:text="Details →"
+                    android:text="View Pass →"
                     android:textSize="11sp"
                     android:textStyle="bold"
-                    android:backgroundTint="#1E293B"
-                    android:textColor="#94A3B8"
-                    app:cornerRadius="8dp" />
+                    android:fontFamily="sans-serif-bold"
+                    android:background="@drawable/bg_pill_dark"
+                    android:textColor="@color/yellow_primary"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    app:backgroundTint="@null" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

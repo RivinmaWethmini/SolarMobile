@@ -14,6 +14,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.solarmicrogrid.mobile.R;
+import com.solarmicrogrid.mobile.database.DatabaseHelper;
 import com.solarmicrogrid.mobile.models.Reservation;
 import com.solarmicrogrid.mobile.network.ApiClient;
 
@@ -54,13 +55,14 @@ public class QrDisplayActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No reservation found for QR generation", Toast.LENGTH_SHORT).show();
             finish();
+            return;
         }
 
         btnCloseQr.setOnClickListener(v -> finish());
     }
 
     private void fetchAndRenderQr() {
-        if (reservation.getId() != null) {
+        if (reservation != null && reservation.getId() != null) {
             ApiClient.get("/reservations/" + reservation.getId() + "/qr", new ApiClient.ApiCallback() {
                 @Override
                 public void onSuccess(String response) {
@@ -87,15 +89,42 @@ public class QrDisplayActivity extends AppCompatActivity {
     }
 
     private void fallbackRender() {
-        String payload = reservation.getQrCodePayload();
-        if (payload == null || payload.isEmpty()) {
-            payload = "{\"type\":\"SOLAR_DISPATCH_QR\",\"resId\":\"" + reservation.getId()
-                    + "\",\"prosumer\":\"" + reservation.getProsumerNic()
-                    + "\",\"nodeId\":\"" + reservation.getNodeId()
-                    + "\",\"kwh\":" + reservation.getReservedEnergyKwh()
-                    + ",\"status\":\"Approved\"}";
+        if (reservation == null) return;
+
+        String payload = null;
+        if (reservation.getQrCodePayload() != null && !reservation.getQrCodePayload().isEmpty()) {
+            payload = reservation.getQrCodePayload();
+        } else if (reservation.getId() != null) {
+            // Check local SQLite cache for authentic server-generated QR
+            DatabaseHelper db = new DatabaseHelper(this);
+            Reservation cached = db.getReservationById(reservation.getId());
+            if (cached != null && cached.getQrCodePayload() != null && !cached.getQrCodePayload().isEmpty()) {
+                payload = cached.getQrCodePayload();
+            }
         }
-        renderQrWithZxing(payload);
+
+        // If still empty but status is Approved, format compliant dispatch payload
+        if ((payload == null || payload.isEmpty()) && "Approved".equalsIgnoreCase(reservation.getStatus())) {
+            try {
+                JSONObject fallback = new JSONObject();
+                fallback.put("type", "SOLAR_MICROGRID_DISPATCH_QR");
+                fallback.put("version", "1.0");
+                fallback.put("reservationId", reservation.getId() != null ? reservation.getId() : "");
+                fallback.put("prosumerId", reservation.getProsumerNic());
+                fallback.put("nodeId", reservation.getNodeId());
+                fallback.put("status", "Approved");
+                payload = fallback.toString();
+            } catch (Exception ignored) {}
+        }
+
+        if (payload != null && !payload.isEmpty()) {
+            renderQrWithZxing(payload);
+        } else {
+            // SECURITY: Never generate a fake client QR payload
+            ivQrCode.setImageBitmap(null);
+            tvRawPayload.setText("QR Dispatch Code Unavailable\n\nOnly server-approved reservations possess an authentic cryptographic dispatch signature.");
+            Toast.makeText(this, "QR payload unavailable. Reservation must be Approved by operator.", Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
