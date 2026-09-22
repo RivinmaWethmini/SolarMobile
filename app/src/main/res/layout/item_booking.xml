@@ -90,7 +90,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="⚡ 25.0 kW/h"
+                    android:text="25.0 kWh"
                     android:textColor="@color/yellow_primary"
                     android:textSize="13sp"
                     android:fontFamily="@font/outfit"
