@@ -29,10 +29,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import android.graphics.Color;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 /**
- * Energy Slot Booking Screen with Microgrid Node selector & Date/Time pickers.
- * Enforces 7-day advance booking constraint as mandated by Member 4 specification.
- * Author: Member 4
+ * Energy Slot Booking Screen with Microgrid Node selector and Date/Time pickers.
  */
 public class BookingActivity extends AppCompatActivity {
 
@@ -121,13 +125,33 @@ public class BookingActivity extends AppCompatActivity {
     }
 
     private void updateSpinnerAdapter() {
-        ArrayAdapter<MicrogridNode> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, nodesList);
+        ArrayAdapter<MicrogridNode> adapter = new ArrayAdapter<MicrogridNode>(this,
+                R.layout.item_spinner_node, nodesList) {
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                if (v instanceof TextView) {
+                    ((TextView) v).setTextColor(Color.WHITE);
+                }
+                return v;
+            }
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView, parent);
+                if (v instanceof TextView) {
+                    ((TextView) v).setTextColor(Color.WHITE);
+                    v.setBackgroundColor(Color.parseColor("#1E1F24"));
+                }
+                return v;
+            }
+        };
+        adapter.setDropDownViewResource(R.layout.item_spinner_node_dropdown);
         spNodeSelector.setAdapter(adapter);
     }
 
     private void setupPickers() {
-        // Date Picker (Bounded by 7-Day Limit Rule)
         btnSelectDate.setOnClickListener(v -> {
             Calendar now = Calendar.getInstance();
             DatePickerDialog datePicker = new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {

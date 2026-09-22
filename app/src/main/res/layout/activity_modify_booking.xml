@@ -12,24 +12,44 @@
         android:orientation="vertical"
         android:padding="22dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Modify Reservation"
-            android:textColor="@color/text_white"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-bold" />
+            android:layout_marginBottom="22dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Update energy allocation or schedule window"
-            android:textColor="@color/yellow_primary"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="22dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Modify Reservation"
+                    android:textColor="@color/text_white"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/outfit" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Update energy allocation or schedule window"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_solar_logo"
+                android:contentDescription="Solar Logo" />
+        </RelativeLayout>
 
         <!-- Read-Only Info Card -->
         <LinearLayout
@@ -47,7 +67,7 @@
                 android:textColor="@color/text_light_muted"
                 android:textSize="11sp"
                 android:letterSpacing="0.08"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -76,7 +96,7 @@
                     android:text="Pending"
                     android:textColor="@color/yellow_primary"
                     android:textStyle="bold"
-                    android:fontFamily="sans-serif-bold" />
+                    android:fontFamily="@font/outfit" />
             </LinearLayout>
 
             <TextView
@@ -101,11 +121,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ENERGY CAPACITY (KW/H)"
+            android:text="Energy Capacity (kWh)"
             android:textColor="@color/text_light_muted"
             android:textSize="11sp"
             android:letterSpacing="0.08"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
 
@@ -132,7 +152,7 @@
             android:textColor="@color/text_light_muted"
             android:textSize="11sp"
             android:letterSpacing="0.08"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
 
@@ -159,7 +179,7 @@
             android:textColor="@color/text_light_muted"
             android:textSize="11sp"
             android:letterSpacing="0.08"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
 
@@ -207,7 +227,7 @@
             android:textColor="@color/text_dark_primary"
             android:textStyle="bold"
             android:textSize="14sp"
-            android:fontFamily="sans-serif-bold"
+            android:fontFamily="@font/outfit"
             app:backgroundTint="@null"
             android:layout_marginBottom="12dp" />
 
@@ -220,7 +240,7 @@
             android:text="Cancel &amp; Go Back"
             android:textColor="@color/text_light_secondary"
             android:textSize="13sp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/outfit"
             app:backgroundTint="@null"
             android:layout_marginBottom="16dp" />
 

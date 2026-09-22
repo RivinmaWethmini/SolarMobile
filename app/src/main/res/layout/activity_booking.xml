@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Top Header -->
+        <!-- Top Header with Solar Logo -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,16 +22,29 @@
             android:paddingBottom="24dp"
             android:background="@color/bg_dark_surface">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="← Reserve Energy Slot"
-                android:textColor="@color/yellow_primary"
-                android:textSize="12sp"
-                android:textAllCaps="true"
-                android:letterSpacing="0.08"
-                android:fontFamily="sans-serif-bold"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="← Back to Dashboard"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="13sp"
+                    android:textAllCaps="false"
+                    android:fontFamily="@font/outfit"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:src="@drawable/ic_solar_logo"
+                    android:contentDescription="Solar Logo" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,15 +53,16 @@
                 android:textColor="@color/text_white"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginTop="4dp" />
+                android:fontFamily="@font/outfit"
+                android:layout_marginTop="6dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Select microgrid node, date, and schedule window"
                 android:textColor="@color/text_light_secondary"
-                android:textSize="12sp"
+                android:textSize="13sp"
+                android:fontFamily="@font/outfit"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
 
@@ -63,11 +77,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MICROGRID NODE"
-                android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.1"
-                android:textAllCaps="true"
+                android:text="Microgrid Node"
+                android:textColor="@color/text_white"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:fontFamily="@font/outfit"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
 
@@ -82,20 +96,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:popupBackground="@color/bg_dark_card" />
+                    android:paddingStart="6dp"
+                    android:paddingEnd="12dp"
+                    android:popupBackground="#1E1F24" />
             </FrameLayout>
 
             <!-- Section: Reservation Date -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RESERVATION DATE"
-                android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.1"
-                android:textAllCaps="true"
+                android:text="Reservation Date"
+                android:textColor="@color/text_white"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:fontFamily="@font/outfit"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
 
@@ -107,10 +121,12 @@
                 android:text="📅  Pick Date"
                 android:textColor="@color/text_white"
                 android:textStyle="bold"
+                android:fontFamily="@font/outfit"
                 android:gravity="start|center_vertical"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
-                android:textSize="13sp"
+                android:textSize="14sp"
+                android:textAllCaps="false"
                 app:backgroundTint="@null"
                 android:layout_marginBottom="20dp" />
 
@@ -118,11 +134,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TIME SLOT"
-                android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.1"
-                android:textAllCaps="true"
+                android:text="Time Slot"
+                android:textColor="@color/text_white"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:fontFamily="@font/outfit"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
 
@@ -143,7 +159,9 @@
                     android:text="🕒  09:00"
                     android:textColor="@color/text_white"
                     android:textStyle="bold"
-                    android:textSize="13sp"
+                    android:fontFamily="@font/outfit"
+                    android:textSize="14sp"
+                    android:textAllCaps="false"
                     app:backgroundTint="@null" />
 
                 <Button
@@ -156,7 +174,9 @@
                     android:text="🕒  11:00"
                     android:textColor="@color/text_white"
                     android:textStyle="bold"
-                    android:textSize="13sp"
+                    android:fontFamily="@font/outfit"
+                    android:textSize="14sp"
+                    android:textAllCaps="false"
                     app:backgroundTint="@null" />
             </LinearLayout>
 
@@ -164,11 +184,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ENERGY CAPACITY (KW/H)"
-                android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.1"
-                android:textAllCaps="true"
+                android:text="Energy Capacity (kWh)"
+                android:textColor="@color/text_white"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:fontFamily="@font/outfit"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
 
@@ -177,7 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:background="@drawable/bg_dark_input"
-                android:hint="Enter power in kW/h (e.g. 25.0)"
+                android:hint="Enter power in kWh (e.g. 25.0)"
                 android:textColorHint="@color/text_light_muted"
                 android:textColor="@color/text_white"
                 android:inputType="numberDecimal"
@@ -185,19 +205,21 @@
                 android:paddingEnd="18dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="24dp" />
+                android:fontFamily="@font/outfit"
+                android:layout_marginBottom="26dp" />
 
             <!-- Submit Button (Yellow Pill) -->
             <Button
                 android:id="@+id/btnSubmitBooking"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="54dp"
                 android:background="@drawable/bg_yellow_pill"
                 android:text="Confirm &amp; Reserve Slot"
                 android:textColor="@color/text_dark_primary"
                 android:textStyle="bold"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif-bold"
+                android:textSize="15sp"
+                android:textAllCaps="false"
+                android:fontFamily="@font/outfit"
                 app:backgroundTint="@null"
                 android:layout_marginBottom="16dp" />
 

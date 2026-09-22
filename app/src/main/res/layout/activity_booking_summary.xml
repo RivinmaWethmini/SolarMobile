@@ -12,26 +12,46 @@
         android:orientation="vertical"
         android:padding="22dp">
 
-        <TextView
-            android:id="@+id/tvSummaryTitle"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Reservation Summary"
-            android:textColor="@color/text_white"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-bold" />
+            android:layout_marginBottom="22dp">
 
-        <TextView
-            android:id="@+id/tvActionStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Action Completed Successfully"
-            android:textColor="@color/emerald_approved"
-            android:textSize="13sp"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="22dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvSummaryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reservation Summary"
+                    android:textColor="@color/text_white"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/outfit" />
+
+                <TextView
+                    android:id="@+id/tvActionStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Action Completed Successfully"
+                    android:textColor="@color/emerald_approved"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/outfit"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_solar_logo"
+                android:contentDescription="Solar Logo" />
+        </RelativeLayout>
 
         <!-- Summary Details Card (Obsidian Dark with Yellow Accent) -->
         <LinearLayout
@@ -50,7 +70,7 @@
                 android:textColor="@color/text_light_muted"
                 android:textSize="11sp"
                 android:letterSpacing="0.08"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textStyle="bold" />
 
             <TextView
@@ -73,7 +93,7 @@
                 android:textColor="@color/text_light_muted"
                 android:textSize="11sp"
                 android:letterSpacing="0.08"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textStyle="bold" />
 
             <TextView
@@ -83,7 +103,7 @@
                 android:text="200012345678"
                 android:textColor="@color/text_white"
                 android:textSize="14sp"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/outfit"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="14dp" />
 
@@ -95,7 +115,7 @@
                 android:textColor="@color/text_light_muted"
                 android:textSize="11sp"
                 android:letterSpacing="0.08"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textStyle="bold" />
 
             <TextView
@@ -105,7 +125,7 @@
                 android:text="NODE-COLOMBO-CENTRAL"
                 android:textColor="@color/text_white"
                 android:textSize="14sp"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/outfit"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="14dp" />
 
@@ -117,7 +137,7 @@
                 android:textColor="@color/text_light_muted"
                 android:textSize="11sp"
                 android:letterSpacing="0.08"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textStyle="bold" />
 
             <TextView
@@ -128,7 +148,7 @@
                 android:textColor="@color/yellow_primary"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-bold"
+                android:fontFamily="@font/outfit"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="14dp" />
 
@@ -140,7 +160,7 @@
                 android:textColor="@color/text_light_muted"
                 android:textSize="11sp"
                 android:letterSpacing="0.08"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textStyle="bold" />
 
             <TextView
@@ -150,7 +170,7 @@
                 android:text="2026-09-20 09:00 - 11:00"
                 android:textColor="@color/text_white"
                 android:textSize="13sp"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/outfit"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="14dp" />
 
@@ -162,7 +182,7 @@
                 android:textColor="@color/text_light_muted"
                 android:textSize="11sp"
                 android:letterSpacing="0.08"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textStyle="bold" />
 
             <TextView
@@ -173,7 +193,7 @@
                 android:textColor="@color/yellow_primary"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-bold"
+                android:fontFamily="@font/outfit"
                 android:layout_marginTop="2dp" />
 
         </LinearLayout>
@@ -188,7 +208,7 @@
             android:textColor="@color/text_dark_primary"
             android:textStyle="bold"
             android:textSize="13sp"
-            android:fontFamily="sans-serif-bold"
+            android:fontFamily="@font/outfit"
             app:backgroundTint="@null"
             android:visibility="gone"
             android:layout_marginBottom="12dp" />
@@ -203,7 +223,7 @@
             android:textColor="@color/yellow_primary"
             android:textStyle="bold"
             android:textSize="13sp"
-            android:fontFamily="sans-serif-bold"
+            android:fontFamily="@font/outfit"
             app:backgroundTint="@null"
             android:layout_marginBottom="12dp" />
 
@@ -217,7 +237,7 @@
             android:textColor="#EF4444"
             android:textStyle="bold"
             android:textSize="13sp"
-            android:fontFamily="sans-serif-bold"
+            android:fontFamily="@font/outfit"
             app:backgroundTint="@null"
             android:layout_marginBottom="12dp" />
 
@@ -230,7 +250,7 @@
             android:text="Back to Dashboard"
             android:textColor="@color/text_light_secondary"
             android:textSize="13sp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/outfit"
             app:backgroundTint="@null" />
 
     </LinearLayout>

@@ -13,6 +13,13 @@
         android:orientation="vertical"
         android:padding="24dp">
 
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_solar_logo"
+            android:contentDescription="Solar Logo"
+            android:layout_marginBottom="12dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +27,7 @@
             android:textColor="@color/text_white"
             android:textSize="26sp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif-bold" />
+            android:fontFamily="@font/outfit" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,7 +35,7 @@
             android:text="Verified Prosumer Energy Dispatch Pass"
             android:textColor="@color/yellow_primary"
             android:textSize="12sp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/outfit"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="24dp" />
 
@@ -74,7 +81,7 @@
             android:text="Present this pass to the operator at the microgrid node to finalize energy transfer."
             android:textColor="@color/text_light_secondary"
             android:textSize="12sp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/outfit"
             android:lineSpacingExtra="2dp"
             android:layout_marginBottom="24dp" />
 
@@ -94,7 +101,7 @@
                 android:textColor="@color/yellow_primary"
                 android:textSize="10sp"
                 android:letterSpacing="0.08"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textStyle="bold" />
 
             <TextView
@@ -117,7 +124,7 @@
             android:textColor="@color/text_dark_primary"
             android:textStyle="bold"
             android:textSize="13sp"
-            android:fontFamily="sans-serif-bold"
+            android:fontFamily="@font/outfit"
             app:backgroundTint="@null" />
 
     </LinearLayout>
