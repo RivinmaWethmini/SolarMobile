@@ -85,34 +85,50 @@
             android:lineSpacingExtra="2dp"
             android:layout_marginBottom="24dp" />
 
-        <!-- Raw Payload Preview Card (Dark Obsidian) -->
+        <!-- Verified Security Badge (Clean replacement for raw technical payload) -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_dark_card"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="24dp">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginBottom="28dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_energy_bolt"
+                app:tint="@color/yellow_primary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CRYPTOGRAPHIC DISPATCH PAYLOAD:"
+                android:text="Cryptographically Verified Pass"
                 android:textColor="@color/yellow_primary"
-                android:textSize="10sp"
-                android:letterSpacing="0.08"
-                android:textAllCaps="false"
-                android:textStyle="bold" />
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/outfit"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Raw Payload Hidden from User (Preserved for backward-compat without UI clutter) -->
+        <LinearLayout
+            android:id="@+id/layoutRawPayload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvRawPayload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="{}"
-                android:textColor="@color/text_light_secondary"
-                android:fontFamily="monospace"
-                android:textSize="11sp"
-                android:layout_marginTop="6dp" />
+                android:visibility="gone" />
         </LinearLayout>
 
         <Button
