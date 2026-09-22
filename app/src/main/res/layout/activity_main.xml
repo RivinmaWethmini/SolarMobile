@@ -15,7 +15,7 @@
         android:paddingTop="36dp"
         android:paddingBottom="36dp">
 
-        <!-- Top Header Bar (Avatar + Greeting + Notification Bell) -->
+        <!-- Top Header Bar (Avatar + Dynamic Greeting + Notification Bell) -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,9 +43,10 @@
                     android:layout_marginStart="12dp">
 
                     <TextView
+                        android:id="@+id/tvGreeting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Good Morning 🌤️"
+                        android:text="Welcome"
                         android:textColor="@color/text_light_secondary"
                         android:textSize="12sp"
                         android:fontFamily="@font/outfit" />
@@ -89,10 +90,10 @@
             </FrameLayout>
         </RelativeLayout>
 
-        <!-- Circular Energy Gauge Card (Matching Screen 2 of Reference Image) -->
+        <!-- Circular Metrics Card (Driven 100% by Live Backend API) -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="240dp"
             android:layout_marginBottom="24dp">
 
             <!-- Progress Ring Background -->
@@ -111,32 +112,35 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvGaugeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Energy Usage"
+                    android:text="Total Bookings"
                     android:textColor="@color/yellow_primary"
                     android:textSize="12sp"
                     android:letterSpacing="0.04"
                     android:fontFamily="@font/outfit" />
 
                 <TextView
+                    android:id="@+id/tvGaugeValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="85%"
+                    android:text="—"
                     android:textColor="@color/text_white"
-                    android:textSize="40sp"
+                    android:textSize="44sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/outfit"
                     android:layout_marginTop="2dp" />
 
                 <TextView
+                    android:id="@+id/tvGaugeSubtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Solar Grid Active"
+                    android:text="Live Microgrid Sync"
                     android:textColor="@color/text_light_muted"
-                    android:textSize="10sp"
-                    android:letterSpacing="0.05"
-                    android:textAllCaps="false"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.04"
+                    android:fontFamily="@font/outfit"
                     android:layout_marginTop="2dp" />
             </LinearLayout>
 
@@ -156,20 +160,21 @@
             </FrameLayout>
         </RelativeLayout>
 
-        <!-- Live Reservation Operational Status (Pending & Approved) -->
+        <!-- Live Reservation Operational Metrics (2x2 Grid) -->
+        <!-- Row 1: Pending & Approved -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="2"
-            android:layout_marginBottom="24dp">
+            android:layout_marginBottom="12dp">
 
             <!-- Pending Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="95dp"
                 android:layout_weight="1"
-                android:layout_marginEnd="7dp"
+                android:layout_marginEnd="6dp"
                 app:cardBackgroundColor="@color/bg_dark_card"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp">
@@ -207,7 +212,7 @@
                 android:layout_width="0dp"
                 android:layout_height="95dp"
                 android:layout_weight="1"
-                android:layout_marginStart="7dp"
+                android:layout_marginStart="6dp"
                 app:cardBackgroundColor="@color/bg_dark_card"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp">
@@ -241,7 +246,92 @@
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
-        <!-- Devices Section Header (Matching Screen 2 of Reference Image) -->
+        <!-- Row 2: Total Bookings & Active Nodes -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginBottom="24dp">
+
+            <!-- Total Bookings Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="95dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                app:cardBackgroundColor="@color/bg_dark_card"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/tvTotalCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textColor="@color/text_white"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/outfit" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Bookings"
+                        android:textColor="@color/text_light_secondary"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/outfit"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Connected Nodes Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="95dp"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                app:cardBackgroundColor="@color/bg_dark_card"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/tvActiveNodesCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textColor="@color/yellow_primary"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/outfit" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Connected Nodes"
+                        android:textColor="@color/text_light_secondary"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/outfit"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <!-- Microgrid Trading Nodes Section (100% Dynamic from API) -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -252,194 +342,31 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:text="Devices &amp; Subsystems"
+                android:text="Microgrid Trading Nodes"
                 android:textColor="@color/text_white"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/outfit" />
 
             <TextView
+                android:id="@+id/tvNodesCountBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:text="See More"
-                android:textColor="@color/text_light_muted"
+                android:text="Live Grid"
+                android:textColor="@color/yellow_primary"
                 android:textSize="12sp"
                 android:fontFamily="@font/outfit" />
         </RelativeLayout>
 
-        <!-- 2x2 Devices Grid (Matching Screen 2 of Reference Image) -->
-        <!-- Row 1 -->
+        <!-- Dynamic Container for Live Nodes from API -->
         <LinearLayout
+            android:id="@+id/layoutNodesContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginBottom="12dp">
-
-            <!-- Device 1: Air Conditioner (Cream Card) -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="115dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="6dp"
-                android:background="@drawable/bg_cream_card"
-                android:orientation="vertical"
-                android:padding="14dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_ac" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Air Conditioner"
-                    android:textColor="@color/text_dark_secondary"
-                    android:textSize="11sp"
-                    android:fontFamily="@font/outfit"
-                    android:layout_marginTop="14dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="278 Kwh"
-                    android:textColor="@color/text_dark_primary"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/outfit"
-                    android:layout_marginTop="2dp" />
-            </LinearLayout>
-
-            <!-- Device 2: Computer / Inverter (Cream Card) -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="115dp"
-                android:layout_weight="1"
-                android:layout_marginStart="6dp"
-                android:background="@drawable/bg_cream_card"
-                android:orientation="vertical"
-                android:padding="14dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_computer" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Computer"
-                    android:textColor="@color/text_dark_secondary"
-                    android:textSize="11sp"
-                    android:fontFamily="@font/outfit"
-                    android:layout_marginTop="14dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="155 Kwh"
-                    android:textColor="@color/text_dark_primary"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/outfit"
-                    android:layout_marginTop="2dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Row 2 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginBottom="24dp">
-
-            <!-- Device 3: Livingroom Substation (Highlighted Electric Yellow Card) -->
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="115dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="6dp"
-                android:background="@drawable/bg_yellow_card"
-                android:padding="14dp">
-
-                <ImageView
-                    android:id="@+id/ivLivingroom"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_livingroom"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true" />
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@drawable/ic_refresh_arrow"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:alpha="0.75" />
-
-                <TextView
-                    android:id="@+id/tvLivingroomLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/ivLivingroom"
-                    android:text="Livingroom"
-                    android:textColor="@color/text_dark_secondary"
-                    android:textSize="11sp"
-                    android:fontFamily="@font/outfit"
-                    android:layout_marginTop="14dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvLivingroomLabel"
-                    android:text="198 Kwh"
-                    android:textColor="@color/text_dark_primary"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/outfit"
-                    android:layout_marginTop="2dp" />
-            </RelativeLayout>
-
-            <!-- Device 4: CCTV / Monitoring (Cream Card) -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="115dp"
-                android:layout_weight="1"
-                android:layout_marginStart="6dp"
-                android:background="@drawable/bg_cream_card"
-                android:orientation="vertical"
-                android:padding="14dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_camera" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CCTV Camera"
-                    android:textColor="@color/text_dark_secondary"
-                    android:textSize="11sp"
-                    android:fontFamily="@font/outfit"
-                    android:layout_marginTop="14dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="88 Kwh"
-                    android:textColor="@color/text_dark_primary"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/outfit"
-                    android:layout_marginTop="2dp" />
-            </LinearLayout>
-        </LinearLayout>
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp" />
 
         <!-- Quick Action Primary Banner (Book Slot - Yellow Accent) -->
         <LinearLayout

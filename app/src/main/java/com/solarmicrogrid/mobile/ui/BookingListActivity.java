@@ -147,7 +147,16 @@ public class BookingListActivity extends AppCompatActivity {
             public void onSuccess(String response) {
                 pbLoading.setVisibility(View.GONE);
                 try {
-                    JSONArray arr = new JSONArray(response);
+                    JSONArray arr;
+                    if (response.trim().startsWith("[")) {
+                        arr = new JSONArray(response);
+                    } else {
+                        JSONObject wrapper = new JSONObject(response);
+                        arr = wrapper.optJSONArray("value");
+                        if (arr == null) arr = wrapper.optJSONArray("data");
+                    }
+                    if (arr == null) arr = new JSONArray();
+
                     allReservations.clear();
                     List<Reservation> freshList = new ArrayList<>();
 
@@ -167,11 +176,13 @@ public class BookingListActivity extends AppCompatActivity {
                         freshList.add(res);
                     }
 
-                    allReservations.addAll(freshList);
-                    // Persist to local SQLite
-                    dbHelper.saveAllReservations(freshList);
-
-                    applyFilterAndSearch();
+                    if (freshList.isEmpty()) {
+                        fetchAllReservations();
+                    } else {
+                        allReservations.addAll(freshList);
+                        dbHelper.saveAllReservations(freshList);
+                        applyFilterAndSearch();
+                    }
 
                 } catch (Exception e) {
                     Toast.makeText(BookingListActivity.this, "Failed to parse reservations", Toast.LENGTH_SHORT).show();
@@ -186,6 +197,53 @@ public class BookingListActivity extends AppCompatActivity {
                     Toast.makeText(BookingListActivity.this, "Network offline: " + errorMessage, Toast.LENGTH_SHORT).show();
                     if (btnRetryLoad != null) btnRetryLoad.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+    }
+
+    private void fetchAllReservations() {
+        ApiClient.get("/reservations", new ApiClient.ApiCallback() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONArray arr;
+                    if (response.trim().startsWith("[")) {
+                        arr = new JSONArray(response);
+                    } else {
+                        JSONObject wrapper = new JSONObject(response);
+                        arr = wrapper.optJSONArray("value");
+                        if (arr == null) arr = wrapper.optJSONArray("data");
+                    }
+                    if (arr == null) arr = new JSONArray();
+
+                    allReservations.clear();
+                    List<Reservation> freshList = new ArrayList<>();
+
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject obj = arr.getJSONObject(i);
+                        Reservation res = new Reservation();
+                        res.setId(obj.optString("id", obj.optString("reservationId", "")));
+                        res.setProsumerId(obj.optString("prosumerId", ""));
+                        res.setProsumerNic(obj.optString("prosumerNic", obj.optString("prosumerId", "")));
+                        res.setNodeId(obj.optString("nodeId", obj.optString("microgridNodeId", "NODE-01")));
+                        res.setReservedEnergyKwh(obj.optDouble("reservedEnergyKwh", 0));
+                        res.setStartTime(obj.optString("startTime", obj.optString("reservationDate", "")));
+                        res.setEndTime(obj.optString("endTime", ""));
+                        res.setStatus(obj.optString("status", "Pending"));
+                        res.setQrCodePayload(obj.optString("qrPayload", obj.optString("qrCodePayload", null)));
+
+                        freshList.add(res);
+                    }
+
+                    allReservations.addAll(freshList);
+                    dbHelper.saveAllReservations(freshList);
+                    applyFilterAndSearch();
+                } catch (Exception ignored) {}
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                applyFilterAndSearch();
             }
         });
     }
