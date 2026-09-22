@@ -64,9 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Reads live counts from the C# Web API (/Reservation/stats)
-     * Directly satisfies Table 2 marking rubric:
-     * "plus a dashboard showing pending reservations and the count of approved future reservations, all read live from the API."
+     * Reads live counts from the C# Web API (/reservations/stats).
      */
     private void fetchLiveDashboardStats() {
         ApiClient.get("/reservations/stats", new ApiClient.ApiCallback() {

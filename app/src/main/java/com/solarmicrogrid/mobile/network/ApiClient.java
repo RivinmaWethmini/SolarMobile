@@ -17,9 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Pure Native Android REST API Client connecting exclusively to C# Web API.
- * Satisfies FAT Service architecture: all business logic resides on central API.
- * Author: Member 4
+ * Native Android REST API Client for Solar Microgrid backend services.
  */
 public class ApiClient {
 
