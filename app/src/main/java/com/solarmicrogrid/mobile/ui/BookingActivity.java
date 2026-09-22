@@ -84,24 +84,35 @@ public class BookingActivity extends AppCompatActivity {
 
     private void setupNodeSpinner() {
         nodesList = new ArrayList<>();
-        // Attempt dynamic load from Member 3 MicrogridNode API with graceful fallback
+        // Dynamic load from MicrogridNode API with graceful fallback
         ApiClient.get("/microgridnodes", new ApiClient.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
-                    org.json.JSONArray arr = new org.json.JSONArray(response);
-                    nodesList.clear();
-                    for (int i = 0; i < arr.length(); i++) {
-                        JSONObject obj = arr.getJSONObject(i);
-                        nodesList.add(new MicrogridNode(
-                                obj.optString("id", "node-" + i),
-                                obj.optString("nodeCode", "NODE-" + i),
-                                obj.optString("name", "Solar Node " + i),
-                                obj.optString("region", "Grid"),
-                                obj.optDouble("totalCapacityKw", 500)
-                        ));
+                    org.json.JSONArray arr;
+                    if (response.trim().startsWith("[")) {
+                        arr = new org.json.JSONArray(response);
+                    } else {
+                        JSONObject wrapper = new JSONObject(response);
+                        arr = wrapper.optJSONArray("value");
+                        if (arr == null) arr = wrapper.optJSONArray("data");
                     }
-                    updateSpinnerAdapter();
+                    if (arr != null && arr.length() > 0) {
+                        nodesList.clear();
+                        for (int i = 0; i < arr.length(); i++) {
+                            JSONObject obj = arr.getJSONObject(i);
+                            nodesList.add(new MicrogridNode(
+                                    obj.optString("id", obj.optString("nodeCode", "node-" + i)),
+                                    obj.optString("nodeCode", "NODE-" + i),
+                                    obj.optString("name", "Solar Node " + i),
+                                    obj.optString("region", "Grid"),
+                                    obj.optDouble("totalCapacityKw", 500)
+                            ));
+                        }
+                        updateSpinnerAdapter();
+                    } else {
+                        loadFallbackNodes();
+                    }
                 } catch (Exception e) {
                     loadFallbackNodes();
                 }
