@@ -17,14 +17,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Pure Native Android REST API Client connecting exclusively to C# Web API.
- * Satisfies FAT Service architecture: all business logic resides on central API.
- * Author: Member 4
+ * Native Android REST API Client for Solar Microgrid backend services.
  */
 public class ApiClient {
 
-    // 10.0.2.2 points to host machine localhost from the Android Emulator
-    public static final String BASE_URL = "http://10.0.2.2:5298/api";
+    // `adb reverse tcp:5298 tcp:5298` exposes the PC's local API to a USB device.
+    public static final String BASE_URL = "http://127.0.0.1:5298/api";
 
     private static final ExecutorService executor = Executors.newFixedThreadPool(4);
     private static final Handler mainHandler = new Handler(Looper.getMainLooper());

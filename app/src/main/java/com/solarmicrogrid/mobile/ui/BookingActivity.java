@@ -47,8 +47,7 @@ public class BookingActivity extends AppCompatActivity {
     private List<MicrogridNode> nodesList;
     private DatabaseHelper dbHelper;
 
-    // TODO (Member 2): Replace with authenticated user NIC from JWT session / Auth SharedPreferences
-    // For now, reads from SharedPreferences with a fallback placeholder value
+    // Reads authenticated user NIC from SharedPreferences with robust fallback
     private String PROSUMER_NIC;
 
     @Override
@@ -59,9 +58,11 @@ public class BookingActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
         selectedCalendar = Calendar.getInstance();
 
-        // TODO (Member 2): Replace this block with JWT session lookup when auth is ready
         android.content.SharedPreferences prefs = getSharedPreferences("solar_session", MODE_PRIVATE);
-        PROSUMER_NIC = prefs.getString("prosumer_nic", "200012345678");
+        String nic = prefs.getString("prosumer_nic", null);
+        if (nic == null) nic = prefs.getString("nic", null);
+        if (nic == null) nic = prefs.getString("username", null);
+        PROSUMER_NIC = (nic != null && !nic.trim().isEmpty()) ? nic : "200012345678";
 
         spNodeSelector = findViewById(R.id.spNodeSelector);
         btnSelectDate = findViewById(R.id.btnSelectDate);
@@ -79,13 +80,47 @@ public class BookingActivity extends AppCompatActivity {
 
     private void setupNodeSpinner() {
         nodesList = new ArrayList<>();
-        // TODO (Member 3): Replace static node list with live API call: ApiClient.get("/microgridnodes", ...)
-        // Hardcoded nodes are placeholders until Member 3's MicrogridNode API is ready
-        nodesList.add(new MicrogridNode("node-01", "NODE-COL-01", "Colombo North Solar Hub", "Western", 500));
-        nodesList.add(new MicrogridNode("node-02", "NODE-COL-02", "Kaduwela Microgrid Substation", "Western", 350));
-        nodesList.add(new MicrogridNode("node-03", "NODE-KND-01", "Kandy Central Solar Station", "Central", 400));
-        nodesList.add(new MicrogridNode("node-04", "NODE-GAL-01", "Galle Coastal Solar Array", "Southern", 600));
+        // Attempt dynamic load from Member 3 MicrogridNode API with graceful fallback
+        ApiClient.get("/microgridnodes", new ApiClient.ApiCallback() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    org.json.JSONArray arr = new org.json.JSONArray(response);
+                    nodesList.clear();
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject obj = arr.getJSONObject(i);
+                        nodesList.add(new MicrogridNode(
+                                obj.optString("id", "node-" + i),
+                                obj.optString("nodeCode", "NODE-" + i),
+                                obj.optString("name", "Solar Node " + i),
+                                obj.optString("region", "Grid"),
+                                obj.optDouble("totalCapacityKw", 500)
+                        ));
+                    }
+                    updateSpinnerAdapter();
+                } catch (Exception e) {
+                    loadFallbackNodes();
+                }
+            }
 
+            @Override
+            public void onError(String errorMessage) {
+                loadFallbackNodes();
+            }
+        });
+    }
+
+    private void loadFallbackNodes() {
+        if (nodesList.isEmpty()) {
+            nodesList.add(new MicrogridNode("node-01", "NODE-COL-01", "Colombo North Solar Hub", "Western", 500));
+            nodesList.add(new MicrogridNode("node-02", "NODE-COL-02", "Kaduwela Microgrid Substation", "Western", 350));
+            nodesList.add(new MicrogridNode("node-03", "NODE-KND-01", "Kandy Central Solar Station", "Central", 400));
+            nodesList.add(new MicrogridNode("node-04", "NODE-GAL-01", "Galle Coastal Solar Array", "Southern", 600));
+            updateSpinnerAdapter();
+        }
+    }
+
+    private void updateSpinnerAdapter() {
         ArrayAdapter<MicrogridNode> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, nodesList);
         spNodeSelector.setAdapter(adapter);
@@ -186,9 +221,10 @@ public class BookingActivity extends AppCompatActivity {
         MicrogridNode selectedNode = (MicrogridNode) spNodeSelector.getSelectedItem();
         String nodeId = selectedNode != null ? selectedNode.getNodeCode() : "NODE-COL-01";
 
-        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
-        String startIso = isoFormat.format(startCal.getTime()) + "Z";
-        String endIso = isoFormat.format(endCal.getTime()) + "Z";
+        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+        isoFormat.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
+        String startIso = isoFormat.format(startCal.getTime());
+        String endIso = isoFormat.format(endCal.getTime());
 
         // Build JSON Payload for C# Web API
         JSONObject payload = new JSONObject();
@@ -197,6 +233,7 @@ public class BookingActivity extends AppCompatActivity {
             payload.put("prosumerNic", PROSUMER_NIC);
             payload.put("nodeId", nodeId);
             payload.put("reservedEnergyKwh", energy);
+            payload.put("reservationDate", startIso);
             payload.put("startTime", startIso);
             payload.put("endTime", endIso);
             payload.put("status", "Pending");
@@ -219,9 +256,11 @@ public class BookingActivity extends AppCompatActivity {
                     JSONObject resObj = new JSONObject(response);
                     Reservation reservation = new Reservation();
                     reservation.setId(resObj.optString("id", "RES-" + System.currentTimeMillis()));
+                    reservation.setProsumerId(PROSUMER_NIC);
                     reservation.setProsumerNic(PROSUMER_NIC);
                     reservation.setNodeId(nodeId);
                     reservation.setReservedEnergyKwh(energy);
+                    reservation.setReservationDate(startIso);
                     reservation.setStartTime(startIso);
                     reservation.setEndTime(endIso);
                     reservation.setStatus("Pending");

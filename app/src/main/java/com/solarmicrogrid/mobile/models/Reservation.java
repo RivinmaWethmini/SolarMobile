@@ -14,6 +14,7 @@ public class Reservation implements Serializable {
     private String nodeName;
     private double reservedEnergyKwh;
     private double totalPrice;
+    private String reservationDate;
     private String startTime;
     private String endTime;
     private String status;
@@ -55,6 +56,9 @@ public class Reservation implements Serializable {
     public double getTotalPrice() { return totalPrice; }
     public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
 
+    public String getReservationDate() { return reservationDate != null ? reservationDate : startTime; }
+    public void setReservationDate(String reservationDate) { this.reservationDate = reservationDate; }
+
     public String getStartTime() { return startTime; }
     public void setStartTime(String startTime) { this.startTime = startTime; }
 
@@ -63,6 +67,9 @@ public class Reservation implements Serializable {
 
     public String getStatus() { return status != null ? status : "Pending"; }
     public void setStatus(String status) { this.status = status; }
+
+    public String getQrPayload() { return qrCodePayload; }
+    public void setQrPayload(String qrPayload) { this.qrCodePayload = qrPayload; }
 
     public String getQrCodePayload() { return qrCodePayload; }
     public void setQrCodePayload(String qrCodePayload) { this.qrCodePayload = qrCodePayload; }

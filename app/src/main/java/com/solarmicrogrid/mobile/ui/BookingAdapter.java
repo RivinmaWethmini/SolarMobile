@@ -66,8 +66,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         } else {
             // Pending
             accentColor = context.getResources().getColor(R.color.amber_pending);
-            badgeBgColor = 0xFFF59E0B;
-            holder.tvCardStatus.setTextColor(0xFF0F172A);
+            badgeBgColor = 0xFFFFD000;
+            holder.tvCardStatus.setTextColor(0xFF0A0A0C);
         }
 
         // Set left accent status bar color
