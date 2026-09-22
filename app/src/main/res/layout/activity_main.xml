@@ -30,18 +30,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <FrameLayout
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:background="@drawable/bg_circle_dark">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="⚡"
-                        android:textSize="20sp" />
-                </FrameLayout>
+                <ImageView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:src="@drawable/ic_solar_logo"
+                    android:contentDescription="Solar Microgrid Logo" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -55,7 +48,7 @@
                         android:text="Good Morning 🌤️"
                         android:textColor="@color/text_light_secondary"
                         android:textSize="12sp"
-                        android:fontFamily="sans-serif-medium" />
+                        android:fontFamily="@font/outfit" />
 
                     <TextView
                         android:id="@+id/tvUserNic"
@@ -65,7 +58,7 @@
                         android:textColor="@color/text_white"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:fontFamily="sans-serif-bold"
+                        android:fontFamily="@font/outfit"
                         android:layout_marginTop="2dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -124,7 +117,7 @@
                     android:textColor="@color/yellow_primary"
                     android:textSize="12sp"
                     android:letterSpacing="0.04"
-                    android:fontFamily="sans-serif-medium" />
+                    android:fontFamily="@font/outfit" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -133,7 +126,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="40sp"
                     android:textStyle="bold"
-                    android:fontFamily="sans-serif-black"
+                    android:fontFamily="@font/outfit"
                     android:layout_marginTop="2dp" />
 
                 <TextView
@@ -143,7 +136,7 @@
                     android:textColor="@color/text_light_muted"
                     android:textSize="10sp"
                     android:letterSpacing="0.05"
-                    android:textAllCaps="true"
+                    android:textAllCaps="false"
                     android:layout_marginTop="2dp" />
             </LinearLayout>
 
@@ -196,7 +189,7 @@
                         android:textColor="@color/yellow_primary"
                         android:textSize="26sp"
                         android:textStyle="bold"
-                        android:fontFamily="sans-serif-bold" />
+                        android:fontFamily="@font/outfit" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -204,7 +197,7 @@
                         android:text="Pending Action"
                         android:textColor="@color/text_light_secondary"
                         android:textSize="11sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/outfit"
                         android:layout_marginTop="2dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -234,7 +227,7 @@
                         android:textColor="@color/emerald_approved"
                         android:textSize="26sp"
                         android:textStyle="bold"
-                        android:fontFamily="sans-serif-bold" />
+                        android:fontFamily="@font/outfit" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -242,7 +235,7 @@
                         android:text="Approved Slots"
                         android:textColor="@color/text_light_secondary"
                         android:textSize="11sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/outfit"
                         android:layout_marginTop="2dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -263,7 +256,7 @@
                 android:textColor="@color/text_white"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-bold" />
+                android:fontFamily="@font/outfit" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -273,7 +266,7 @@
                 android:text="See More"
                 android:textColor="@color/text_light_muted"
                 android:textSize="12sp"
-                android:fontFamily="sans-serif-medium" />
+                android:fontFamily="@font/outfit" />
         </RelativeLayout>
 
         <!-- 2x2 Devices Grid (Matching Screen 2 of Reference Image) -->
@@ -306,7 +299,7 @@
                     android:text="Air Conditioner"
                     android:textColor="@color/text_dark_secondary"
                     android:textSize="11sp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/outfit"
                     android:layout_marginTop="14dp" />
 
                 <TextView
@@ -316,7 +309,7 @@
                     android:textColor="@color/text_dark_primary"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:fontFamily="sans-serif-bold"
+                    android:fontFamily="@font/outfit"
                     android:layout_marginTop="2dp" />
             </LinearLayout>
 
@@ -341,7 +334,7 @@
                     android:text="Computer"
                     android:textColor="@color/text_dark_secondary"
                     android:textSize="11sp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/outfit"
                     android:layout_marginTop="14dp" />
 
                 <TextView
@@ -351,7 +344,7 @@
                     android:textColor="@color/text_dark_primary"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:fontFamily="sans-serif-bold"
+                    android:fontFamily="@font/outfit"
                     android:layout_marginTop="2dp" />
             </LinearLayout>
         </LinearLayout>
@@ -397,7 +390,7 @@
                     android:text="Livingroom"
                     android:textColor="@color/text_dark_secondary"
                     android:textSize="11sp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/outfit"
                     android:layout_marginTop="14dp" />
 
                 <TextView
@@ -408,7 +401,7 @@
                     android:textColor="@color/text_dark_primary"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:fontFamily="sans-serif-bold"
+                    android:fontFamily="@font/outfit"
                     android:layout_marginTop="2dp" />
             </RelativeLayout>
 
@@ -433,7 +426,7 @@
                     android:text="CCTV Camera"
                     android:textColor="@color/text_dark_secondary"
                     android:textSize="11sp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/outfit"
                     android:layout_marginTop="14dp" />
 
                 <TextView
@@ -443,7 +436,7 @@
                     android:textColor="@color/text_dark_primary"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:fontFamily="sans-serif-bold"
+                    android:fontFamily="@font/outfit"
                     android:layout_marginTop="2dp" />
             </LinearLayout>
         </LinearLayout>
@@ -471,7 +464,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:fontFamily="sans-serif-bold" />
+                    android:fontFamily="@font/outfit" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -491,7 +484,7 @@
                 android:textColor="@color/text_dark_primary"
                 android:textStyle="bold"
                 android:textSize="12sp"
-                android:fontFamily="sans-serif-bold"
+                android:fontFamily="@font/outfit"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
                 app:backgroundTint="@null" />
@@ -520,7 +513,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:fontFamily="sans-serif-bold" />
+                    android:fontFamily="@font/outfit" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -540,7 +533,7 @@
                 android:textColor="@color/yellow_primary"
                 android:textStyle="bold"
                 android:textSize="12sp"
-                android:fontFamily="sans-serif-bold"
+                android:fontFamily="@font/outfit"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 app:backgroundTint="@null" />
@@ -555,7 +548,7 @@
             android:text="↻  Sync Live Microgrid Metrics"
             android:textColor="@color/text_light_secondary"
             android:textSize="12sp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/outfit"
             app:backgroundTint="@null" />
 
     </LinearLayout>

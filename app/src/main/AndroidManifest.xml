@@ -9,7 +9,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@android:drawable/sym_def_app_icon"
+        android:icon="@drawable/ic_solar_logo"
+        android:roundIcon="@drawable/ic_solar_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.SolarMicrogrid"
@@ -26,35 +27,35 @@
             </intent-filter>
         </activity>
 
-        <!-- Member 4: Energy Slot Booking Screen (Node & Date Picker) -->
+        <!-- Energy Slot Booking Screen (Node & Date Picker) -->
         <activity
             android:name=".ui.BookingActivity"
             android:exported="false"
             android:label="Reserve Energy Slot"
             android:parentActivityName=".ui.MainActivity" />
 
-        <!-- Member 4: Energy Slot Modification Screen -->
+        <!-- Energy Slot Modification Screen -->
         <activity
             android:name=".ui.ModifyBookingActivity"
             android:exported="false"
             android:label="Modify Reservation"
             android:parentActivityName=".ui.BookingSummaryActivity" />
 
-        <!-- Member 4: Booking Summary Screen (Shown after each action) -->
+        <!-- Booking Summary Screen -->
         <activity
             android:name=".ui.BookingSummaryActivity"
             android:exported="false"
             android:label="Booking Summary"
             android:parentActivityName=".ui.MainActivity" />
 
-        <!-- Member 4: ZXing QR Code Display for Approved Bookings -->
+        <!-- QR Code Display for Approved Bookings -->
         <activity
             android:name=".ui.QrDisplayActivity"
             android:exported="false"
             android:label="Dispatch QR Code"
             android:parentActivityName=".ui.BookingListActivity" />
 
-        <!-- Current / Pending Bookings and History Screen with Search Filter -->
+        <!-- Reservations List Screen -->
         <activity
             android:name=".ui.BookingListActivity"
             android:exported="false"

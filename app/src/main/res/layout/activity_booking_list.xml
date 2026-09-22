@@ -17,26 +17,45 @@
         android:paddingBottom="16dp"
         android:background="@color/bg_dark_surface">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="☀️  My Reservations"
-            android:textColor="@color/yellow_primary"
-            android:textSize="12sp"
-            android:textAllCaps="true"
-            android:letterSpacing="0.08"
-            android:fontFamily="sans-serif-bold"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Booking History"
-            android:textColor="@color/text_white"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-bold"
-            android:layout_marginTop="4dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="← Back to Dashboard"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="13sp"
+                    android:textAllCaps="false"
+                    android:fontFamily="@font/outfit"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Booking History"
+                    android:textColor="@color/text_white"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/outfit"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_solar_logo"
+                android:contentDescription="Solar Logo" />
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -90,7 +109,7 @@
                 android:text="All"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-bold"
+                android:fontFamily="@font/outfit"
                 android:background="@drawable/bg_yellow_pill"
                 android:textColor="@color/text_dark_primary"
                 android:layout_marginEnd="8dp"
@@ -105,7 +124,7 @@
                 android:text="Pending"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/outfit"
                 android:background="@drawable/bg_pill_dark"
                 android:textColor="@color/text_light_secondary"
                 android:layout_marginEnd="8dp"
@@ -120,7 +139,7 @@
                 android:text="Approved"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/outfit"
                 android:background="@drawable/bg_pill_dark"
                 android:textColor="@color/text_light_secondary"
                 android:layout_marginEnd="8dp"
@@ -135,7 +154,7 @@
                 android:text="Cancelled"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/outfit"
                 android:background="@drawable/bg_pill_dark"
                 android:textColor="@color/text_light_secondary"
                 android:layout_marginEnd="8dp"
@@ -150,7 +169,7 @@
                 android:text="Rejected"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/outfit"
                 android:background="@drawable/bg_pill_dark"
                 android:textColor="@color/text_light_secondary"
                 android:paddingStart="16dp"
@@ -200,7 +219,7 @@
             android:textColor="@color/text_white"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif-bold" />
+            android:fontFamily="@font/outfit" />
 
         <TextView
             android:id="@+id/tvEmptySubtitle"
