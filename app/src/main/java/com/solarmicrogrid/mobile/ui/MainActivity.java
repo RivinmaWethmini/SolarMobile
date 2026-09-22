@@ -102,13 +102,13 @@ public class MainActivity extends AppCompatActivity {
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         String greeting;
         if (hour >= 4 && hour < 12) {
-            greeting = "Good Morning 🌤️";
+            greeting = "Good Morning";
         } else if (hour >= 12 && hour < 17) {
-            greeting = "Good Afternoon ☀️";
+            greeting = "Good Afternoon";
         } else if (hour >= 17 && hour < 21) {
-            greeting = "Good Evening 🌇";
+            greeting = "Good Evening";
         } else {
-            greeting = "Good Night 🌙";
+            greeting = "Good Night";
         }
         tvGreeting.setText(greeting);
 

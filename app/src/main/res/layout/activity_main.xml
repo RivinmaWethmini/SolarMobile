@@ -143,21 +143,6 @@
                     android:fontFamily="@font/outfit"
                     android:layout_marginTop="2dp" />
             </LinearLayout>
-
-            <!-- Bottom Floating Lightning Bolt Badge -->
-            <FrameLayout
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/bg_circle_yellow">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_energy_bolt" />
-            </FrameLayout>
         </RelativeLayout>
 
         <!-- Live Reservation Operational Metrics (2x2 Grid) -->
@@ -472,7 +457,7 @@
             android:layout_width="match_parent"
             android:layout_height="46dp"
             android:background="@drawable/bg_pill_dark"
-            android:text="↻  Sync Live Microgrid Metrics"
+            android:text="Sync Live Metrics"
             android:textColor="@color/text_light_secondary"
             android:textSize="12sp"
             android:fontFamily="@font/outfit"

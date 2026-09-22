@@ -78,7 +78,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         holder.tvCardStatus.setBackgroundColor(badgeBgColor);
 
         holder.tvCardNode.setText(res.getNodeId() != null ? res.getNodeId() : "Unknown Node");
-        holder.tvCardEnergy.setText("⚡ " + res.getReservedEnergyKwh() + " kW/h");
+        holder.tvCardEnergy.setText(res.getReservedEnergyKwh() + " kWh");
 
         // Format time: show just HH:MM if full ISO string
         String startTime = res.getStartTime() != null ? res.getStartTime() : "";
