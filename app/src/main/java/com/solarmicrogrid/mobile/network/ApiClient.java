@@ -24,7 +24,7 @@ import java.util.concurrent.Executors;
 public class ApiClient {
 
     // 10.0.2.2 points to host machine localhost from the Android Emulator
-    public static final String BASE_URL = "http://10.0.2.2:5298/api";
+    public static final String BASE_URL = "http://10.0.2.2:5083/api";
 
     private static final ExecutorService executor = Executors.newFixedThreadPool(4);
     private static final Handler mainHandler = new Handler(Looper.getMainLooper());

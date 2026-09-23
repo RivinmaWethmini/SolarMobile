@@ -25,7 +25,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvPendingCount, tvApprovedFutureCount;
-    private Button btnBookSlot, btnViewBookings, btnRefreshStats;
+    private Button btnBookSlot, btnViewBookings, btnRefreshStats, btnViewNodes;
     private DatabaseHelper dbHelper;
 
     @Override
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         btnBookSlot = findViewById(R.id.btnBookSlot);
         btnViewBookings = findViewById(R.id.btnViewBookings);
         btnRefreshStats = findViewById(R.id.btnRefreshStats);
+        btnViewNodes = findViewById(R.id.btnViewNodes);
 
         // Quick Action 1: Reserve Energy Slot (Member 4)
         btnBookSlot.setOnClickListener(v -> {
@@ -55,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Quick Action 3: Refresh live counts from API
         btnRefreshStats.setOnClickListener(v -> fetchLiveDashboardStats());
+
+        // Quick Action 4: View Active Solar Nodes (Member 3)
+        btnViewNodes.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, NodeListActivity.class);
+            startActivity(intent);
+        });
     }
 
     @Override

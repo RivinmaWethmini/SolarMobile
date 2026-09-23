@@ -11,4 +11,8 @@
     <color name="slate_card">#1E293B</color>
     <color name="slate_text_dim">#94A3B8</color>
     <color name="white">#FFFFFF</color>
+    <color name="slate_muted">#64748B</color>
+    <color name="card_light">#EDEDED</color>
+    <color name="text_on_light_card">#1A1A1A</color>
+    <color name="bg_black">#0D0D0D</color>
 </resources>

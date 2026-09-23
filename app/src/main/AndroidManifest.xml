@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Network permissions for RESTful Web API connectivity -->
+    <!-- Network permissions for REST API connectivity -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- Camera permission for QR scanning if operator mode is utilized -->
+
+    <!-- Camera permission for QR scanning -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -19,40 +20,56 @@
         <!-- Main Dashboard Activity -->
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/app_name">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
-        <!-- Member 4: Energy Slot Booking Screen (Node & Date Picker) -->
+        <!-- Member 3: Active Solar Nodes List -->
+        <activity
+            android:name=".ui.NodeListActivity"
+            android:exported="false"
+            android:label="Active Solar Nodes"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <!-- Member 4: Energy Slot Booking -->
         <activity
             android:name=".ui.BookingActivity"
             android:exported="false"
             android:label="Reserve Energy Slot"
             android:parentActivityName=".ui.MainActivity" />
 
-        <!-- Member 4: Booking Summary Screen (Shown after each action) -->
+        <!-- Member 4: Booking List and History -->
+        <activity
+            android:name=".ui.BookingListActivity"
+            android:exported="false"
+            android:label="My Energy Reservations"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <!-- Member 4: Booking Summary -->
         <activity
             android:name=".ui.BookingSummaryActivity"
             android:exported="false"
             android:label="Booking Summary"
             android:parentActivityName=".ui.MainActivity" />
 
-        <!-- Member 4: ZXing QR Code Display for Approved Bookings -->
+        <!-- Member 4: QR Code Display -->
         <activity
             android:name=".ui.QrDisplayActivity"
             android:exported="false"
             android:label="Dispatch QR Code"
             android:parentActivityName=".ui.BookingListActivity" />
 
-        <!-- Current / Pending Bookings and History Screen with Search Filter -->
         <activity
-            android:name=".ui.BookingListActivity"
+            android:name=".ui.NodeDetailsActivity"
             android:exported="false"
-            android:label="My Energy Reservations"
-            android:parentActivityName=".ui.MainActivity" />
+            android:label="Solar Node Details"
+            android:parentActivityName=".ui.NodeListActivity" />
 
     </application>
 
