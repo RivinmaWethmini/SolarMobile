@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvPendingCount, tvApprovedFutureCount, tvTotalCount, tvActiveNodesCount;
     private TextView tvNodesCountBadge;
     private LinearLayout layoutNodesContainer;
-    private Button btnBookSlot, btnViewBookings, btnRefreshStats;
+    private Button btnBookSlot, btnViewBookings, btnRefreshStats, btnOperatorScan, btnViewNodes;
     private DatabaseHelper dbHelper;
 
     @Override
@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         btnBookSlot = findViewById(R.id.btnBookSlot);
         btnViewBookings = findViewById(R.id.btnViewBookings);
         btnRefreshStats = findViewById(R.id.btnRefreshStats);
+        btnOperatorScan = findViewById(R.id.btnOperatorScan);
+        btnViewNodes = findViewById(R.id.btnViewNodes);
 
         updateGreetingAndUser();
 
@@ -77,7 +79,19 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Quick Action 3: Refresh live counts and microgrid nodes from API
+        // Quick Action 3: Operator QR Scanner
+        btnOperatorScan.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, OperatorScanActivity.class);
+            startActivity(intent);
+        });
+
+        // Quick Action 4: Explore Active Solar Nodes (Member 3)
+        btnViewNodes.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, NodeListActivity.class);
+            startActivity(intent);
+        });
+
+        // Quick Action 5: Refresh live counts and microgrid nodes from API
         btnRefreshStats.setOnClickListener(v -> {
             Toast.makeText(MainActivity.this, "Syncing live metrics...", Toast.LENGTH_SHORT).show();
             fetchLiveDashboardStats();
