@@ -40,5 +40,6 @@
     <color name="slate_dark">#18191E</color>
     <color name="slate_card">#18191E</color>
     <color name="slate_text_dim">#9496A1</color>
+    <color name="slate_muted">#636573</color>
     <color name="white">#FFFFFF</color>
 </resources>
