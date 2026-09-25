@@ -27,25 +27,42 @@
                 android:layout_alignParentStart="true"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/btnBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="← Back to Dashboard"
-                    android:textColor="@color/yellow_primary"
-                    android:textSize="13sp"
-                    android:textAllCaps="false"
-                    android:fontFamily="@font/outfit"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_arrow_back"
+                        android:contentDescription="Back"
+                        android:layout_marginEnd="6dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Back to Dashboard"
+                        android:textColor="@color/yellow_primary"
+                        android:textSize="13sp"
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/outfit"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Booking History"
+                    android:text="My Reservations"
                     android:textColor="@color/text_white"
                     android:textSize="28sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/outfit"
-                    android:layout_marginTop="4dp" />
+                    android:layout_marginTop="6dp" />
             </LinearLayout>
 
             <ImageView
@@ -58,11 +75,13 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/tvReservationCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Track all active, scheduled, and past reservations"
             android:textColor="@color/text_light_secondary"
             android:textSize="12sp"
+            android:fontFamily="@font/outfit"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp" />
 
@@ -77,10 +96,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:hint="🔍  Search by Node, ID or Status..."
+                android:hint="Search by node, ID or status…"
                 android:textColorHint="@color/text_light_muted"
                 android:textColor="@color/text_white"
                 android:textSize="13sp"
+                android:fontFamily="@font/outfit"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp" />
         </FrameLayout>

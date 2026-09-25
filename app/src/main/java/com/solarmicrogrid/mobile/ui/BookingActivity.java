@@ -44,6 +44,7 @@ public class BookingActivity extends AppCompatActivity {
     private Button btnSelectDate, btnSelectStartTime, btnSelectEndTime, btnSubmitBooking;
     private EditText etEnergyAmount;
     private ProgressBar progressBar;
+    private TextView tvDateRangeHint;
 
     private Calendar selectedCalendar;
     private int startHour = 9, startMinute = 0;
@@ -75,6 +76,12 @@ public class BookingActivity extends AppCompatActivity {
         etEnergyAmount = findViewById(R.id.etEnergyAmount);
         btnSubmitBooking = findViewById(R.id.btnSubmitBooking);
         progressBar = findViewById(R.id.progressBar);
+        tvDateRangeHint = findViewById(R.id.tvDateRangeHint);
+
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         setupNodeSpinner();
         setupPickers();
@@ -207,6 +214,15 @@ public class BookingActivity extends AppCompatActivity {
         // Set default date text
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         btnSelectDate.setText(sdf.format(selectedCalendar.getTime()));
+
+        // Populate dynamic date range hint (7-Day Limit)
+        if (tvDateRangeHint != null) {
+            Calendar minLimit = Calendar.getInstance();
+            Calendar maxLimit = Calendar.getInstance();
+            maxLimit.add(Calendar.DAY_OF_YEAR, 7);
+            SimpleDateFormat hintFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
+            tvDateRangeHint.setText("Available: " + hintFormat.format(minLimit.getTime()) + " – " + hintFormat.format(maxLimit.getTime()) + " (within 7 days)");
+        }
     }
 
     private void submitBookingRequest() {

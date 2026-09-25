@@ -39,40 +39,95 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="24dp" />
 
-        <!-- Crisp Card Container for QR Code with Yellow Border -->
-        <androidx.cardview.widget.CardView
+        <!-- Metadata Header Block -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="#FFFFFF"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="10dp"
-            android:layout_marginBottom="20dp">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
 
-            <LinearLayout
+            <!-- Approved Status Pill -->
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Approved"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/outfit"
+                android:background="@drawable/bg_status_pill"
+                android:backgroundTint="@color/emerald_approved"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:id="@+id/tvQrNodeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textColor="@color/text_white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/outfit"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/tvQrTimeWindow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textColor="@color/text_light_secondary"
+                android:textSize="13sp"
+                android:fontFamily="@font/outfit"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:layout_marginTop="3dp" />
+        </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/ivQrCode"
-                    android:layout_width="240dp"
-                    android:layout_height="240dp"
-                    android:contentDescription="Dispatch QR Pass" />
+        <!-- QR Card with Yellow Border Frame -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_qr_frame"
+            android:padding="6dp"
+            android:layout_marginBottom="24dp">
 
-                <TextView
-                    android:id="@+id/tvQrReservationRef"
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#RES-SAMPLE"
-                    android:textColor="#0F172A"
-                    android:fontFamily="monospace"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:id="@+id/ivQrCode"
+                        android:layout_width="240dp"
+                        android:layout_height="240dp"
+                        android:contentDescription="Dispatch QR Pass" />
+
+                    <TextView
+                        android:id="@+id/tvQrReservationRef"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textColor="#0F172A"
+                        android:fontFamily="monospace"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

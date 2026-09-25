@@ -28,16 +28,33 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/btnBack"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="← Back to Dashboard"
-                    android:textColor="@color/yellow_primary"
-                    android:textSize="13sp"
-                    android:textAllCaps="false"
-                    android:fontFamily="@font/outfit"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_arrow_back"
+                        android:contentDescription="Back"
+                        android:layout_marginEnd="6dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Back to Dashboard"
+                        android:textColor="@color/yellow_primary"
+                        android:textSize="13sp"
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/outfit"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="38dp"
@@ -127,7 +144,17 @@
                 android:paddingEnd="18dp"
                 android:textSize="14sp"
                 android:textAllCaps="false"
-                app:backgroundTint="@null"
+                app:backgroundTint="@null" />
+
+            <TextView
+                android:id="@+id/tvDateRangeHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/text_light_muted"
+                android:textSize="11sp"
+                android:fontFamily="@font/outfit"
+                android:layout_marginTop="6dp"
                 android:layout_marginBottom="20dp" />
 
             <!-- Section: Time Slot Pickers -->
@@ -206,7 +233,45 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/outfit"
-                android:layout_marginBottom="26dp" />
+                android:layout_marginBottom="20dp" />
+
+            <!-- Booking Rules Info Block -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_info_card"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Booking Rules"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/outfit"
+                    android:layout_marginBottom="6dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="• Reservations must be made at least 12 hours in advance."
+                    android:textColor="@color/text_light_muted"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit"
+                    android:lineSpacingExtra="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="• Bookings are limited to within 7 days from today."
+                    android:textColor="@color/text_light_muted"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
 
             <!-- Submit Button (Yellow Pill) -->
             <Button

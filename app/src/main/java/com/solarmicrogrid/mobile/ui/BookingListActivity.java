@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +39,8 @@ public class BookingListActivity extends AppCompatActivity {
     private ProgressBar pbLoading;
     private RecyclerView rvBookings;
     private LinearLayout layoutEmptyState;
+    private TextView tvEmptyTitle, tvEmptySubtitle;
+    private TextView tvReservationCount;
     private Button btnRetryLoad;
     private BookingAdapter adapter;
 
@@ -71,7 +74,15 @@ public class BookingListActivity extends AppCompatActivity {
         pbLoading = findViewById(R.id.pbLoading);
         rvBookings = findViewById(R.id.rvBookings);
         layoutEmptyState = findViewById(R.id.layoutEmptyState);
+        tvEmptyTitle = findViewById(R.id.tvEmptyTitle);
+        tvEmptySubtitle = findViewById(R.id.tvEmptySubtitle);
+        tvReservationCount = findViewById(R.id.tvReservationCount);
         btnRetryLoad = findViewById(R.id.btnRetryLoad);
+
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         rvBookings.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BookingAdapter(this, displayedList);
@@ -268,10 +279,32 @@ public class BookingListActivity extends AppCompatActivity {
 
         adapter.updateList(displayedList);
 
+        if (tvReservationCount != null) {
+            int count = displayedList.size();
+            String label = count + " " + (count == 1 ? "reservation" : "reservations");
+            if (!"All".equalsIgnoreCase(currentFilter)) {
+                label += " in " + currentFilter;
+            }
+            if (!query.isEmpty()) {
+                label += " matching \"" + query + "\"";
+            }
+            tvReservationCount.setText(label);
+        }
+
         if (layoutEmptyState != null) {
             if (displayedList.isEmpty()) {
                 rvBookings.setVisibility(View.GONE);
                 layoutEmptyState.setVisibility(View.VISIBLE);
+
+                if (allReservations.isEmpty()) {
+                    if (tvEmptyTitle != null) tvEmptyTitle.setText("No reservations yet");
+                    if (tvEmptySubtitle != null) tvEmptySubtitle.setText("Book your first energy slot to get started.");
+                    if (btnRetryLoad != null) btnRetryLoad.setVisibility(View.GONE);
+                } else {
+                    if (tvEmptyTitle != null) tvEmptyTitle.setText("No matching reservations");
+                    if (tvEmptySubtitle != null) tvEmptySubtitle.setText("Try selecting a different filter or clearing your search.");
+                    if (btnRetryLoad != null) btnRetryLoad.setVisibility(View.GONE);
+                }
             } else {
                 rvBookings.setVisibility(View.VISIBLE);
                 layoutEmptyState.setVisibility(View.GONE);

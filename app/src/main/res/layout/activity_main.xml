@@ -90,60 +90,53 @@
             </FrameLayout>
         </RelativeLayout>
 
-        <!-- Circular Metrics Card (Driven 100% by Live Backend API) -->
-        <RelativeLayout
+        <!-- Editorial Hero Image Header -->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="220dp"
             android:layout_marginBottom="24dp">
 
-            <!-- Progress Ring Background -->
-            <View
-                android:layout_width="210dp"
-                android:layout_height="210dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/bg_circular_gauge" />
+            <ImageView
+                android:id="@+id/ivHero"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/hero_solar_microgrid"
+                android:contentDescription="Solar microgrid installation" />
 
-            <!-- Center Metrics -->
+            <!-- Bottom-up dark scrim -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_hero_scrim" />
+
+            <!-- Text overlay anchored to bottom -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <TextView
-                    android:id="@+id/tvGaugeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total Bookings"
-                    android:textColor="@color/yellow_primary"
-                    android:textSize="12sp"
-                    android:letterSpacing="0.04"
+                    android:text="Energy Reservations"
+                    android:textColor="@color/text_white"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
                     android:fontFamily="@font/outfit" />
 
                 <TextView
-                    android:id="@+id/tvGaugeValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="—"
-                    android:textColor="@color/text_white"
-                    android:textSize="44sp"
-                    android:textStyle="bold"
+                    android:text="Manage upcoming energy slots and dispatch approvals."
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="13sp"
                     android:fontFamily="@font/outfit"
-                    android:layout_marginTop="2dp" />
-
-                <TextView
-                    android:id="@+id/tvGaugeSubtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Live Microgrid Sync"
-                    android:textColor="@color/text_light_muted"
-                    android:textSize="11sp"
-                    android:letterSpacing="0.04"
-                    android:fontFamily="@font/outfit"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
-        </RelativeLayout>
+        </FrameLayout>
 
         <!-- Live Reservation Operational Metrics (2x2 Grid) -->
         <!-- Row 1: Pending & Approved -->
@@ -315,6 +308,139 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
+
+        <!-- Next Approved Slot Card (Dynamic from API, hidden if none) -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardNextSlot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/bg_dark_card"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Left Emerald Status Indicator -->
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/emerald_approved" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Upcoming Dispatch Slot"
+                            android:textColor="@color/emerald_approved"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/outfit" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Approved"
+                            android:textColor="#FFFFFF"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/outfit"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:background="@drawable/bg_status_pill" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvNextSlotNode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Colombo North Hub"
+                        android:textColor="@color/text_white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/outfit" />
+
+                    <TextView
+                        android:id="@+id/tvNextSlotDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mon, 25 Sep 2026"
+                        android:textColor="@color/text_light_secondary"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/outfit"
+                        android:layout_marginTop="2dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvNextSlotTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="09:00 – 11:00"
+                                android:textColor="@color/text_light_primary"
+                                android:textSize="13sp"
+                                android:fontFamily="@font/outfit" />
+
+                            <TextView
+                                android:id="@+id/tvNextSlotEnergy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="25.0 kWh"
+                                android:textColor="@color/yellow_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/outfit"
+                                android:layout_marginTop="2dp" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnNextSlotQr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="38dp"
+                            android:background="@drawable/bg_yellow_pill"
+                            android:text="View QR Pass →"
+                            android:textColor="@color/text_dark_primary"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/outfit"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            app:backgroundTint="@null" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- Microgrid Trading Nodes Section (100% Dynamic from API) -->
         <RelativeLayout

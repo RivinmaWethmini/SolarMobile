@@ -12,6 +12,35 @@
         android:orientation="vertical"
         android:padding="22dp">
 
+        <!-- Back Navigation Row -->
+        <LinearLayout
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Back"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back to Dashboard"
+                android:textColor="@color/yellow_primary"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:fontFamily="@font/outfit"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,7 +82,7 @@
                 android:contentDescription="Solar Logo" />
         </RelativeLayout>
 
-        <!-- Summary Details Card (Obsidian Dark with Yellow Accent) -->
+        <!-- Summary Details Card (Obsidian Dark with Status at Top) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,6 +90,30 @@
             android:orientation="vertical"
             android:padding="22dp"
             android:layout_marginBottom="24dp">
+
+            <!-- Centred Status Badge at top of card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/tvSummaryStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pending"
+                    android:textColor="@color/text_dark_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/outfit"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="22dp"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    android:background="@drawable/bg_status_pill"
+                    android:textAllCaps="false" />
+            </LinearLayout>
 
             <!-- Reservation Reference ID -->
             <TextView
@@ -77,11 +130,34 @@
                 android:id="@+id/tvSummaryId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#RES-1002"
+                android:text="—"
                 android:textColor="@color/yellow_primary"
                 android:textSize="20sp"
                 android:fontFamily="monospace"
                 android:textStyle="bold"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="14dp" />
+
+            <!-- Assigned Node -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ASSIGNED MICROGRID NODE"
+                android:textColor="@color/text_light_muted"
+                android:textSize="11sp"
+                android:letterSpacing="0.08"
+                android:textAllCaps="false"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvSummaryNode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textColor="@color/text_white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/outfit"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="14dp" />
 
@@ -100,18 +176,18 @@
                 android:id="@+id/tvSummaryNic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="200012345678"
+                android:text="—"
                 android:textColor="@color/text_white"
                 android:textSize="14sp"
                 android:fontFamily="@font/outfit"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="14dp" />
 
-            <!-- Node ID -->
+            <!-- Scheduled Time Window -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ASSIGNED MICROGRID NODE"
+                android:text="SCHEDULED TIME WINDOW"
                 android:textColor="@color/text_light_muted"
                 android:textSize="11sp"
                 android:letterSpacing="0.08"
@@ -119,10 +195,10 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvSummaryNode"
+                android:id="@+id/tvSummaryTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NODE-COLOMBO-CENTRAL"
+                android:text="—"
                 android:textColor="@color/text_white"
                 android:textSize="14sp"
                 android:fontFamily="@font/outfit"
@@ -144,54 +220,9 @@
                 android:id="@+id/tvSummaryCapacity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="35.0 kW/h"
+                android:text="—"
                 android:textColor="@color/yellow_primary"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/outfit"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="14dp" />
-
-            <!-- Scheduled Time Window -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SCHEDULED TIME WINDOW"
-                android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
-                android:textAllCaps="false"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvSummaryTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2026-09-20 09:00 - 11:00"
-                android:textColor="@color/text_white"
-                android:textSize="13sp"
-                android:fontFamily="@font/outfit"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="14dp" />
-
-            <!-- Status Badge -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DISPATCH STATUS"
-                android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
-                android:textAllCaps="false"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvSummaryStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pending"
-                android:textColor="@color/yellow_primary"
-                android:textSize="14sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/outfit"
                 android:layout_marginTop="2dp" />
