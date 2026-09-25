@@ -63,7 +63,12 @@ public class BookingSummaryActivity extends AppCompatActivity {
 
         populateDetails();
 
-        btnBackHome.setOnClickListener(v -> finish());
+        btnBackHome.setOnClickListener(v -> {
+            Intent homeIntent = new Intent(BookingSummaryActivity.this, MainActivity.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(homeIntent);
+            finish();
+        });
 
         // Modify Reservation (Subject to 12-Hour Notice Rule)
         btnModifyBooking.setOnClickListener(v -> {

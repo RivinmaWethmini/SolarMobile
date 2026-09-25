@@ -54,11 +54,18 @@ public class BookingActivity extends AppCompatActivity {
 
     // Reads authenticated user NIC from SharedPreferences with robust fallback
     private String PROSUMER_NIC;
+    private String preselectedNodeId;
+    private String preselectedNodeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
+
+        if (getIntent() != null) {
+            preselectedNodeId = getIntent().getStringExtra("nodeId");
+            preselectedNodeName = getIntent().getStringExtra("nodeName");
+        }
 
         dbHelper = new DatabaseHelper(this);
         selectedCalendar = Calendar.getInstance();
@@ -167,6 +174,34 @@ public class BookingActivity extends AppCompatActivity {
         };
         adapter.setDropDownViewResource(R.layout.item_spinner_node_dropdown);
         spNodeSelector.setAdapter(adapter);
+
+        // Preselect node if launched from NodeDetailsActivity
+        if (preselectedNodeId != null && !preselectedNodeId.trim().isEmpty()) {
+            int selectedIdx = -1;
+            for (int i = 0; i < nodesList.size(); i++) {
+                MicrogridNode n = nodesList.get(i);
+                if (preselectedNodeId.equalsIgnoreCase(n.getId()) ||
+                    preselectedNodeId.equalsIgnoreCase(n.getNodeCode())) {
+                    selectedIdx = i;
+                    break;
+                }
+            }
+            if (selectedIdx >= 0) {
+                spNodeSelector.setSelection(selectedIdx);
+            } else {
+                // If not found in API list, append it so user's selection is respected
+                MicrogridNode newNode = new MicrogridNode(
+                    preselectedNodeId,
+                    preselectedNodeId,
+                    preselectedNodeName != null ? preselectedNodeName : preselectedNodeId,
+                    "Selected Microgrid Node",
+                    500
+                );
+                nodesList.add(0, newNode);
+                adapter.notifyDataSetChanged();
+                spNodeSelector.setSelection(0);
+            }
+        }
     }
 
     private void setupPickers() {

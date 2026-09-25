@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvPendingCount, tvApprovedFutureCount, tvTotalCount, tvActiveNodesCount;
     private TextView tvNodesCountBadge;
     private LinearLayout layoutNodesContainer;
+    private View layoutOperatorScan;
     private Button btnBookSlot, btnViewBookings, btnRefreshStats, btnOperatorScan, btnViewNodes;
     private DatabaseHelper dbHelper;
 
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         btnViewBookings = findViewById(R.id.btnViewBookings);
         btnRefreshStats = findViewById(R.id.btnRefreshStats);
         btnOperatorScan = findViewById(R.id.btnOperatorScan);
+        layoutOperatorScan = findViewById(R.id.layoutOperatorScan);
         btnViewNodes = findViewById(R.id.btnViewNodes);
 
         // Next Approved Slot
@@ -148,6 +150,13 @@ public class MainActivity extends AppCompatActivity {
             tvUserNic.setText(nic);
         } else {
             tvUserNic.setText("Prosumer Portal");
+        }
+
+        // Role-based visibility: Show Operator QR Scanner strictly for Operator / Admin
+        String role = prefs.getString("role", "");
+        boolean isOperator = "GridOperator".equalsIgnoreCase(role) || "Admin".equalsIgnoreCase(role);
+        if (layoutOperatorScan != null) {
+            layoutOperatorScan.setVisibility(isOperator ? View.VISIBLE : View.GONE);
         }
     }
 
