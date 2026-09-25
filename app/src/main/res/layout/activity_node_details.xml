@@ -27,11 +27,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:text="SOLAR MICROGRID"
+            android:text="Solar Microgrid"
             android:textColor="#FBBF24"
-            android:textSize="11sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.12" />
+            android:textSize="13sp"
+            android:fontFamily="@font/outfit"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvDetailsNodeName"
@@ -41,6 +41,7 @@
             android:text="Microgrid Node"
             android:textColor="#FFFFFF"
             android:textSize="28sp"
+            android:fontFamily="@font/outfit"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -57,16 +58,19 @@
                 android:layout_weight="1"
                 android:text="Node ID"
                 android:textColor="#94A3B8"
+                android:fontFamily="@font/outfit"
                 android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/tvDetailsStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/emerald_approved"
-                android:paddingHorizontal="12dp"
+                android:background="@drawable/bg_status_pill"
+                android:backgroundTint="@color/emerald_approved"
+                android:paddingHorizontal="14dp"
                 android:paddingVertical="5dp"
-                android:text="ACTIVE"
+                android:text="Active"
+                android:fontFamily="@font/outfit"
                 android:textColor="#052E16"
                 android:textSize="11sp"
                 android:textStyle="bold" />
@@ -92,11 +96,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="NODE INFORMATION"
+                    android:text="Node Details"
                     android:textColor="#94A3B8"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.1" />
+                    android:textSize="13sp"
+                    android:fontFamily="@font/outfit"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"

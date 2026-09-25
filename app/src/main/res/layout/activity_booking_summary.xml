@@ -119,10 +119,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RESERVATION REFERENCE"
+                android:text="Reservation reference"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
                 android:textAllCaps="false"
                 android:textStyle="bold" />
 
@@ -142,10 +142,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ASSIGNED MICROGRID NODE"
+                android:text="Assigned solar node"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
                 android:textAllCaps="false"
                 android:textStyle="bold" />
 
@@ -165,10 +165,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PROSUMER IDENTIFIER"
+                android:text="Prosumer identifier"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
                 android:textAllCaps="false"
                 android:textStyle="bold" />
 
@@ -187,10 +187,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SCHEDULED TIME WINDOW"
+                android:text="Scheduled time window"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
                 android:textAllCaps="false"
                 android:textStyle="bold" />
 
@@ -209,10 +209,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RESERVED CAPACITY"
+                android:text="Reserved capacity"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
                 android:textAllCaps="false"
                 android:textStyle="bold" />
 

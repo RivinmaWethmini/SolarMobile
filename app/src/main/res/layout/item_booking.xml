@@ -61,8 +61,7 @@
                     android:paddingTop="3dp"
                     android:paddingBottom="3dp"
                     android:background="@drawable/bg_yellow_pill"
-                    android:textAllCaps="false"
-                    android:letterSpacing="0.05" />
+                    android:textAllCaps="false" />
             </LinearLayout>
 
             <!-- Node Name -->

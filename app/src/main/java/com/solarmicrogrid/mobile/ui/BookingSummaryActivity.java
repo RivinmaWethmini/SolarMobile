@@ -127,26 +127,33 @@ public class BookingSummaryActivity extends AppCompatActivity {
         boolean isCancelled = "Cancelled".equalsIgnoreCase(status);
         boolean isRejected = "Rejected".equalsIgnoreCase(status);
 
+        android.graphics.drawable.GradientDrawable statusBg = new android.graphics.drawable.GradientDrawable();
+        statusBg.setCornerRadius(99f * getResources().getDisplayMetrics().density);
+
         if (isPending) {
-            tvSummaryStatus.setBackgroundColor(0xFFFFD000);
+            statusBg.setColor(0xFFFFD000);
+            tvSummaryStatus.setBackground(statusBg);
             tvSummaryStatus.setTextColor(0xFF0A0A0C);
             btnModifyBooking.setVisibility(View.VISIBLE);
             btnCancelBooking.setVisibility(View.VISIBLE);
             btnViewQrCode.setVisibility(View.GONE);
         } else if (isApproved) {
-            tvSummaryStatus.setBackgroundColor(0xFF10B981);
+            statusBg.setColor(0xFF10B981);
+            tvSummaryStatus.setBackground(statusBg);
             tvSummaryStatus.setTextColor(0xFFFFFFFF);
             btnModifyBooking.setVisibility(View.VISIBLE);
             btnCancelBooking.setVisibility(View.VISIBLE);
             btnViewQrCode.setVisibility(View.VISIBLE);
         } else if (isCancelled) {
-            tvSummaryStatus.setBackgroundColor(0xFF374151);
+            statusBg.setColor(0xFF374151);
+            tvSummaryStatus.setBackground(statusBg);
             tvSummaryStatus.setTextColor(0xFF9CA3AF);
             btnModifyBooking.setVisibility(View.GONE);
             btnCancelBooking.setVisibility(View.GONE);
             btnViewQrCode.setVisibility(View.GONE);
         } else if (isRejected) {
-            tvSummaryStatus.setBackgroundColor(0xFF7F1D1D);
+            statusBg.setColor(0xFF7F1D1D);
+            tvSummaryStatus.setBackground(statusBg);
             tvSummaryStatus.setTextColor(0xFFFCA5A5);
             btnModifyBooking.setVisibility(View.GONE);
             btnCancelBooking.setVisibility(View.GONE);
