@@ -64,30 +64,55 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Notification Bell Icon Button with Indicator -->
-            <FrameLayout
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+            <!-- Header Action Icons (Quick QR Scanner & Notification Bell) -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/bg_circle_dark">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_bell"
-                    app:tint="@color/text_white" />
-
-                <!-- Notification Dot -->
-                <View
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="top|end"
-                    android:layout_marginTop="10dp"
+                <!-- Quick Operator QR Scanner Button -->
+                <FrameLayout
+                    android:id="@+id/btnQuickScanHeader"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/bg_circle_yellow" />
-            </FrameLayout>
+                    android:background="@drawable/bg_circle_dark"
+                    android:contentDescription="Open Operator QR Scanner">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_camera"
+                        app:tint="@color/yellow_primary" />
+                </FrameLayout>
+
+                <!-- Notification Bell Icon Button with Indicator -->
+                <FrameLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_circle_dark">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_bell"
+                        app:tint="@color/text_white" />
+
+                    <!-- Notification Dot -->
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_circle_yellow" />
+                </FrameLayout>
+            </LinearLayout>
         </RelativeLayout>
 
         <!-- Editorial Hero Image Header -->

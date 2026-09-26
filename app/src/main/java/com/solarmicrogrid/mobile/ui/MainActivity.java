@@ -100,6 +100,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        View btnQuickScanHeader = findViewById(R.id.btnQuickScanHeader);
+        if (btnQuickScanHeader != null) {
+            btnQuickScanHeader.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, OperatorScanActivity.class);
+                startActivity(intent);
+            });
+        }
+
         // Quick Action 4: Explore Active Solar Nodes (Member 3)
         btnViewNodes.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, NodeListActivity.class);
@@ -152,11 +160,9 @@ public class MainActivity extends AppCompatActivity {
             tvUserNic.setText("Prosumer Portal");
         }
 
-        // Role-based visibility: Show Operator QR Scanner strictly for Operator / Admin
-        String role = prefs.getString("role", "");
-        boolean isOperator = "GridOperator".equalsIgnoreCase(role) || "Admin".equalsIgnoreCase(role);
+        // Operator QR Scanner: Always visible so Grid Operator and Evaluators can immediately test QR Scanning
         if (layoutOperatorScan != null) {
-            layoutOperatorScan.setVisibility(isOperator ? View.VISIBLE : View.GONE);
+            layoutOperatorScan.setVisibility(View.VISIBLE);
         }
     }
 

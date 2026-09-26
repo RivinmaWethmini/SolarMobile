@@ -371,7 +371,7 @@ public class BookingActivity extends AppCompatActivity {
             public void onError(String errorMessage) {
                 progressBar.setVisibility(View.GONE);
                 btnSubmitBooking.setEnabled(true);
-                Toast.makeText(BookingActivity.this, "Server Rule Rejection: " + errorMessage, Toast.LENGTH_LONG).show();
+                Toast.makeText(BookingActivity.this, errorMessage, Toast.LENGTH_LONG).show();
             }
         });
     }
