@@ -133,7 +133,7 @@ public class BookingSummaryActivity extends AppCompatActivity {
         boolean isRejected = "Rejected".equalsIgnoreCase(status);
 
         android.graphics.drawable.GradientDrawable statusBg = new android.graphics.drawable.GradientDrawable();
-        statusBg.setCornerRadius(99f * getResources().getDisplayMetrics().density);
+        statusBg.setCornerRadius(8f * getResources().getDisplayMetrics().density);
 
         if (isPending) {
             statusBg.setColor(0xFFFFD000);

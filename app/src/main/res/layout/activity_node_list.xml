@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0F172A"
+    android:background="@color/bg_black"
     android:orientation="vertical">
 
     <LinearLayout
@@ -11,19 +12,20 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="14dp">
+        android:paddingStart="20dp"
+        android:paddingTop="28dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="18dp">
 
         <TextView
             android:id="@+id/btnBackNodes"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Go back"
             android:gravity="center"
             android:text="‹"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_white"
             android:textSize="38sp"
             android:textStyle="bold" />
 
@@ -38,8 +40,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Active Solar Nodes"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp"
+                android:fontFamily="@font/outfit"
+                android:textColor="@color/text_white"
+                android:textSize="26sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -47,7 +50,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:text="Microgrid hubs available for energy trading"
-                android:textColor="#94A3B8"
+                android:fontFamily="@font/outfit"
+                android:textColor="@color/text_light_secondary"
                 android:textSize="13sp" />
 
         </LinearLayout>
@@ -57,7 +61,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#1E293B" />
+        android:background="@color/divider_dark" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -69,7 +73,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingTop="8dp"
+            android:paddingStart="20dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="20dp"
             android:paddingBottom="16dp" />
 
         <ProgressBar
@@ -77,7 +83,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:indeterminateTint="#10B981"
+            android:indeterminateTint="@color/yellow_primary"
             android:visibility="gone" />
 
         <LinearLayout
@@ -95,7 +101,7 @@
                 android:layout_height="64dp"
                 android:gravity="center"
                 android:text="☀"
-                android:textColor="#FBBF24"
+                android:textColor="@color/yellow_primary"
                 android:textSize="38sp" />
 
             <TextView
@@ -105,7 +111,8 @@
                 android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:text="No active nodes found"
-                android:textColor="#CBD5E1"
+                android:fontFamily="@font/outfit"
+                android:textColor="@color/text_white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -116,7 +123,8 @@
                 android:layout_marginTop="6dp"
                 android:gravity="center"
                 android:text="Active solar nodes will appear here."
-                android:textColor="#64748B"
+                android:fontFamily="@font/outfit"
+                android:textColor="@color/text_light_secondary"
                 android:textSize="13sp" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -124,14 +132,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_marginTop="18dp"
-                android:backgroundTint="#10B981"
+                android:background="@drawable/bg_yellow_pill"
                 android:minHeight="0dp"
                 android:paddingHorizontal="24dp"
                 android:text="Refresh"
                 android:textAllCaps="false"
-                android:textColor="#052E16"
+                android:fontFamily="@font/outfit"
+                android:textColor="@color/text_dark_primary"
                 android:textSize="13sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:backgroundTint="@null" />
 
         </LinearLayout>
 

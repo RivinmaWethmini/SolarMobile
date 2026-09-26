@@ -159,7 +159,9 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
         }
 
         holder.viewStatusBar.setBackgroundColor(accentColor);
-        holder.tvNodeStatus.setBackgroundColor(statusColor);
+        if (holder.tvNodeStatus.getBackground() != null) {
+            holder.tvNodeStatus.getBackground().mutate().setTint(statusColor);
+        }
 
         holder.btnViewDetails.setOnClickListener(
                 view -> openNodeDetails(node)

@@ -44,7 +44,7 @@ public class NodeListActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(
                 ContextCompat.getColor(
                         this,
-                        R.color.slate_card
+                        R.color.bg_black
                 )
         );
 

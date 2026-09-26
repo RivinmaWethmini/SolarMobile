@@ -17,10 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#CC0A0A0C"
+        android:background="#E60B0B0E"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:paddingTop="40dp"
+        android:paddingTop="36dp"
         android:paddingBottom="16dp"
         android:gravity="center_vertical">
 
@@ -55,9 +55,13 @@
             android:layout_height="36dp"
             android:text="Close"
             android:textColor="@color/yellow_primary"
-            android:background="@null"
+            android:background="@drawable/bg_pill_dark"
             android:fontFamily="@font/outfit"
-            android:textStyle="bold" />
+            android:textSize="12sp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:textStyle="bold"
+            app:backgroundTint="@null" />
     </LinearLayout>
 
     <!-- Center guide text when active -->
@@ -67,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginBottom="120dp"
-        android:background="#88000000"
+        android:background="@drawable/bg_pill_dark"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:paddingTop="8dp"
@@ -84,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="vertical"
-        android:background="#F218191E"
+        android:background="@drawable/bg_dark_card"
         android:padding="24dp"
         android:visibility="gone">
 
@@ -123,7 +127,7 @@
         <Button
             android:id="@+id/btnScanAgain"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="48dp"
             android:layout_marginTop="18dp"
             android:background="@drawable/bg_yellow_pill"
             android:text="Scan Next QR"

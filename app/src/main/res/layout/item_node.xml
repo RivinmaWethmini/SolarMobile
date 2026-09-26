@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="12dp"
-    android:layout_marginVertical="6dp"
+    android:background="@android:color/transparent"
     android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/slate_card"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="3dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +14,7 @@
 
         <View
             android:id="@+id/viewNodeStatusBar"
-            android:layout_width="5dp"
+            android:layout_width="3dp"
             android:layout_height="match_parent"
             android:background="@color/emerald_approved" />
 
@@ -27,7 +23,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="14dp">
+            android:paddingStart="14dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="2dp"
+            android:paddingBottom="12dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,10 +40,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:maxLines="1"
                     android:ellipsize="end"
+                    android:fontFamily="@font/outfit"
+                    android:maxLines="1"
                     android:text="Node Name"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -53,33 +53,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_status_pill"
-                    android:backgroundTint="@color/emerald_approved"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="4dp"
-                    android:text="Active"
                     android:fontFamily="@font/outfit"
-                    android:textColor="#052E16"
-                    android:textSize="10sp"
+                    android:paddingStart="9dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="9dp"
+                    android:paddingBottom="4dp"
+                    android:text="Active"
+                    android:textColor="@color/text_dark_primary"
+                    android:textSize="11sp"
                     android:textStyle="bold" />
-
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tvNodeId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="3dp"
+                android:fontFamily="monospace"
                 android:text="#NODE-ID"
-                android:textColor="#94A3B8"
+                android:textColor="@color/text_light_muted"
                 android:textSize="11sp" />
 
             <TextView
                 android:id="@+id/tvNodeLocation"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="📍 0.0000, 0.0000"
-                android:textColor="#CBD5E1"
+                android:layout_marginTop="9dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/outfit"
+                android:maxLines="1"
+                android:text="ðŸ“ 0.0000, 0.0000"
+                android:textColor="@color/text_light_primary"
                 android:textSize="13sp" />
 
             <LinearLayout
@@ -93,8 +97,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="⚡ 0 kWh"
-                    android:textColor="#FBBF24"
+                    android:fontFamily="@font/outfit"
+                    android:text="âš¡ 0 kWh"
+                    android:textColor="@color/yellow_primary"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -103,44 +108,55 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="🔋 0 slots"
-                    android:textColor="#CBD5E1"
+                    android:fontFamily="@font/outfit"
+                    android:gravity="end"
+                    android:text="ðŸ”‹ 0 slots"
+                    android:textColor="@color/text_light_primary"
                     android:textSize="13sp" />
-
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvNodeSchedule"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:text="🕒 Schedule not specified"
-                android:textColor="#94A3B8"
-                android:textSize="12sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="12dp"
-                android:background="#334155" />
+                <TextView
+                    android:id="@+id/tvNodeSchedule"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/outfit"
+                    android:maxLines="1"
+                    android:text="ðŸ•’ Schedule not specified"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="12sp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnViewDetails"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginTop="12dp"
-                android:backgroundTint="@color/emerald_approved"
-                android:gravity="center"
-                android:minHeight="0dp"
-                android:paddingHorizontal="16dp"
-                android:text="View Details"
-                android:textAllCaps="false"
-                android:textColor="#052E16"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnViewDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_text_action"
+                    android:fontFamily="@font/outfit"
+                    android:minWidth="0dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="Details â†’"
+                    android:textAllCaps="false"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="17dp"
+        android:background="@color/divider_dark" />
+</LinearLayout>

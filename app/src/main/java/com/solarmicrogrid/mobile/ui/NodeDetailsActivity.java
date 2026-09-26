@@ -29,7 +29,7 @@ public class NodeDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_node_details);
 
         getWindow().setStatusBarColor(
-                ContextCompat.getColor(this, R.color.slate_card)
+                ContextCompat.getColor(this, R.color.bg_black)
         );
 
         readIntentData();
@@ -126,22 +126,20 @@ public class NodeDetailsActivity extends AppCompatActivity {
         boolean isActive = "Active".equalsIgnoreCase(status);
 
         if (isActive) {
-            tvDetailsStatus.setBackgroundColor(
-                    ContextCompat.getColor(
-                            this,
-                            R.color.emerald_approved
-                    )
-            );
+            if (tvDetailsStatus.getBackground() != null) {
+                tvDetailsStatus.getBackground().mutate().setTint(
+                        ContextCompat.getColor(this, R.color.emerald_approved)
+                );
+            }
 
             btnBookNode.setEnabled(true);
             btnBookNode.setText("Book Energy Slot");
         } else {
-            tvDetailsStatus.setBackgroundColor(
-                    ContextCompat.getColor(
-                            this,
-                            R.color.slate_muted
-                    )
-            );
+            if (tvDetailsStatus.getBackground() != null) {
+                tvDetailsStatus.getBackground().mutate().setTint(
+                        ContextCompat.getColor(this, R.color.slate_muted)
+                );
+            }
 
             btnBookNode.setEnabled(false);
             btnBookNode.setText("Node Currently Inactive");

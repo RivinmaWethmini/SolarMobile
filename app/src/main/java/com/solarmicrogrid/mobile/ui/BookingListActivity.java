@@ -123,8 +123,8 @@ public class BookingListActivity extends AppCompatActivity {
 
     private void updateFilterButtonStyle(Button btn, boolean isSelected) {
         if (btn == null) return;
-        btn.setBackgroundColor(isSelected ? getResources().getColor(R.color.accent_solar) : getResources().getColor(R.color.slate_card));
-        btn.setTextColor(isSelected ? 0xFF0F172A : 0xFFFFFFFF);
+        btn.setBackgroundResource(isSelected ? R.drawable.bg_yellow_pill : R.drawable.bg_pill_dark);
+        btn.setTextColor(isSelected ? 0xFF0A0A0C : 0xFFA2A4AD);
     }
 
     private void setupSearch() {

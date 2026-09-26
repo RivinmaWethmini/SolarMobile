@@ -113,7 +113,9 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             holder.viewStatusBar.setBackgroundColor(accentColor);
         }
         // Set status badge pill background and text color
-        holder.tvCardStatus.setBackgroundColor(badgeBgColor);
+        if (holder.tvCardStatus.getBackground() != null) {
+            holder.tvCardStatus.getBackground().mutate().setTint(badgeBgColor);
+        }
         holder.tvCardStatus.setTextColor(badgeTextColor);
 
         holder.tvCardNode.setText(res.getNodeId() != null ? res.getNodeId() : "Microgrid Node");
