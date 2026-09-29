@@ -35,11 +35,12 @@ import java.util.Locale;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private TextView tvGreeting, tvUserNic;
+    private TextView tvGreeting, tvUserNic, tvUserRoleBadge;
     private TextView tvPendingCount, tvApprovedFutureCount, tvTotalCount, tvActiveNodesCount;
     private TextView tvNodesCountBadge;
     private LinearLayout layoutNodesContainer;
     private View layoutOperatorScan;
+    private View btnHeaderLogout;
     private Button btnBookSlot, btnViewBookings, btnRefreshStats, btnOperatorScan, btnViewNodes;
     private DatabaseHelper dbHelper;
 
@@ -51,12 +52,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ApiClient.init(this);
+
+        // Security check: Redirect to Onboarding/Login if not authenticated
+        if (!SessionManager.getInstance(this).isLoggedIn()) {
+            startActivity(new Intent(this, OnboardingActivity.class));
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_main);
 
         dbHelper = new DatabaseHelper(this);
 
         tvGreeting = findViewById(R.id.tvGreeting);
         tvUserNic = findViewById(R.id.tvUserNic);
+        tvUserRoleBadge = findViewById(R.id.tvUserRoleBadge);
+        btnHeaderLogout = findViewById(R.id.btnHeaderLogout);
 
         tvPendingCount = findViewById(R.id.tvPendingCount);
         tvApprovedFutureCount = findViewById(R.id.tvApprovedFutureCount);
@@ -81,6 +93,26 @@ public class MainActivity extends AppCompatActivity {
         btnNextSlotQr = findViewById(R.id.btnNextSlotQr);
 
         updateGreetingAndUser();
+
+        // Sign Out / Logout
+        if (btnHeaderLogout != null) {
+            btnHeaderLogout.setOnClickListener(v -> {
+                SessionManager session = SessionManager.getInstance(MainActivity.this);
+                String refreshToken = session.getRefreshToken();
+                ApiClient.logout(refreshToken, new ApiClient.ApiCallback() {
+                    @Override
+                    public void onSuccess(String response) {}
+                    @Override
+                    public void onError(String errorMessage) {}
+                });
+                session.clearSession();
+                Toast.makeText(MainActivity.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            });
+        }
 
         // Quick Action 1: Reserve Energy Slot
         btnBookSlot.setOnClickListener(v -> {
@@ -126,6 +158,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // Check session again on resume
+        if (!SessionManager.getInstance(this).isLoggedIn()) {
+            startActivity(new Intent(this, OnboardingActivity.class));
+            finish();
+            return;
+        }
         updateGreetingAndUser();
         fetchLiveDashboardStats();
         fetchLiveMicrogridNodes();
@@ -133,31 +171,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Dynamically computes greeting based on current device clock time.
-     * Prevents static/hardcoded "Good Morning" greetings.
+     * Dynamically computes greeting based on current device clock time and logged in user.
      */
     private void updateGreetingAndUser() {
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);
-        String greeting;
+        String timeGreeting;
         if (hour >= 4 && hour < 12) {
-            greeting = "Good Morning";
+            timeGreeting = "Good Morning";
         } else if (hour >= 12 && hour < 17) {
-            greeting = "Good Afternoon";
+            timeGreeting = "Good Afternoon";
         } else if (hour >= 17 && hour < 21) {
-            greeting = "Good Evening";
+            timeGreeting = "Good Evening";
         } else {
-            greeting = "Good Night";
+            timeGreeting = "Good Night";
         }
-        tvGreeting.setText(greeting);
 
-        // Read active session prosumer if present
-        android.content.SharedPreferences prefs = getSharedPreferences("solar_session", MODE_PRIVATE);
-        String nic = prefs.getString("prosumer_nic", null);
-        if (nic != null && !nic.trim().isEmpty()) {
-            tvUserNic.setText(nic);
+        AuthUser user = SessionManager.getInstance(this).getUser();
+        if (user != null) {
+            tvGreeting.setText(timeGreeting + ", " + user.getDisplayName());
+            if (user.getNic() != null && !user.getNic().trim().isEmpty()) {
+                tvUserNic.setText(user.getNic());
+            } else {
+                tvUserNic.setText(user.getDisplayName());
+            }
+
+            if (tvUserRoleBadge != null) {
+                tvUserRoleBadge.setVisibility(View.VISIBLE);
+                tvUserRoleBadge.setText(user.getRole().toUpperCase());
+                if (user.isAdmin()) {
+                    tvUserRoleBadge.setTextColor(getColor(R.color.yellow_primary));
+                } else if (user.isProsumer()) {
+                    tvUserRoleBadge.setTextColor(getColor(R.color.emerald_approved));
+                } else {
+                    tvUserRoleBadge.setTextColor(getColor(R.color.text_light_secondary));
+                }
+            }
         } else {
-            tvUserNic.setText("Prosumer Portal");
+            tvGreeting.setText(timeGreeting);
+            tvUserNic.setText("Solis Portal");
+            if (tvUserRoleBadge != null) {
+                tvUserRoleBadge.setVisibility(View.GONE);
+            }
         }
 
         // Operator QR Scanner: Always visible so Grid Operator and Evaluators can immediately test QR Scanning

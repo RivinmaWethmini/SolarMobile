@@ -17,15 +17,35 @@
         android:usesCleartextTraffic="true">
 
 
-        <!-- Main Dashboard Activity -->
+        <!-- Onboarding Carousel Activity (Launcher) -->
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.OnboardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Authentication Screens -->
+        <activity
+            android:name=".ui.LoginActivity"
+            android:exported="false"
+            android:label="Sign In"
+            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName=".ui.OnboardingActivity" />
+
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:exported="false"
+            android:label="Create Account"
+            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName=".ui.OnboardingActivity" />
+
+        <!-- Main Dashboard Activity -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="false" />
 
         <!-- Energy Slot Booking Screen (Node & Date Picker) -->
         <activity

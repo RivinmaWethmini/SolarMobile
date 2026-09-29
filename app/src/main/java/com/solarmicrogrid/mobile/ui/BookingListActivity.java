@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.solarmicrogrid.mobile.R;
+import com.solarmicrogrid.mobile.auth.SessionManager;
 import com.solarmicrogrid.mobile.database.DatabaseHelper;
 import com.solarmicrogrid.mobile.models.Reservation;
 import com.solarmicrogrid.mobile.network.ApiClient;
@@ -49,7 +50,6 @@ public class BookingListActivity extends AppCompatActivity {
     private String currentFilter = "All";
     private DatabaseHelper dbHelper;
 
-    // TODO (Member 2): Replace with authenticated user NIC from JWT session / Auth SharedPreferences
     private String PROSUMER_NIC;
 
     @Override
@@ -61,9 +61,7 @@ public class BookingListActivity extends AppCompatActivity {
         allReservations = new ArrayList<>();
         displayedList = new ArrayList<>();
 
-        // TODO (Member 2): Replace with JWT session lookup when auth is ready
-        android.content.SharedPreferences prefs = getSharedPreferences("solar_session", MODE_PRIVATE);
-        PROSUMER_NIC = prefs.getString("prosumer_nic", "200012345678");
+        PROSUMER_NIC = SessionManager.getInstance(this).getProsumerNic();
 
         etSearchBookings = findViewById(R.id.etSearchBookings);
         btnFilterAll = findViewById(R.id.btnFilterAll);

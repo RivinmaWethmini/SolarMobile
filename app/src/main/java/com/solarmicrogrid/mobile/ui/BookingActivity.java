@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.solarmicrogrid.mobile.R;
+import com.solarmicrogrid.mobile.auth.SessionManager;
 import com.solarmicrogrid.mobile.database.DatabaseHelper;
 import com.solarmicrogrid.mobile.models.MicrogridNode;
 import com.solarmicrogrid.mobile.models.Reservation;
@@ -88,12 +89,7 @@ public class BookingActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
         selectedCalendar = Calendar.getInstance();
 
-        // Read user NIC with fallback
-        android.content.SharedPreferences prefs = getSharedPreferences("solar_session", MODE_PRIVATE);
-        String nic = prefs.getString("prosumer_nic", null);
-        if (nic == null) nic = prefs.getString("nic", null);
-        if (nic == null) nic = prefs.getString("username", null);
-        PROSUMER_NIC = (nic != null && !nic.trim().isEmpty()) ? nic : "200012345678";
+        PROSUMER_NIC = SessionManager.getInstance(this).getProsumerNic();
 
         // Bind Views
         spNodeSelector = findViewById(R.id.spNodeSelector);
