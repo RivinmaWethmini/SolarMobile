@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.solarmicrogrid.mobile.R;
+import com.solarmicrogrid.mobile.auth.SessionManager;
 import com.solarmicrogrid.mobile.database.DatabaseHelper;
+import com.solarmicrogrid.mobile.models.AuthUser;
 import com.solarmicrogrid.mobile.models.MicrogridNode;
 import com.solarmicrogrid.mobile.models.Reservation;
 import com.solarmicrogrid.mobile.network.ApiClient;
