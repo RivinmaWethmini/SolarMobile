@@ -1,10 +1,13 @@
 package com.solarmicrogrid.mobile.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.solarmicrogrid.mobile.R;
@@ -23,6 +26,9 @@ public class ProsumerProfileActivity extends AppCompatActivity {
     private TextView tvLocation;
     private TextView tvStatus;
 
+    private Button btnEditProfile;
+    private Button btnDeactivateProfile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +43,26 @@ public class ProsumerProfileActivity extends AppCompatActivity {
         tvLocation = findViewById(R.id.tvLocation);
         tvStatus = findViewById(R.id.tvStatus);
 
+        btnEditProfile = findViewById(R.id.btnEditProfile);
+        btnDeactivateProfile = findViewById(R.id.btnDeactivateProfile);
+
         loadProsumerProfile();
+
+        // Edit Profile button
+        btnEditProfile.setOnClickListener(v -> {
+
+            Intent intent = new Intent(
+                    ProsumerProfileActivity.this,
+                    EditProsumerActivity.class
+            );
+
+            startActivity(intent);
+        });
+
+        // Request Deactivation button
+        btnDeactivateProfile.setOnClickListener(v -> {
+            showDeactivateConfirmation();
+        });
     }
 
     private void loadProsumerProfile() {
@@ -45,86 +70,193 @@ public class ProsumerProfileActivity extends AppCompatActivity {
         SharedPreferences prefs =
                 getSharedPreferences("solar_session", MODE_PRIVATE);
 
-        String nic = prefs.getString("prosumer_nic", null);
+        String nic = prefs.getString(
+                "prosumer_nic",
+                "200224700740"
+        );
 
         if (nic == null || nic.trim().isEmpty()) {
+
             Toast.makeText(
                     this,
                     "Prosumer NIC not found",
                     Toast.LENGTH_LONG
             ).show();
+
             return;
         }
 
-        ApiClient.get("/Prosumer/" + nic, new ApiClient.ApiCallback() {
+        ApiClient.get(
+                "/Prosumer/" + nic,
+                new ApiClient.ApiCallback() {
 
-            @Override
-            public void onSuccess(String response) {
-                try {
-                    JSONObject prosumer = new JSONObject(response);
+                    @Override
+                    public void onSuccess(String response) {
 
-                    tvNic.setText("NIC: " + prosumer.optString("nic"));
+                        try {
 
-                    tvName.setText(
-                            "Name: " + prosumer.optString("name")
-                    );
+                            JSONObject prosumer =
+                                    new JSONObject(response);
 
-                    tvSolarCapacity.setText(
-                            "Solar Capacity: " +
-                            prosumer.optDouble("solarCapacityKw", 0) +
-                            " kW"
-                    );
+                            tvNic.setText(
+                                    "NIC: " +
+                                    prosumer.optString("nic")
+                            );
 
-                    tvBatteryCapacity.setText(
-                            "Battery Capacity: " +
-                            prosumer.optDouble("batteryCapacityKwh", 0) +
-                            " kWh"
-                    );
+                            tvName.setText(
+                                    "Name: " +
+                                    prosumer.optString("name")
+                            );
 
-                    tvAvailableEnergy.setText(
-                            "Available Energy: " +
-                            prosumer.optDouble("availableEnergyKw", 0) +
-                            " kW"
-                    );
+                            tvSolarCapacity.setText(
+                                    "Solar Capacity: " +
+                                    prosumer.optDouble(
+                                            "solarCapacityKw",
+                                            0
+                                    ) +
+                                    " kW"
+                            );
 
-                    tvPrice.setText(
-                            "Price: Rs. " +
-                            prosumer.optDouble("pricePerKwh", 0) +
-                            " / kWh"
-                    );
+                            tvBatteryCapacity.setText(
+                                    "Battery Capacity: " +
+                                    prosumer.optDouble(
+                                            "batteryCapacityKwh",
+                                            0
+                                    ) +
+                                    " kWh"
+                            );
 
-                    tvLocation.setText(
-                            "Location: " +
-                            prosumer.optString("location", "-")
-                    );
+                            tvAvailableEnergy.setText(
+                                    "Available Energy: " +
+                                    prosumer.optDouble(
+                                            "availableEnergyKw",
+                                            0
+                                    ) +
+                                    " kW"
+                            );
 
-                    boolean isAvailable =
-                            prosumer.optBoolean("isAvailable", false);
+                            tvPrice.setText(
+                                    "Price: Rs. " +
+                                    prosumer.optDouble(
+                                            "pricePerKwh",
+                                            0
+                                    ) +
+                                    " / kWh"
+                            );
 
-                    tvStatus.setText(
-                            "Status: " +
-                            (isAvailable ? "Available" : "Deactivated")
-                    );
+                            tvLocation.setText(
+                                    "Location: " +
+                                    prosumer.optString(
+                                            "location",
+                                            "-"
+                                    )
+                            );
 
-                } catch (Exception e) {
+                            boolean isAvailable =
+                                    prosumer.optBoolean(
+                                            "isAvailable",
+                                            false
+                                    );
 
-                    Toast.makeText(
-                            ProsumerProfileActivity.this,
-                            "Invalid profile response",
-                            Toast.LENGTH_LONG
-                    ).show();
+                            if (isAvailable) {
+
+                                tvStatus.setText(
+                                        "Status: Available"
+                                );
+
+                                btnEditProfile.setEnabled(true);
+                                btnDeactivateProfile.setEnabled(true);
+
+                            } else {
+
+                                tvStatus.setText(
+                                        "Status: Deactivated"
+                                );
+
+                                btnEditProfile.setEnabled(false);
+                                btnDeactivateProfile.setEnabled(false);
+                            }
+
+                        } catch (Exception e) {
+
+                            Toast.makeText(
+                                    ProsumerProfileActivity.this,
+                                    "Invalid profile response",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+
+                        Toast.makeText(
+                                ProsumerProfileActivity.this,
+                                errorMessage,
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
                 }
-            }
+        );
+    }
 
-            @Override
-            public void onError(String errorMessage) {
+    private void showDeactivateConfirmation() {
 
-                Toast.makeText(
-                        ProsumerProfileActivity.this,
-                        errorMessage,
-                        Toast.LENGTH_LONG
-                ).show();
-            }
-        });
+        new AlertDialog.Builder(this)
+                .setTitle("Request Deactivation")
+                .setMessage(
+                        "Are you sure you want to request deactivation of your prosumer account?"
+                )
+                .setNegativeButton(
+                        "Cancel",
+                        null
+                )
+                .setPositiveButton(
+                        "Confirm",
+                        (dialog, which) -> {
+                            deactivateProsumer();
+                        }
+                )
+                .show();
+    }
+
+    private void deactivateProsumer() {
+
+        SharedPreferences prefs =
+                getSharedPreferences("solar_session", MODE_PRIVATE);
+
+        String nic = prefs.getString(
+                "prosumer_nic",
+                "200224700740"
+        );
+
+        ApiClient.patch(
+                "/Prosumer/" + nic + "/deactivate",
+                "",
+                new ApiClient.ApiCallback() {
+
+                    @Override
+                    public void onSuccess(String response) {
+
+                        Toast.makeText(
+                                ProsumerProfileActivity.this,
+                                "Prosumer account deactivated",
+                                Toast.LENGTH_LONG
+                        ).show();
+
+                        loadProsumerProfile();
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+
+                        Toast.makeText(
+                                ProsumerProfileActivity.this,
+                                errorMessage,
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                }
+        );
     }
 }

@@ -45,7 +45,9 @@ public class ApiClient {
     public static void put(String endpoint, String jsonBody, ApiCallback callback) {
         sendRequest("PUT", endpoint, jsonBody, callback);
     }
-
+    public static void patch(String endpoint, String jsonBody, ApiCallback callback) {
+        sendRequest("PATCH", endpoint, jsonBody, callback);
+    }
     public static void delete(String endpoint, ApiCallback callback) {
         sendRequest("DELETE", endpoint, null, callback);
     }

@@ -94,6 +94,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // Quick Action 3: Prosumer Profile
+        Button btnProsumerProfile = findViewById(R.id.btnProsumerProfile);
+
+        btnProsumerProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    ProsumerProfileActivity.class
+            );
+            startActivity(intent);
+        });
+
         // Quick Action 3: Operator QR Scanner
         btnOperatorScan.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, OperatorScanActivity.class);

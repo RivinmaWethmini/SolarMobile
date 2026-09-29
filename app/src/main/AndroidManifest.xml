@@ -83,6 +83,14 @@
             android:label="Operator QR Scan"
             android:screenOrientation="portrait"
             android:parentActivityName=".ui.MainActivity" />
+        
+        <activity
+        android:name=".ui.ProsumerProfileActivity"
+        android:exported="false" />
+
+        <activity
+        android:name=".ui.EditProsumerActivity"
+        android:exported="false" />
 
     </application>
 
