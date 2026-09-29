@@ -21,8 +21,10 @@ import java.util.concurrent.Executors;
  */
 public class ApiClient {
 
-    // `adb reverse tcp:5298 tcp:5298` exposes the PC's local API to a USB device.
-    public static final String BASE_URL = "http://127.0.0.1:5298/api";
+    // USB ADB Reverse (127.0.0.1:5298) and LAN Wi-Fi (192.168.1.5:5298)
+    public static final String USB_ADB_URL = "http://127.0.0.1:5298/api";
+    public static final String LAN_WIFI_URL = "http://192.168.1.5:5298/api";
+    public static volatile String BASE_URL = USB_ADB_URL;
 
     private static final ExecutorService executor = Executors.newFixedThreadPool(4);
     private static final Handler mainHandler = new Handler(Looper.getMainLooper());
@@ -50,60 +52,74 @@ public class ApiClient {
 
     private static void sendRequest(String method, String endpoint, String jsonBody, ApiCallback callback) {
         executor.execute(() -> {
-            HttpURLConnection conn = null;
+            String primaryBase = BASE_URL;
+            String secondaryBase = primaryBase.equals(USB_ADB_URL) ? LAN_WIFI_URL : USB_ADB_URL;
+
             try {
-                URL url = new URL(BASE_URL + endpoint);
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod(method);
-                conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-                conn.setRequestProperty("Accept", "application/json");
-                conn.setConnectTimeout(8000);
-                conn.setReadTimeout(8000);
-
-                if (jsonBody != null && (method.equals("POST") || method.equals("PUT") || method.equals("PATCH"))) {
-                    conn.setDoOutput(true);
-                    byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
-                    try (OutputStream os = conn.getOutputStream()) {
-                        os.write(input, 0, input.length);
-                    }
-                }
-
-                int statusCode = conn.getResponseCode();
-                InputStream is = (statusCode >= 200 && statusCode < 300) ? conn.getInputStream() : conn.getErrorStream();
-
-                StringBuilder response = new StringBuilder();
-                if (is != null) {
-                    try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-                        String line;
-                        while ((line = br.readLine()) != null) {
-                            response.append(line.trim());
-                        }
-                    }
-                }
-
-                String responseStr = response.toString();
-                if (statusCode >= 200 && statusCode < 300) {
-                    mainHandler.post(() -> callback.onSuccess(responseStr));
-                } else {
-                    String errorMsg = "HTTP " + statusCode;
-                    try {
-                        JSONObject errJson = new JSONObject(responseStr);
-                        if (errJson.has("message")) {
-                            errorMsg = errJson.getString("message");
-                        }
-                    } catch (Exception ignored) {}
-                    String finalError = errorMsg;
-                    mainHandler.post(() -> callback.onError(finalError));
-                }
-
-            } catch (Exception e) {
-                String msg = "Connection error: " + e.getMessage();
-                mainHandler.post(() -> callback.onError(msg));
-            } finally {
-                if (conn != null) {
-                    conn.disconnect();
+                executeHttp(primaryBase, method, endpoint, jsonBody, callback);
+            } catch (Exception primaryEx) {
+                // If primary endpoint is unreachable, auto-failover to secondary
+                try {
+                    executeHttp(secondaryBase, method, endpoint, jsonBody, callback);
+                    BASE_URL = secondaryBase;
+                } catch (Exception secondaryEx) {
+                    String msg = "Connection error: " + primaryEx.getMessage();
+                    mainHandler.post(() -> callback.onError(msg));
                 }
             }
         });
+    }
+
+    private static void executeHttp(String baseUrl, String method, String endpoint, String jsonBody, ApiCallback callback) throws Exception {
+        HttpURLConnection conn = null;
+        try {
+            URL url = new URL(baseUrl + endpoint);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod(method);
+            conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setConnectTimeout(4000);
+            conn.setReadTimeout(5000);
+
+            if (jsonBody != null && (method.equals("POST") || method.equals("PUT") || method.equals("PATCH"))) {
+                conn.setDoOutput(true);
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
+                try (OutputStream os = conn.getOutputStream()) {
+                    os.write(input, 0, input.length);
+                }
+            }
+
+            int statusCode = conn.getResponseCode();
+            InputStream is = (statusCode >= 200 && statusCode < 300) ? conn.getInputStream() : conn.getErrorStream();
+
+            StringBuilder response = new StringBuilder();
+            if (is != null) {
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        response.append(line.trim());
+                    }
+                }
+            }
+
+            String responseStr = response.toString();
+            if (statusCode >= 200 && statusCode < 300) {
+                mainHandler.post(() -> callback.onSuccess(responseStr));
+            } else {
+                String errorMsg = "HTTP " + statusCode;
+                try {
+                    JSONObject errJson = new JSONObject(responseStr);
+                    if (errJson.has("message")) {
+                        errorMsg = errJson.getString("message");
+                    }
+                } catch (Exception ignored) {}
+                String finalError = errorMsg;
+                mainHandler.post(() -> callback.onError(finalError));
+            }
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
     }
 }

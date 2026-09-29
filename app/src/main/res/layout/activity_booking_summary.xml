@@ -10,12 +10,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="22dp">
+        android:padding="20dp">
 
+        <!-- Back Navigation Row -->
+        <LinearLayout
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Back"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back to Dashboard"
+                android:textColor="@color/yellow_primary"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:fontFamily="@font/outfit"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Header Row -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="22dp">
+            android:layout_marginBottom="20dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -39,176 +71,217 @@
                     android:layout_height="wrap_content"
                     android:text="Action Completed Successfully"
                     android:textColor="@color/emerald_approved"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     android:fontFamily="@font/outfit"
                     android:layout_marginTop="2dp" />
             </LinearLayout>
 
             <ImageView
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_solar_logo"
                 android:contentDescription="Solar Logo" />
         </RelativeLayout>
 
-        <!-- Summary Details Card (Obsidian Dark with Yellow Accent) -->
+        <!-- Reference & Status Header Row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_dark_card"
-            android:orientation="vertical"
-            android:padding="22dp"
-            android:layout_marginBottom="24dp">
-
-            <!-- Reservation Reference ID -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RESERVATION REFERENCE"
-                android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
-                android:textAllCaps="false"
-                android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
 
             <TextView
                 android:id="@+id/tvSummaryId"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="#RES-1002"
-                android:textColor="@color/yellow_primary"
-                android:textSize="20sp"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
-                android:textStyle="bold"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="14dp" />
-
-            <!-- Prosumer NIC -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PROSUMER IDENTIFIER"
-                android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
-                android:textAllCaps="false"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvSummaryNic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="200012345678"
-                android:textColor="@color/text_white"
-                android:textSize="14sp"
-                android:fontFamily="@font/outfit"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="14dp" />
-
-            <!-- Node ID -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ASSIGNED MICROGRID NODE"
-                android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
-                android:textAllCaps="false"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvSummaryNode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NODE-COLOMBO-CENTRAL"
-                android:textColor="@color/text_white"
-                android:textSize="14sp"
-                android:fontFamily="@font/outfit"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="14dp" />
-
-            <!-- Energy Capacity -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RESERVED CAPACITY"
-                android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
-                android:textAllCaps="false"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvSummaryCapacity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="35.0 kW/h"
+                android:text="#RES-000000"
                 android:textColor="@color/yellow_primary"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/outfit"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="14dp" />
-
-            <!-- Scheduled Time Window -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SCHEDULED TIME WINDOW"
-                android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
-                android:textAllCaps="false"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvSummaryTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2026-09-20 09:00 - 11:00"
-                android:textColor="@color/text_white"
-                android:textSize="13sp"
-                android:fontFamily="@font/outfit"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="14dp" />
-
-            <!-- Status Badge -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DISPATCH STATUS"
-                android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:letterSpacing="0.08"
-                android:textAllCaps="false"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvSummaryStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pending"
-                android:textColor="@color/yellow_primary"
-                android:textSize="14sp"
-                android:textStyle="bold"
+                android:background="@drawable/bg_status_pill"
                 android:fontFamily="@font/outfit"
-                android:layout_marginTop="2dp" />
-
+                android:paddingStart="12dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="5dp"
+                android:text="Pending"
+                android:textColor="@color/text_dark_primary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
         </LinearLayout>
+
+        <!-- Details Section Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/outfit"
+            android:text="Reservation details"
+            android:textColor="@color/text_white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_dark" />
+
+        <!-- Detail Item: Solar Node -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit"
+                android:text="Assigned solar node"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvSummaryNode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit"
+                android:layout_marginTop="2dp"
+                android:text="Colombo North Solar Hub"
+                android:textColor="@color/text_white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_dark" />
+
+        <!-- Detail Item: Prosumer Identifier -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit"
+                android:text="Prosumer identifier (NIC)"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvSummaryNic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit"
+                android:layout_marginTop="2dp"
+                android:text="200012345678"
+                android:textColor="@color/text_light_secondary"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_dark" />
+
+        <!-- Detail Item: Scheduled Window -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit"
+                android:text="Scheduled trading window"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvSummaryTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit"
+                android:layout_marginTop="2dp"
+                android:text="09:00 - 11:00"
+                android:textColor="@color/yellow_primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_dark" />
+
+        <!-- Detail Item: Reserved Energy Capacity -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit"
+                android:text="Reserved energy capacity"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvSummaryCapacity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit"
+                android:layout_marginTop="2dp"
+                android:text="20.0 kWh"
+                android:textColor="@color/emerald_approved"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_dark"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Actions Section -->
 
         <!-- View QR Code Button (Visible when Approved) -->
         <Button
             android:id="@+id/btnViewQrCode"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="50dp"
             android:background="@drawable/bg_yellow_pill"
-            android:text="View Dispatch QR Code"
+            android:text="View Dispatch QR Code →"
             android:textColor="@color/text_dark_primary"
             android:textStyle="bold"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:fontFamily="@font/outfit"
+            android:textAllCaps="false"
             app:backgroundTint="@null"
             android:visibility="gone"
             android:layout_marginBottom="12dp" />
@@ -217,40 +290,43 @@
         <Button
             android:id="@+id/btnModifyBooking"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="48dp"
             android:background="@drawable/bg_pill_dark"
-            android:text="Modify Reservation"
+            android:text="Modify Reservation →"
             android:textColor="@color/yellow_primary"
             android:textStyle="bold"
             android:textSize="13sp"
             android:fontFamily="@font/outfit"
+            android:textAllCaps="false"
             app:backgroundTint="@null"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="10dp" />
 
-        <!-- Cancel Booking Button (Cleaned text without assignment rule label) -->
+        <!-- Cancel Booking Button -->
         <Button
             android:id="@+id/btnCancelBooking"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_pill_dark"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_text_action"
             android:text="Cancel Reservation"
             android:textColor="#EF4444"
             android:textStyle="bold"
             android:textSize="13sp"
             android:fontFamily="@font/outfit"
+            android:textAllCaps="false"
             app:backgroundTint="@null"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="10dp" />
 
         <!-- Back to Dashboard -->
         <Button
             android:id="@+id/btnBackHome"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_pill_dark"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_text_action"
             android:text="Back to Dashboard"
             android:textColor="@color/text_light_secondary"
             android:textSize="13sp"
             android:fontFamily="@font/outfit"
+            android:textAllCaps="false"
             app:backgroundTint="@null" />
 
     </LinearLayout>
