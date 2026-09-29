@@ -192,7 +192,9 @@ public class MainActivity extends AppCompatActivity {
         AuthUser user = SessionManager.getInstance(this).getUser();
         if (user != null) {
             tvGreeting.setText(timeGreeting + ", " + user.getDisplayName());
-            if (user.getNic() != null && !user.getNic().trim().isEmpty()) {
+            if (user.getEmail() != null && !user.getEmail().trim().isEmpty()) {
+                tvUserNic.setText(user.getEmail());
+            } else if (user.getNic() != null && !user.getNic().trim().isEmpty()) {
                 tvUserNic.setText(user.getNic());
             } else {
                 tvUserNic.setText(user.getDisplayName());
@@ -239,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
 
                     tvTotalCount.setText(String.valueOf(total));
                     tvPendingCount.setText(String.valueOf(pending));
-                    tvApprovedFutureCount.setText(String.valueOf(approvedFuture));
+                    tvApprovedFutureCount.setText(String.valueOf(approved));
                 } catch (Exception e) {
                     calculateLocalFallbackStats();
                 }

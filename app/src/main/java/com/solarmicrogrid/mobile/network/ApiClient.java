@@ -21,7 +21,8 @@ import java.util.concurrent.Executors;
 /**
  * Native Android REST API Client for Solar Microgrid backend services.
  * Features:
- * - Dual-network failover (USB ADB 127.0.0.1:5298 <-> LAN Wi-Fi 192.168.1.5:5298)
+ * - Dual-network failover (USB ADB 127.0.0.1:5298 <-> LAN Wi-Fi
+ * 192.168.1.5:5298)
  * - Automatic Authorization: Bearer JWT injection
  * - Background Executor threading with Main-Thread Handlers
  * - High-level auth endpoints (login, otp, register, refresh, logout)
@@ -46,6 +47,7 @@ public class ApiClient {
 
     public interface ApiCallback {
         void onSuccess(String response);
+
         void onError(String errorMessage);
     }
 
@@ -65,7 +67,8 @@ public class ApiClient {
         sendRequest("DELETE", endpoint, null, callback, true);
     }
 
-    // Unauthenticated variants (for login/registration without sending stale tokens)
+    // Unauthenticated variants (for login/registration without sending stale
+    // tokens)
     public static void postUnauthenticated(String endpoint, String jsonBody, ApiCallback callback) {
         sendRequest("POST", endpoint, jsonBody, callback, false);
     }
@@ -147,7 +150,8 @@ public class ApiClient {
 
     // ─── INTERNAL HTTP EXECUTION ────────────────────────────────────────────────
 
-    private static void sendRequest(String method, String endpoint, String jsonBody, ApiCallback callback, boolean attachToken) {
+    private static void sendRequest(String method, String endpoint, String jsonBody, ApiCallback callback,
+            boolean attachToken) {
         executor.execute(() -> {
             String primaryBase = BASE_URL;
             String secondaryBase = primaryBase.equals(USB_ADB_URL) ? LAN_WIFI_URL : USB_ADB_URL;
@@ -167,7 +171,8 @@ public class ApiClient {
         });
     }
 
-    private static void executeHttp(String baseUrl, String method, String endpoint, String jsonBody, ApiCallback callback, boolean attachToken) throws Exception {
+    private static void executeHttp(String baseUrl, String method, String endpoint, String jsonBody,
+            ApiCallback callback, boolean attachToken) throws Exception {
         HttpURLConnection conn = null;
         try {
             URL url = new URL(baseUrl + endpoint);
