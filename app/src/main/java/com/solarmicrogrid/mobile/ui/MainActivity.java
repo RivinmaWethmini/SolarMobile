@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.solarmicrogrid.mobile.R;
+import com.solarmicrogrid.mobile.auth.SessionManager;
+import com.solarmicrogrid.mobile.models.AuthUser;
 import com.solarmicrogrid.mobile.database.DatabaseHelper;
 import com.solarmicrogrid.mobile.models.MicrogridNode;
 import com.solarmicrogrid.mobile.models.Reservation;
@@ -40,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvNodesCountBadge;
     private LinearLayout layoutNodesContainer;
     private View layoutOperatorScan;
-    private Button btnBookSlot, btnViewBookings, btnRefreshStats, btnOperatorScan, btnViewNodes;
+    private Button btnBookSlot, btnViewBookings, btnRefreshStats, btnOperatorScan, btnViewNodes, btnProsumerProfile;
+    private TextView tvUserRoleBadge;
+    private View btnHeaderLogout;
     private DatabaseHelper dbHelper;
 
     // Next Approved Slot UI
@@ -71,6 +75,29 @@ public class MainActivity extends AppCompatActivity {
         btnOperatorScan = findViewById(R.id.btnOperatorScan);
         layoutOperatorScan = findViewById(R.id.layoutOperatorScan);
         btnViewNodes = findViewById(R.id.btnViewNodes);
+        btnProsumerProfile = findViewById(R.id.btnProsumerProfile);
+        tvUserRoleBadge = findViewById(R.id.tvUserRoleBadge);
+        btnHeaderLogout = findViewById(R.id.btnHeaderLogout);
+
+        // Initialize networking context
+        ApiClient.init(this);
+
+        if (btnHeaderLogout != null) {
+            btnHeaderLogout.setOnClickListener(v -> {
+                SessionManager.getInstance(MainActivity.this).logout();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            });
+        }
+
+        if (btnProsumerProfile != null) {
+            btnProsumerProfile.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, ProsumerProfileActivity.class);
+                startActivity(intent);
+            });
+        }
 
         // Next Approved Slot
         cardNextSlot = findViewById(R.id.cardNextSlot);
@@ -126,6 +153,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (!SessionManager.getInstance(this).isLoggedIn()) {
+            startActivity(new Intent(this, OnboardingActivity.class));
+            finish();
+            return;
+        }
         updateGreetingAndUser();
         fetchLiveDashboardStats();
         fetchLiveMicrogridNodes();
@@ -151,13 +183,34 @@ public class MainActivity extends AppCompatActivity {
         }
         tvGreeting.setText(greeting);
 
-        // Read active session prosumer if present
-        android.content.SharedPreferences prefs = getSharedPreferences("solar_session", MODE_PRIVATE);
-        String nic = prefs.getString("prosumer_nic", null);
-        if (nic != null && !nic.trim().isEmpty()) {
-            tvUserNic.setText(nic);
+        AuthUser user = SessionManager.getInstance(this).getUser();
+        if (user != null) {
+            tvGreeting.setText(greeting + ", " + user.getDisplayName());
+            if (user.getNic() != null && !user.getNic().trim().isEmpty()) {
+                tvUserNic.setText("NIC: " + user.getNic());
+            } else if (user.getEmail() != null && !user.getEmail().trim().isEmpty()) {
+                tvUserNic.setText(user.getEmail());
+            } else {
+                tvUserNic.setText(user.getDisplayName());
+            }
+
+            if (tvUserRoleBadge != null) {
+                tvUserRoleBadge.setVisibility(View.VISIBLE);
+                tvUserRoleBadge.setText(user.getRole().toUpperCase(Locale.US));
+                if (user.isAdmin()) {
+                    tvUserRoleBadge.setTextColor(getColor(R.color.yellow_primary));
+                } else if (user.isProsumer()) {
+                    tvUserRoleBadge.setTextColor(getColor(R.color.emerald_approved));
+                } else {
+                    tvUserRoleBadge.setTextColor(getColor(R.color.text_light_secondary));
+                }
+            }
         } else {
-            tvUserNic.setText("Prosumer Portal");
+            tvGreeting.setText(greeting);
+            tvUserNic.setText("Solis Portal");
+            if (tvUserRoleBadge != null) {
+                tvUserRoleBadge.setVisibility(View.GONE);
+            }
         }
 
         // Operator QR Scanner: Always visible so Grid Operator and Evaluators can immediately test QR Scanning
@@ -281,8 +334,11 @@ public class MainActivity extends AppCompatActivity {
      * and populates the Next Approved Slot card.
      */
     private void updateNextApprovedSlot() {
+        AuthUser user = SessionManager.getInstance(this).getUser();
         android.content.SharedPreferences prefs = getSharedPreferences("solar_session", MODE_PRIVATE);
-        String nic = prefs.getString("prosumer_nic", "200012345678");
+        String nic = (user != null && user.getNic() != null && !user.getNic().trim().isEmpty())
+                ? user.getNic()
+                : prefs.getString("prosumer_nic", "200224700740");
 
         ApiClient.get("/reservations/prosumer/" + nic, new ApiClient.ApiCallback() {
             @Override

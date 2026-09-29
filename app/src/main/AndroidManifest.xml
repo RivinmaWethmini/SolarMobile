@@ -84,6 +84,35 @@
             android:screenOrientation="portrait"
             android:parentActivityName=".ui.MainActivity" />
 
+        <!-- Member 2 - Manuga: Prosumer Profile & Edit Screens -->
+        <activity
+            android:name=".ui.ProsumerProfileActivity"
+            android:exported="false"
+            android:label="Prosumer Profile"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <activity
+            android:name=".ui.EditProsumerActivity"
+            android:exported="false"
+            android:label="Edit Prosumer Profile"
+            android:parentActivityName=".ui.ProsumerProfileActivity" />
+
+        <!-- Authentication Flow: Onboarding, Login, Register -->
+        <activity
+            android:name=".ui.OnboardingActivity"
+            android:exported="false"
+            android:label="Welcome to Solis" />
+
+        <activity
+            android:name=".ui.LoginActivity"
+            android:exported="false"
+            android:label="Sign In" />
+
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:exported="false"
+            android:label="Create Account" />
+
     </application>
 
 </manifest>

@@ -57,18 +57,38 @@
                         android:maxLines="1"
                         android:fontFamily="@font/outfit" />
 
-                    <TextView
-                        android:id="@+id/tvUserNic"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Prosumer Portal"
-                        android:textColor="@color/text_white"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:fontFamily="@font/outfit"
-                        android:layout_marginTop="2dp" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="2dp">
+
+                        <TextView
+                            android:id="@+id/tvUserNic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Prosumer Portal"
+                            android:textColor="@color/text_white"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:fontFamily="@font/outfit" />
+
+                        <TextView
+                            android:id="@+id/tvUserRoleBadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="PROSUMER"
+                            android:textColor="@color/yellow_primary"
+                            android:textSize="9sp"
+                            android:fontFamily="@font/outfit_bold"
+                            android:background="@drawable/bg_dark_input"
+                            android:paddingHorizontal="6dp"
+                            android:paddingVertical="2dp" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -96,27 +116,20 @@
                         app:tint="@color/yellow_primary" />
                 </FrameLayout>
 
-                <!-- Notification Bell Icon Button with Indicator -->
+                <!-- Logout Icon Button -->
                 <FrameLayout
+                    android:id="@+id/btnHeaderLogout"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@drawable/bg_circle_dark">
+                    android:background="@drawable/bg_circle_dark"
+                    android:contentDescription="Sign Out">
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_bell"
-                        app:tint="@color/text_white" />
-
-                    <!-- Notification Dot -->
-                    <View
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
-                        android:layout_gravity="top|end"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@drawable/bg_circle_yellow" />
+                        android:src="@drawable/ic_logout"
+                        app:tint="@color/text_light_secondary" />
                 </FrameLayout>
             </LinearLayout>
         </LinearLayout>
@@ -730,6 +743,57 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/divider_dark" />
+
+        <!-- Prosumer Profile -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dark_card"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="18dp"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Prosumer Profile"
+                    android:textColor="@color/text_white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/outfit" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View and manage your profile"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="11sp"
+                    android:layout_marginTop="2dp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnProsumerProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_pill_dark"
+                android:text="Profile →"
+                android:textColor="@color/yellow_primary"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:backgroundTint="@null" />
+
+        </LinearLayout>
 
         <!-- Live Sync Refresh Button -->
         <Button

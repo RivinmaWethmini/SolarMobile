@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_black">
+
+    <!-- Top Minimal Branding Bar -->
+    <LinearLayout
+        android:id="@+id/layoutTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="28dp"
+        android:paddingBottom="12dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_solar_logo"
+            android:contentDescription="Solis Logo" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:text="Solis microgrid"
+            android:textColor="@color/text_white"
+            android:textSize="16sp"
+            android:fontFamily="@font/outfit_medium" />
+
+        <TextView
+            android:id="@+id/btnTopSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign in"
+            android:textColor="@color/text_light_secondary"
+            android:textSize="13sp"
+            android:fontFamily="@font/outfit_medium"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+    </LinearLayout>
+
+    <!-- Center Hero Card with Image & Gradient Scrim -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardHero"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="24dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="@color/bg_dark_surface"
+        app:layout_constraintTop_toBottomOf="@id/layoutTopBar"
+        app:layout_constraintBottom_toTopOf="@id/layoutBottomControls">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Hero Image -->
+            <ImageView
+                android:id="@+id/ivHeroImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/hero_solar_microgrid"
+                android:contentDescription="Microgrid Solar Field" />
+
+            <!-- Dark Gradient Scrim overlay -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_hero_scrim" />
+
+            <!-- Editorial Content Overlay -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- Slide Tag & Category -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:id="@+id/tvSlideTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="01 / 02"
+                        android:textColor="@color/yellow_primary"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/outfit_bold"
+                        android:background="@drawable/bg_dark_input"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="3dp" />
+
+                    <TextView
+                        android:id="@+id/tvSlideCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Decentralized Trading"
+                        android:textColor="@color/text_light_secondary"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/outfit_medium" />
+                </LinearLayout>
+
+                <!-- Headline -->
+                <TextView
+                    android:id="@+id/tvSlideHeadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Trade solar power across local microgrids."
+                    android:textColor="@color/text_white"
+                    android:textSize="26sp"
+                    android:lineSpacingMultiplier="1.15"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <!-- Description -->
+                <TextView
+                    android:id="@+id/tvSlideDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Reserve clean generation dispatch slots, balance grid loads, and access real-time node capacity directly from your mobile device."
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="13sp"
+                    android:lineSpacingMultiplier="1.2"
+                    android:fontFamily="@font/outfit" />
+            </LinearLayout>
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Bottom Action & Navigation Controls -->
+    <LinearLayout
+        android:id="@+id/layoutBottomControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Slide Indicator Dots & Prev/Next Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:id="@+id/layoutDots"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <View
+                    android:id="@+id/dot0"
+                    android:layout_width="28dp"
+                    android:layout_height="6dp"
+                    android:background="@drawable/bg_tab_selected" />
+
+                <View
+                    android:id="@+id/dot1"
+                    android:layout_width="8dp"
+                    android:layout_height="6dp"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/bg_dark_input" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btnNextSlide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next →"
+                android:textColor="@color/yellow_primary"
+                android:textSize="13sp"
+                android:fontFamily="@font/outfit_bold"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+        </LinearLayout>
+
+        <!-- Get Started (Register) Action Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGetStarted"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Get started"
+            android:textAllCaps="false"
+            android:textColor="@color/bg_black"
+            android:textSize="15sp"
+            android:fontFamily="@font/outfit_bold"
+            android:background="@drawable/bg_yellow_pill"
+            android:stateListAnimator="@null" />
+
+        <!-- Console Sign In Action Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:text="Sign in with existing account"
+            android:textAllCaps="false"
+            android:textColor="@color/text_light_primary"
+            android:textSize="14sp"
+            android:fontFamily="@font/outfit_medium"
+            android:background="@drawable/bg_pill_dark"
+            android:stateListAnimator="@null" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
