@@ -71,6 +71,11 @@ public class ModifyBookingActivity extends AppCompatActivity {
         btnSubmitModify = findViewById(R.id.btnSubmitModify);
         pbModify = findViewById(R.id.pbModify);
 
+        Button btnCancel = findViewById(R.id.btnCancelModification);
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(v -> finish());
+        }
+
         setupInitialValues();
         setupPickers();
 
@@ -83,7 +88,17 @@ public class ModifyBookingActivity extends AppCompatActivity {
         tvModifyRef.setText("#" + ref);
         tvModifyNic.setText(reservation.getProsumerNic());
         tvModifyNode.setText(reservation.getNodeId());
-        tvModifyStatus.setText(reservation.getStatus());
+        String status = reservation.getStatus() != null ? reservation.getStatus() : "Pending";
+        tvModifyStatus.setText(status);
+        if ("Approved".equalsIgnoreCase(status)) {
+            tvModifyStatus.setTextColor(getResources().getColor(R.color.emerald_approved));
+        } else if ("Cancelled".equalsIgnoreCase(status)) {
+            tvModifyStatus.setTextColor(getResources().getColor(R.color.slate_cancelled));
+        } else if ("Rejected".equalsIgnoreCase(status)) {
+            tvModifyStatus.setTextColor(getResources().getColor(R.color.red_rejected));
+        } else {
+            tvModifyStatus.setTextColor(getResources().getColor(R.color.yellow_primary));
+        }
         etModifyEnergy.setText(String.valueOf(reservation.getReservedEnergyKwh()));
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());

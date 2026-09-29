@@ -6,6 +6,7 @@
     <color name="bg_dark_card">#18191E</color>
     <color name="bg_dark_card_stroke">#282932</color>
     <color name="bg_dark_card_secondary">#202128</color>
+    <color name="divider_dark">#25262D</color>
 
     <!-- Yellow Primary & Accents (Matching Reference Image) -->
     <color name="yellow_primary">#FFD000</color>
@@ -21,8 +22,8 @@
     <!-- Text Colors -->
     <color name="text_white">#FFFFFF</color>
     <color name="text_light_primary">#F4F4F6</color>
-    <color name="text_light_secondary">#9496A1</color>
-    <color name="text_light_muted">#636573</color>
+    <color name="text_light_secondary">#A2A4AD</color>
+    <color name="text_light_muted">#737581</color>
     <color name="text_dark_primary">#121214</color>
     <color name="text_dark_secondary">#595B66</color>
 
@@ -40,5 +41,6 @@
     <color name="slate_dark">#18191E</color>
     <color name="slate_card">#18191E</color>
     <color name="slate_text_dim">#9496A1</color>
+    <color name="slate_muted">#636573</color>
     <color name="white">#FFFFFF</color>
 </resources>

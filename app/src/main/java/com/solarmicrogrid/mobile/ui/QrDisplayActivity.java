@@ -29,6 +29,7 @@ public class QrDisplayActivity extends AppCompatActivity {
 
     private ImageView ivQrCode;
     private TextView tvQrReservationRef, tvRawPayload;
+    private TextView tvQrNodeName, tvQrTimeWindow;
     private Button btnCloseQr;
 
     private Reservation reservation;
@@ -41,6 +42,8 @@ public class QrDisplayActivity extends AppCompatActivity {
         ivQrCode = findViewById(R.id.ivQrCode);
         tvQrReservationRef = findViewById(R.id.tvQrReservationRef);
         tvRawPayload = findViewById(R.id.tvRawPayload);
+        tvQrNodeName = findViewById(R.id.tvQrNodeName);
+        tvQrTimeWindow = findViewById(R.id.tvQrTimeWindow);
         btnCloseQr = findViewById(R.id.btnCloseQr);
 
         reservation = (Reservation) getIntent().getSerializableExtra("reservation");
@@ -49,6 +52,25 @@ public class QrDisplayActivity extends AppCompatActivity {
             String ref = reservation.getId();
             if (ref != null && ref.length() > 8) ref = ref.substring(ref.length() - 8).toUpperCase();
             tvQrReservationRef.setText("#" + ref);
+
+            String node = reservation.getNodeId();
+            if (node == null) node = getIntent().getStringExtra("nodeName");
+            if (tvQrNodeName != null) {
+                tvQrNodeName.setText(node != null ? node : "Microgrid Solar Node");
+            }
+
+            String timeWindow = reservation.getStartTime() != null ? reservation.getStartTime() : "";
+            if (reservation.getEndTime() != null && !reservation.getEndTime().isEmpty()) {
+                timeWindow += " – " + reservation.getEndTime();
+            }
+            if (timeWindow.isEmpty()) {
+                String s = getIntent().getStringExtra("startTime");
+                String e = getIntent().getStringExtra("endTime");
+                if (s != null) timeWindow = s + (e != null ? " – " + e : "");
+            }
+            if (tvQrTimeWindow != null) {
+                tvQrTimeWindow.setText(!timeWindow.isEmpty() ? timeWindow : "Approved Dispatch Window");
+            }
 
             // Fetch live QR payload from C# API or use local payload
             fetchAndRenderQr();

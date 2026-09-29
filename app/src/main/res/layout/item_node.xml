@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
-    android:foreground="?android:attr/selectableItemBackground"
+    android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,10 +13,10 @@
         android:orientation="horizontal">
 
         <View
-            android:id="@+id/viewStatusBar"
+            android:id="@+id/viewNodeStatusBar"
             android:layout_width="3dp"
             android:layout_height="match_parent"
-            android:background="@color/yellow_primary" />
+            android:background="@color/emerald_approved" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -26,7 +26,7 @@
             android:paddingStart="14dp"
             android:paddingTop="16dp"
             android:paddingEnd="2dp"
-            android:paddingBottom="14dp">
+            android:paddingBottom="12dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,21 +35,21 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvCardId"
+                    android:id="@+id/tvNodeName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
-                    android:fontFamily="monospace"
+                    android:fontFamily="@font/outfit"
                     android:maxLines="1"
-                    android:text="#RES-SAMPLE"
-                    android:textColor="@color/yellow_primary"
-                    android:textSize="12sp"
+                    android:text="Node Name"
+                    android:textColor="@color/text_white"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvCardStatus"
+                    android:id="@+id/tvNodeStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_status_pill"
@@ -58,77 +58,96 @@
                     android:paddingTop="4dp"
                     android:paddingEnd="9dp"
                     android:paddingBottom="4dp"
-                    android:text="Pending"
-                    android:textAllCaps="false"
+                    android:text="Active"
                     android:textColor="@color/text_dark_primary"
                     android:textSize="11sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tvCardNode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/outfit"
-                android:maxLines="2"
-                android:text="Colombo North Solar Hub"
-                android:textColor="@color/text_white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvCardDate"
+                android:id="@+id/tvNodeId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="3dp"
+                android:fontFamily="monospace"
+                android:text="#NODE-ID"
+                android:textColor="@color/text_light_muted"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/tvNodeLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/outfit"
-                android:text=""
-                android:textColor="@color/text_light_secondary"
-                android:textSize="12sp" />
+                android:maxLines="1"
+                android:text="ðŸ“ 0.0000, 0.0000"
+                android:textColor="@color/text_light_primary"
+                android:textSize="13sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
+                android:layout_marginTop="7dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvCardEnergy"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvNodeCapacity"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:fontFamily="@font/outfit"
-                    android:text="25.0 kWh"
+                    android:text="âš¡ 0 kWh"
                     android:textColor="@color/yellow_primary"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvCardTime"
+                    android:id="@+id/tvNodeBattery"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/outfit"
+                    android:gravity="end"
+                    android:text="ðŸ”‹ 0 slots"
+                    android:textColor="@color/text_light_primary"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvNodeSchedule"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:fontFamily="@font/outfit"
                     android:maxLines="1"
-                    android:text="09:00 â€“ 11:00"
+                    android:text="ðŸ•’ Schedule not specified"
                     android:textColor="@color/text_light_secondary"
                     android:textSize="12sp" />
 
-                <Button
-                    android:id="@+id/btnCardAction"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnViewDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="42dp"
-                    android:background="@drawable/bg_pill_dark"
+                    android:background="@drawable/bg_text_action"
                     android:fontFamily="@font/outfit"
+                    android:minWidth="0dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:text="View Pass â†’"
+                    android:text="Details â†’"
+                    android:textAllCaps="false"
                     android:textColor="@color/yellow_primary"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     app:backgroundTint="@null" />
             </LinearLayout>
