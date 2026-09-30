@@ -1,46 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_black"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingHorizontal="20dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="42dp">
 
-        <!-- Header -->
+        <!-- Top Header Bar with Back Button & Brand -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="22dp">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/btnProfileBack"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_arrow_back"
+                android:background="@drawable/bg_dark_input"
+                android:contentDescription="Back" />
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Prosumer Profile"
-                android:textColor="@color/text_white"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/outfit" />
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Manage your solar energy profile"
-                android:textColor="@color/text_light_secondary"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/outfit" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Solarrays"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit_bold" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prosumer Solar Registry"
+                    android:textColor="@color/text_white"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/outfit_bold" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_solar_logo"
+                android:contentDescription="Logo" />
         </LinearLayout>
 
+        <!-- Role / Preview Notice Banner (Shown when admin or non-prosumer views this screen) -->
+        <LinearLayout
+            android:id="@+id/layoutRoleNotice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_dark_card"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvNoticeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ℹ️ Active Solar Prosumer Record"
+                android:textColor="@color/yellow_primary"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_bold" />
+
+            <TextView
+                android:id="@+id/tvNoticeMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Displaying live prosumer profile for SunPower Station A (NIC: 200224700740)."
+                android:textColor="@color/text_light_secondary"
+                android:textSize="12sp"
+                android:lineSpacingMultiplier="1.2"
+                android:fontFamily="@font/outfit" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnNoticeAction"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginTop="10dp"
+                android:text="Switch to Prosumer Role"
+                android:textAllCaps="false"
+                android:textColor="@color/bg_black"
+                android:textSize="11sp"
+                android:fontFamily="@font/outfit_bold"
+                android:background="@drawable/bg_yellow_pill"
+                android:paddingHorizontal="14dp" />
+        </LinearLayout>
 
         <!-- Profile Overview Card -->
         <LinearLayout
@@ -49,80 +116,79 @@
             android:orientation="vertical"
             android:padding="20dp"
             android:background="@drawable/bg_dark_card"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="18dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PROSUMER ACCOUNT"
-                android:textColor="@color/yellow_primary"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.08"
-                android:fontFamily="@font/outfit" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PROSUMER ACCOUNT"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:letterSpacing="0.08" />
+
+                <!-- Status Badge -->
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available"
+                    android:textColor="@color/emerald_approved"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:background="@drawable/bg_pill_dark" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Name:"
+                android:text="Loading prosumer..."
                 android:textColor="@color/text_white"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/outfit" />
+                android:fontFamily="@font/outfit_bold"
+                android:layout_marginTop="12dp" />
 
             <TextView
                 android:id="@+id/tvNic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="NIC:"
+                android:text="NIC: --"
                 android:textColor="@color/text_light_secondary"
-                android:textSize="12sp"
-                android:layout_marginTop="5dp"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/outfit" />
-
-            <!-- Status -->
-            <TextView
-                android:id="@+id/tvStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Status: Available"
-                android:textColor="@color/yellow_primary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="7dp"
-                android:paddingBottom="7dp"
-                android:background="@drawable/bg_pill_dark"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/outfit" />
-
         </LinearLayout>
 
-
-        <!-- Energy Information -->
+        <!-- Energy Information Section Header -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ENERGY INFORMATION"
-            android:textColor="@color/text_white"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/outfit" />
-
+            android:text="ENERGY CAPACITY &amp; HARDWARE"
+            android:textColor="@color/text_light_muted"
+            android:textSize="11sp"
+            android:fontFamily="@font/outfit_bold"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="10dp" />
 
         <!-- Energy Cards Row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2"
+            android:baselineAligned="false"
             android:layout_marginBottom="12dp">
 
-            <!-- Solar Capacity -->
+            <!-- Solar Capacity Card -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -135,27 +201,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SOLAR CAPACITY"
-                    android:textColor="@color/text_light_secondary"
+                    android:text="SOLAR GENERATION"
+                    android:textColor="@color/text_light_muted"
                     android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/outfit" />
+                    android:fontFamily="@font/outfit_bold" />
 
                 <TextView
                     android:id="@+id/tvSolarCapacity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0 kW"
+                    android:text="-- kW"
                     android:textColor="@color/yellow_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/outfit" />
-
+                    android:textSize="20sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:layout_marginTop="8dp" />
             </LinearLayout>
 
-
-            <!-- Battery Capacity -->
+            <!-- Battery Capacity Card -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -168,80 +230,71 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="BATTERY"
-                    android:textColor="@color/text_light_secondary"
+                    android:text="BATTERY STORAGE"
+                    android:textColor="@color/text_light_muted"
                     android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/outfit" />
+                    android:fontFamily="@font/outfit_bold" />
 
                 <TextView
                     android:id="@+id/tvBatteryCapacity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0 kWh"
-                    android:textColor="@color/yellow_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/outfit" />
-
+                    android:text="-- kWh"
+                    android:textColor="@color/text_white"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:layout_marginTop="8dp" />
             </LinearLayout>
-
         </LinearLayout>
 
-
-        <!-- Available Energy -->
+        <!-- Available Energy Card -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="18dp"
+            android:padding="16dp"
             android:background="@drawable/bg_dark_card"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="18dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AVAILABLE ENERGY"
-                android:textColor="@color/text_light_secondary"
+                android:text="REAL-TIME DISPATCHABLE LOAD"
+                android:textColor="@color/text_light_muted"
                 android:textSize="10sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/outfit" />
+                android:fontFamily="@font/outfit_bold" />
 
             <TextView
                 android:id="@+id/tvAvailableEnergy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Available Energy: 0 kW"
+                android:text="Available: 0 kW"
                 android:textColor="@color/text_white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginTop="7dp"
-                android:fontFamily="@font/outfit" />
-
+                android:textSize="15sp"
+                android:fontFamily="@font/outfit_bold"
+                android:layout_marginTop="6dp" />
         </LinearLayout>
 
-
-        <!-- Trading Information -->
+        <!-- Energy Trading Section Header -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ENERGY TRADING"
-            android:textColor="@color/text_white"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/outfit" />
+            android:text="TRADING PARAMETERS"
+            android:textColor="@color/text_light_muted"
+            android:textSize="11sp"
+            android:fontFamily="@font/outfit_bold"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="10dp" />
 
-
+        <!-- Trading Cards Row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginBottom="20dp">
+            android:baselineAligned="false"
+            android:layout_marginBottom="24dp">
 
-            <!-- Price -->
+            <!-- Unit Price -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -254,27 +307,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PRICE / kWh"
-                    android:textColor="@color/text_light_secondary"
+                    android:text="ENERGY UNIT PRICE"
+                    android:textColor="@color/text_light_muted"
                     android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/outfit" />
+                    android:fontFamily="@font/outfit_bold" />
 
                 <TextView
                     android:id="@+id/tvPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Price:"
+                    android:text="-- / kWh"
                     android:textColor="@color/yellow_primary"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/outfit" />
-
+                    android:textSize="16sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:layout_marginTop="6dp" />
             </LinearLayout>
 
-
-            <!-- Location -->
+            <!-- Substation Location -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -287,70 +336,60 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LOCATION"
-                    android:textColor="@color/text_light_secondary"
+                    android:text="GRID NODE LINK"
+                    android:textColor="@color/text_light_muted"
                     android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/outfit" />
+                    android:fontFamily="@font/outfit_bold" />
 
                 <TextView
                     android:id="@+id/tvLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Location:"
+                    android:text="Node: Colombo North"
                     android:textColor="@color/text_white"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/outfit" />
-
+                    android:textSize="13sp"
+                    android:fontFamily="@font/outfit_medium"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:layout_marginTop="6dp" />
             </LinearLayout>
-
         </LinearLayout>
 
-
-        <!-- Actions -->
+        <!-- Account Actions -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ACCOUNT ACTIONS"
-            android:textColor="@color/text_white"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/outfit" />
+            android:textColor="@color/text_light_muted"
+            android:textSize="11sp"
+            android:fontFamily="@font/outfit_bold"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="10dp" />
 
-
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnEditProfile"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Edit Profile"
+            android:text="Edit Hardware &amp; Price Specs"
+            android:textAllCaps="false"
             android:textColor="@color/bg_black"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/outfit"
-            android:background="@drawable/bg_pill_dark"
-            android:layout_marginBottom="10dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            app:backgroundTint="@null" />
+            android:textSize="14sp"
+            android:fontFamily="@font/outfit_bold"
+            android:background="@drawable/bg_yellow_pill"
+            android:stateListAnimator="@null"
+            android:layout_marginBottom="12dp" />
 
-
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnDeactivateProfile"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Request Deactivation"
-            android:textColor="@color/yellow_primary"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/outfit"
+            android:layout_height="48dp"
+            android:text="Request Account Deactivation"
+            android:textAllCaps="false"
+            android:textColor="@color/red_rejected"
+            android:textSize="14sp"
+            android:fontFamily="@font/outfit_medium"
             android:background="@drawable/bg_pill_dark"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            app:backgroundTint="@null" />
+            android:stateListAnimator="@null" />
 
     </LinearLayout>
-
 </ScrollView>

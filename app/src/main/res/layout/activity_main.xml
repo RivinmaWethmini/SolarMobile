@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_black"
+    android:fitsSystemWindows="true"
     android:fillViewport="true">
 
     <LinearLayout
@@ -12,8 +13,8 @@
         android:orientation="vertical"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:paddingTop="28dp"
-        android:paddingBottom="32dp">
+        android:paddingTop="20dp"
+        android:paddingBottom="36dp">
 
         <!-- Top Header Bar (Avatar + Dynamic Greeting + Notification Bell) -->
         <LinearLayout
@@ -35,45 +36,47 @@
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:src="@drawable/ic_solar_logo"
-                    android:contentDescription="Solar Microgrid Logo" />
+                    android:contentDescription="Solarrays Logo" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="12dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
+                    <!-- Row 1: Brand / Time Greeting -->
                     <TextView
                         android:id="@+id/tvGreeting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Welcome"
-                        android:textColor="@color/text_light_secondary"
-                        android:textSize="12sp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:fontFamily="@font/outfit" />
+                        android:text="SOLARRAYS • AFTERNOON"
+                        android:textColor="@color/yellow_primary"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.08"
+                        android:fontFamily="@font/outfit_bold" />
 
+                    <!-- Row 2: User Name + Guaranteed-width Role Badge (Zero layout shifting) -->
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:gravity="center_vertical"
+                        android:orientation="horizontal"
                         android:layout_marginTop="2dp">
 
                         <TextView
                             android:id="@+id/tvUserNic"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Prosumer Portal"
+                            android:layout_weight="1"
+                            android:text="SunPower Station A"
                             android:textColor="@color/text_white"
-                            android:textSize="15sp"
+                            android:textSize="16sp"
                             android:textStyle="bold"
-                            android:ellipsize="end"
+                            android:singleLine="true"
                             android:maxLines="1"
+                            android:ellipsize="end"
                             android:fontFamily="@font/outfit" />
 
                         <TextView
@@ -81,52 +84,77 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="PROSUMER"
-                            android:textColor="@color/yellow_primary"
+                            android:text="☀️ PROSUMER"
+                            android:textColor="@color/emerald_approved"
                             android:textSize="9sp"
                             android:fontFamily="@font/outfit_bold"
-                            android:background="@drawable/bg_dark_input"
-                            android:paddingHorizontal="6dp"
-                            android:paddingVertical="2dp" />
+                            android:background="@drawable/bg_pill_dark"
+                            android:paddingHorizontal="7dp"
+                            android:paddingVertical="2dp"
+                            android:singleLine="true"
+                            android:maxLines="1" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Header Action Icons (Quick QR Scanner & Notification Bell) -->
+            <!-- Header Action Icons (Role Switcher + QR Scanner + Logout) -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
+                <!-- Fast Role Switcher Button -->
+                <FrameLayout
+                    android:id="@+id/btnSwitchRoleHeader"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="@drawable/bg_circle_dark"
+                    android:contentDescription="Switch User Role">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_refresh_arrow"
+                        app:tint="@color/yellow_primary" />
+                </FrameLayout>
+
                 <!-- Quick Operator QR Scanner Button -->
                 <FrameLayout
                     android:id="@+id/btnQuickScanHeader"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:background="@drawable/bg_circle_dark"
                     android:contentDescription="Open Operator QR Scanner">
 
                     <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_camera"
-                        app:tint="@color/yellow_primary" />
+                        app:tint="@color/text_light_secondary" />
                 </FrameLayout>
 
                 <!-- Logout Icon Button -->
                 <FrameLayout
                     android:id="@+id/btnHeaderLogout"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:background="@drawable/bg_circle_dark"
                     android:contentDescription="Sign Out">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_logout"
                         app:tint="@color/text_light_secondary" />

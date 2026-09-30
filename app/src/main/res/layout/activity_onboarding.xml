@@ -3,9 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_black">
+    android:background="@color/bg_black"
+    android:fitsSystemWindows="false">
 
-    <!-- Top Minimal Branding Bar -->
+    <!-- Edge-to-Edge Hero Image Background (No ugly black border margins) -->
+    <ImageView
+        android:id="@+id/ivHeroImage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hero_solar_microgrid"
+        android:contentDescription="Solarrays Microgrid Station"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHeroBottom" />
+
+    <!-- Dark Gradient Scrim overlay ensuring smooth blend into pure dark surface -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_hero_scrim"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHeroBottom" />
+
+    <!-- Guideline for Hero Split (60% top, 40% bottom) -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHeroBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.62" />
+
+    <!-- Top Minimal Branding Bar with Safe Status Bar Insets -->
     <LinearLayout
         android:id="@+id/layoutTopBar"
         android:layout_width="match_parent"
@@ -13,144 +41,160 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingHorizontal="24dp"
-        android:paddingTop="28dp"
+        android:paddingTop="36dp"
         android:paddingBottom="12dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:src="@drawable/ic_solar_logo"
-            android:contentDescription="Solis Logo" />
+            android:contentDescription="Solarrays Logo" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="12dp"
-            android:text="Solis microgrid"
+            android:layout_marginStart="10dp"
+            android:text="Solarrays"
             android:textColor="@color/text_white"
-            android:textSize="16sp"
-            android:fontFamily="@font/outfit_medium" />
+            android:textSize="17sp"
+            android:fontFamily="@font/outfit_bold" />
 
         <TextView
             android:id="@+id/btnTopSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign in"
-            android:textColor="@color/text_light_secondary"
-            android:textSize="13sp"
-            android:fontFamily="@font/outfit_medium"
-            android:padding="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless" />
+            android:textColor="@color/yellow_primary"
+            android:textSize="14sp"
+            android:fontFamily="@font/outfit_bold"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="6dp"
+            android:background="@drawable/bg_dark_input" />
     </LinearLayout>
 
-    <!-- Center Hero Card with Image & Gradient Scrim -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardHero"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="24dp"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="10dp"
-        app:cardBackgroundColor="@color/bg_dark_surface"
-        app:layout_constraintTop_toBottomOf="@id/layoutTopBar"
-        app:layout_constraintBottom_toTopOf="@id/layoutBottomControls">
+    <!-- Animated Solarrays Brand Badge (Centrally Animated on Load) -->
+    <LinearLayout
+        android:id="@+id/layoutAnimatedBrand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTopBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- Glowing Circular Logo Container -->
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:id="@+id/frameLogoEmblem"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:background="@drawable/bg_logo_glow"
+            android:padding="12dp">
 
-            <!-- Hero Image -->
             <ImageView
-                android:id="@+id/ivHeroImage"
+                android:id="@+id/ivAnimatedLogo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/hero_solar_microgrid"
-                android:contentDescription="Microgrid Solar Field" />
-
-            <!-- Dark Gradient Scrim overlay -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_hero_scrim" />
-
-            <!-- Editorial Content Overlay -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:orientation="vertical"
-                android:padding="24dp">
-
-                <!-- Slide Tag & Category -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
-
-                    <TextView
-                        android:id="@+id/tvSlideTag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="01 / 02"
-                        android:textColor="@color/yellow_primary"
-                        android:textSize="11sp"
-                        android:fontFamily="@font/outfit_bold"
-                        android:background="@drawable/bg_dark_input"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="3dp" />
-
-                    <TextView
-                        android:id="@+id/tvSlideCategory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Decentralized Trading"
-                        android:textColor="@color/text_light_secondary"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/outfit_medium" />
-                </LinearLayout>
-
-                <!-- Headline -->
-                <TextView
-                    android:id="@+id/tvSlideHeadline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Trade solar power across local microgrids."
-                    android:textColor="@color/text_white"
-                    android:textSize="26sp"
-                    android:lineSpacingMultiplier="1.15"
-                    android:fontFamily="@font/outfit_bold" />
-
-                <!-- Description -->
-                <TextView
-                    android:id="@+id/tvSlideDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Reserve clean generation dispatch slots, balance grid loads, and access real-time node capacity directly from your mobile device."
-                    android:textColor="@color/text_light_secondary"
-                    android:textSize="13sp"
-                    android:lineSpacingMultiplier="1.2"
-                    android:fontFamily="@font/outfit" />
-            </LinearLayout>
+                android:src="@drawable/ic_solar_logo"
+                android:contentDescription="Solarrays Emblem" />
         </FrameLayout>
-    </androidx.cardview.widget.CardView>
 
-    <!-- Bottom Action & Navigation Controls -->
+        <TextView
+            android:id="@+id/tvBrandNameAnimated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="SOLARRAYS"
+            android:textColor="@color/yellow_primary"
+            android:textSize="13sp"
+            android:letterSpacing="0.18"
+            android:fontFamily="@font/outfit_bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Smart Microgrid Energy Trading"
+            android:textColor="@color/text_light_secondary"
+            android:textSize="11sp"
+            android:fontFamily="@font/outfit" />
+    </LinearLayout>
+
+    <!-- Editorial Content Area (Positioned above bottom controls) -->
+    <LinearLayout
+        android:id="@+id/layoutSlideContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/layoutBottomControls">
+
+        <!-- Slide Tag & Category -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/tvSlideTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01 / 02"
+                android:textColor="@color/yellow_primary"
+                android:textSize="11sp"
+                android:fontFamily="@font/outfit_bold"
+                android:background="@drawable/bg_dark_input"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp" />
+
+            <TextView
+                android:id="@+id/tvSlideCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Decentralized Trading"
+                android:textColor="@color/text_light_secondary"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium" />
+        </LinearLayout>
+
+        <!-- Headline -->
+        <TextView
+            android:id="@+id/tvSlideHeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trade solar power across local microgrids."
+            android:textColor="@color/text_white"
+            android:textSize="25sp"
+            android:lineSpacingMultiplier="1.15"
+            android:fontFamily="@font/outfit_bold" />
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/tvSlideDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Reserve clean generation dispatch slots, balance grid loads, and access real-time node capacity directly from your mobile device."
+            android:textColor="@color/text_light_secondary"
+            android:textSize="13sp"
+            android:lineSpacingMultiplier="1.2"
+            android:fontFamily="@font/outfit" />
+    </LinearLayout>
+
+    <!-- Bottom Action & Navigation Controls (Properly padded for Samsung navigation bar) -->
     <LinearLayout
         android:id="@+id/layoutBottomControls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="24dp"
-        android:paddingBottom="32dp"
+        android:paddingBottom="36dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Slide Indicator Dots & Prev/Next Buttons -->
@@ -159,7 +203,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="18dp">
 
             <LinearLayout
                 android:id="@+id/layoutDots"
@@ -221,6 +265,19 @@
             android:fontFamily="@font/outfit_medium"
             android:background="@drawable/bg_pill_dark"
             android:stateListAnimator="@null" />
+
+        <!-- Instant Prosumer Demo Switcher (1-Tap Test Access) -->
+        <TextView
+            android:id="@+id/btnFastDemoProsumer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:text="Demo Access: Solar Prosumer"
+            android:textColor="@color/yellow_primary"
+            android:textSize="12sp"
+            android:fontFamily="@font/outfit_bold"
+            android:padding="6dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

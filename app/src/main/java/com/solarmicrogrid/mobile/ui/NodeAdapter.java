@@ -93,7 +93,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
             holder.tvNodeCapacity.setText(
                     String.format(
                             Locale.US,
-                            "⚡ %.2f MWh",
+                            "%.2f MWh",
                             capacity / 1000
                     )
             );
@@ -101,7 +101,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
             holder.tvNodeCapacity.setText(
                     String.format(
                             Locale.US,
-                            "⚡ %.0f kWh",
+                            "%.0f kW",
                             capacity
                     )
             );

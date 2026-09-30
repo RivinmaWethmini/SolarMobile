@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -135,6 +136,11 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+        View btnSwitchRoleHeader = findViewById(R.id.btnSwitchRoleHeader);
+        if (btnSwitchRoleHeader != null) {
+            btnSwitchRoleHeader.setOnClickListener(v -> showRoleSwitcherDialog());
+        }
+
         // Quick Action 4: Explore Active Solar Nodes (Member 3)
         btnViewNodes.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, NodeListActivity.class);
@@ -171,43 +177,45 @@ public class MainActivity extends AppCompatActivity {
     private void updateGreetingAndUser() {
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);
-        String greeting;
+        String timeGreeting;
         if (hour >= 4 && hour < 12) {
-            greeting = "Good Morning";
+            timeGreeting = "MORNING";
         } else if (hour >= 12 && hour < 17) {
-            greeting = "Good Afternoon";
+            timeGreeting = "AFTERNOON";
         } else if (hour >= 17 && hour < 21) {
-            greeting = "Good Evening";
+            timeGreeting = "EVENING";
         } else {
-            greeting = "Good Night";
+            timeGreeting = "NIGHT";
         }
-        tvGreeting.setText(greeting);
+        tvGreeting.setText("SOLARRAYS • " + timeGreeting);
 
         AuthUser user = SessionManager.getInstance(this).getUser();
         if (user != null) {
-            tvGreeting.setText(greeting + ", " + user.getDisplayName());
-            if (user.getNic() != null && !user.getNic().trim().isEmpty()) {
-                tvUserNic.setText("NIC: " + user.getNic());
-            } else if (user.getEmail() != null && !user.getEmail().trim().isEmpty()) {
-                tvUserNic.setText(user.getEmail());
-            } else {
-                tvUserNic.setText(user.getDisplayName());
+            String rawName = user.getDisplayName();
+            if (rawName != null && rawName.contains("(")) {
+                rawName = rawName.substring(0, rawName.indexOf('(')).trim();
             }
+            tvUserNic.setText(rawName != null && !rawName.isEmpty() ? rawName : "Solarrays Participant");
 
             if (tvUserRoleBadge != null) {
                 tvUserRoleBadge.setVisibility(View.VISIBLE);
-                tvUserRoleBadge.setText(user.getRole().toUpperCase(Locale.US));
+                String role = user.getRole();
                 if (user.isAdmin()) {
+                    tvUserRoleBadge.setText("♻️ ADMIN");
                     tvUserRoleBadge.setTextColor(getColor(R.color.yellow_primary));
                 } else if (user.isProsumer()) {
+                    tvUserRoleBadge.setText("☀️ PROSUMER");
                     tvUserRoleBadge.setTextColor(getColor(R.color.emerald_approved));
+                } else if (role != null && role.toLowerCase(Locale.US).contains("operator")) {
+                    tvUserRoleBadge.setText("👷‍♂️ OPERATOR");
+                    tvUserRoleBadge.setTextColor(getColor(R.color.yellow_primary));
                 } else {
+                    tvUserRoleBadge.setText("💡 CONSUMER");
                     tvUserRoleBadge.setTextColor(getColor(R.color.text_light_secondary));
                 }
             }
         } else {
-            tvGreeting.setText(greeting);
-            tvUserNic.setText("Solis Portal");
+            tvUserNic.setText("Solarrays Portal");
             if (tvUserRoleBadge != null) {
                 tvUserRoleBadge.setVisibility(View.GONE);
             }
@@ -217,6 +225,70 @@ public class MainActivity extends AppCompatActivity {
         if (layoutOperatorScan != null) {
             layoutOperatorScan.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void showRoleSwitcherDialog() {
+        final String[] roles = {
+                "☀️ Solar Prosumer (SunPower Station A - Colombo)",
+                "👷‍♂️ Grid Site Operator (Substation Verification)",
+                "👑 System Administrator (Rivinma)",
+                "♻️ Backoffice Administrator (Sanjitha)",
+                "💡 Clean Energy Consumer"
+        };
+
+        new AlertDialog.Builder(this)
+                .setTitle("Switch Active System Role")
+                .setItems(roles, (dialog, which) -> {
+                    switch (which) {
+                        case 0:
+                            performSwitchLogin("prosumer@solar.com", "Prosumer@12345");
+                            break;
+                        case 1:
+                            performSwitchLogin("operator@solar.com", "Operator@12345");
+                            break;
+                        case 2:
+                            performSwitchLogin("dissanayakerivinma@gmail.com", "rivinma12");
+                            break;
+                        case 3:
+                            performSwitchLogin("sanjithar2315@gmail.com", "sanjitha123");
+                            break;
+                        case 4:
+                            performSwitchLogin("consumer@solar.com", "Consumer@12345");
+                            break;
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void performSwitchLogin(String identifier, String password) {
+        Toast.makeText(this, "Switching role...", Toast.LENGTH_SHORT).show();
+        ApiClient.login(identifier, password, new ApiClient.ApiCallback() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String accessToken = json.optString("accessToken", "");
+                    String refreshToken = json.optString("refreshToken", "");
+                    JSONObject userObj = json.optJSONObject("user");
+                    AuthUser authUser = userObj != null ? AuthUser.fromJson(userObj) : null;
+
+                    SessionManager.getInstance(MainActivity.this).saveSession(accessToken, refreshToken, authUser);
+                    updateGreetingAndUser();
+                    fetchLiveDashboardStats();
+                    fetchLiveMicrogridNodes();
+                    updateNextApprovedSlot();
+                    Toast.makeText(MainActivity.this, "✓ Switched to " + (authUser != null ? authUser.getRole() : "User"), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Switch error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Toast.makeText(MainActivity.this, "Login error: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**

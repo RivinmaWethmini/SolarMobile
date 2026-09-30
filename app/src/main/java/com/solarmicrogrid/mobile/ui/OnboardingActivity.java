@@ -3,25 +3,32 @@ package com.solarmicrogrid.mobile.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.solarmicrogrid.mobile.R;
 import com.solarmicrogrid.mobile.auth.SessionManager;
+import com.solarmicrogrid.mobile.models.AuthUser;
 import com.solarmicrogrid.mobile.network.ApiClient;
 
+import org.json.JSONObject;
+
 /**
- * Onboarding Carousel introducing the Solis Microgrid trading capabilities.
- * Matches Onboarding.jsx from the Web frontend.
+ * Onboarding Carousel introducing the Solarrays Microgrid trading capabilities.
+ * Features an animated brand entrance and 1-tap instant test authentication.
  */
 public class OnboardingActivity extends AppCompatActivity {
 
     private TextView tvSlideTag, tvSlideCategory, tvSlideHeadline, tvSlideDescription;
-    private TextView btnNextSlide, btnTopSignIn;
+    private TextView btnNextSlide, btnTopSignIn, btnFastDemoProsumer;
     private View dot0, dot1;
     private Button btnGetStarted, btnSignIn;
+    private View layoutAnimatedBrand, frameLogoEmblem;
 
     private int currentSlide = 0;
 
@@ -62,6 +69,12 @@ public class OnboardingActivity extends AppCompatActivity {
         dot1 = findViewById(R.id.dot1);
         btnGetStarted = findViewById(R.id.btnGetStarted);
         btnSignIn = findViewById(R.id.btnSignIn);
+        btnFastDemoProsumer = findViewById(R.id.btnFastDemoProsumer);
+        layoutAnimatedBrand = findViewById(R.id.layoutAnimatedBrand);
+        frameLogoEmblem = findViewById(R.id.frameLogoEmblem);
+
+        // Animate the Solarrays emblem into view smoothly
+        playBrandEntranceAnimation();
 
         updateSlideUI();
 
@@ -90,6 +103,69 @@ public class OnboardingActivity extends AppCompatActivity {
 
         btnSignIn.setOnClickListener(goToLogin);
         btnTopSignIn.setOnClickListener(goToLogin);
+
+        // 1-Tap Fast Test Login for Prosumer role
+        if (btnFastDemoProsumer != null) {
+            btnFastDemoProsumer.setOnClickListener(v -> performFastProsumerLogin());
+        }
+    }
+
+    private void playBrandEntranceAnimation() {
+        if (layoutAnimatedBrand != null && frameLogoEmblem != null) {
+            layoutAnimatedBrand.setAlpha(0f);
+            layoutAnimatedBrand.setTranslationY(-40f);
+            frameLogoEmblem.setScaleX(0.35f);
+            frameLogoEmblem.setScaleY(0.35f);
+
+            layoutAnimatedBrand.animate()
+                    .alpha(1f)
+                    .translationY(0f)
+                    .setDuration(800)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .start();
+
+            frameLogoEmblem.animate()
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(1000)
+                    .setInterpolator(new OvershootInterpolator(1.7f))
+                    .start();
+        }
+    }
+
+    private void performFastProsumerLogin() {
+        Toast.makeText(this, "☀️ Connecting as SunPower Solar Prosumer...", Toast.LENGTH_SHORT).show();
+        ApiClient.login("prosumer@solar.com", "Prosumer@12345", new ApiClient.ApiCallback() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String accessToken = json.optString("accessToken", "");
+                    String refreshToken = json.optString("refreshToken", "");
+                    JSONObject userObj = json.optJSONObject("user");
+
+                    AuthUser authUser = null;
+                    if (userObj != null) {
+                        authUser = AuthUser.fromJson(userObj);
+                    }
+
+                    SessionManager.getInstance(OnboardingActivity.this).saveSession(accessToken, refreshToken, authUser);
+                    Toast.makeText(OnboardingActivity.this, "✓ Welcome, " + (authUser != null ? authUser.getDisplayName() : "Prosumer") + "!", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(OnboardingActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                } catch (Exception e) {
+                    Toast.makeText(OnboardingActivity.this, "Login error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Toast.makeText(OnboardingActivity.this, "Authentication failed: " + errorMessage, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void updateSlideUI() {

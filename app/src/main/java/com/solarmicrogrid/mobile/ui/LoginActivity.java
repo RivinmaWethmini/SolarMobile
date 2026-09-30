@@ -343,7 +343,7 @@ public class LoginActivity extends AppCompatActivity {
             SessionManager.getInstance(this).saveSession(accessToken, refreshToken, authUser);
 
             String greeting = authUser != null ? authUser.getDisplayName() : "Participant";
-            Toast.makeText(this, "⚡ Welcome back, " + greeting + "!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Welcome back, " + greeting + "!", Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

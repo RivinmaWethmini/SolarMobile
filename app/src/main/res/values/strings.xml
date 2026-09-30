@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Solar Microgrid</string>
-    <string name="portal_subtitle">Prosumer Energy Trading</string>
+    <string name="app_name">Solarrays</string>
+    <string name="portal_subtitle">Decentralized Microgrid Trading</string>
     <string name="reserve_slot">Book Energy Slot</string>
     <string name="my_bookings">My Reservations</string>
     <string name="booking_history">Booking History</string>

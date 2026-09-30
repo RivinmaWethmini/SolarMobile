@@ -11,6 +11,66 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!-- Camera Permission Prompt Card (Shown if permission is missing, never force close) -->
+    <LinearLayout
+        android:id="@+id/layoutCameraPermission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="28dp"
+        android:background="@drawable/bg_dark_card"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="28dp"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_circle_dark"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_camera"
+                app:tint="@color/yellow_primary"
+                android:contentDescription="Camera Icon" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Camera Access Required"
+            android:textColor="@color/text_white"
+            android:textSize="18sp"
+            android:fontFamily="@font/outfit_bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="22dp"
+            android:text="The Grid Operator scanner uses your camera to scan Prosumer QR transaction passes and authorize energy dispatch into microgrid substations."
+            android:textColor="@color/text_light_secondary"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:fontFamily="@font/outfit" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGrantPermission"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="📷 Grant Camera Access"
+            android:textAllCaps="false"
+            android:textColor="@color/bg_black"
+            android:textSize="14sp"
+            android:fontFamily="@font/outfit_bold"
+            android:background="@drawable/bg_yellow_pill" />
+    </LinearLayout>
+
     <!-- Top overlay: title bar with back/cancel -->
     <LinearLayout
         android:id="@+id/layoutScanHeader"
@@ -33,9 +93,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Operator QR Dispatch"
+                android:text="Solarrays Operator QR Dispatch"
                 android:textColor="@color/text_white"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/outfit" />
 
@@ -64,22 +124,44 @@
             app:backgroundTint="@null" />
     </LinearLayout>
 
-    <!-- Center guide text when active -->
-    <TextView
-        android:id="@+id/tvScanHint"
-        android:layout_width="wrap_content"
+    <!-- Center/Bottom guide & Fast Demo Action -->
+    <LinearLayout
+        android:id="@+id/layoutBottomGuide"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="120dp"
-        android:background="@drawable/bg_pill_dark"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:text="Point camera at Prosumer QR Code"
-        android:textColor="@color/text_white"
-        android:textSize="12sp"
-        android:fontFamily="@font/outfit" />
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="42dp">
+
+        <TextView
+            android:id="@+id/tvScanHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_pill_dark"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Point camera at Prosumer QR Code"
+            android:textColor="@color/text_white"
+            android:textSize="12sp"
+            android:fontFamily="@font/outfit" />
+
+        <!-- Fast Test Button for QR Verification (Allows instant verification even without 2nd phone) -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnFastTestPass"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="14dp"
+            android:text="Verify Latest Approved Pass (Simulate)"
+            android:textAllCaps="false"
+            android:textColor="@color/yellow_primary"
+            android:textSize="13sp"
+            android:fontFamily="@font/outfit_bold"
+            android:background="@drawable/bg_pill_dark" />
+    </LinearLayout>
 
     <!-- Bottom result overlay (hidden until scan occurs) -->
     <LinearLayout

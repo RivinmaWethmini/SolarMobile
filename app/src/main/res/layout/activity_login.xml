@@ -41,7 +41,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Solis microgrid"
+                    android:text="Solarrays"
                     android:textColor="@color/yellow_primary"
                     android:textSize="12sp"
                     android:fontFamily="@font/outfit_bold" />
@@ -157,7 +157,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
-                    android:hint="e.g. rivinma_solar or operator@solarmicrogrid.com"
+                    android:hint="Enter email or username"
                     android:textColorHint="@color/text_light_muted"
                     android:textColor="@color/text_white"
                     android:textSize="14sp"
