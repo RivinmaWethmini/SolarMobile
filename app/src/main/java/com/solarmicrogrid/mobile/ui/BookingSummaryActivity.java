@@ -24,7 +24,7 @@ public class BookingSummaryActivity extends AppCompatActivity {
 
     private TextView tvSummaryTitle, tvActionStatus, tvSummaryId, tvSummaryNic;
     private TextView tvSummaryNode, tvSummaryCapacity, tvSummaryTime, tvSummaryStatus;
-    private Button btnViewQrCode, btnCancelBooking, btnBackHome;
+    private Button btnViewQrCode, btnModifyBooking, btnCancelBooking, btnBackHome;
 
     private Reservation reservation;
     private String actionType = "VIEW";
@@ -47,8 +47,14 @@ public class BookingSummaryActivity extends AppCompatActivity {
         tvSummaryStatus = findViewById(R.id.tvSummaryStatus);
 
         btnViewQrCode = findViewById(R.id.btnViewQrCode);
+        btnModifyBooking = findViewById(R.id.btnModifyBooking);
         btnCancelBooking = findViewById(R.id.btnCancelBooking);
         btnBackHome = findViewById(R.id.btnBackHome);
+
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         reservation = (Reservation) getIntent().getSerializableExtra("reservation");
         if (getIntent().hasExtra("actionType")) {
@@ -57,7 +63,19 @@ public class BookingSummaryActivity extends AppCompatActivity {
 
         populateDetails();
 
-        btnBackHome.setOnClickListener(v -> finish());
+        btnBackHome.setOnClickListener(v -> {
+            Intent homeIntent = new Intent(BookingSummaryActivity.this, MainActivity.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(homeIntent);
+            finish();
+        });
+
+        // Modify Reservation (Subject to 12-Hour Notice Rule)
+        btnModifyBooking.setOnClickListener(v -> {
+            Intent modifyIntent = new Intent(BookingSummaryActivity.this, ModifyBookingActivity.class);
+            modifyIntent.putExtra("reservation", reservation);
+            startActivity(modifyIntent);
+        });
 
         // Cancel Reservation (Subject to 12-Hour Rule)
         btnCancelBooking.setOnClickListener(v -> confirmAndCancelReservation());
@@ -80,10 +98,15 @@ public class BookingSummaryActivity extends AppCompatActivity {
         if ("CREATED".equals(actionType)) {
             tvActionStatus.setText("Energy Slot Reservation Created!");
             tvActionStatus.setTextColor(getResources().getColor(R.color.emerald_approved));
+        } else if ("MODIFIED".equals(actionType)) {
+            tvActionStatus.setText("Reservation Modified Successfully!");
+            tvActionStatus.setTextColor(getResources().getColor(R.color.accent_solar));
         } else if ("CANCELLED".equals(actionType)) {
             tvActionStatus.setText("Reservation Cancelled (12-Hour Notice Verified)");
             tvActionStatus.setTextColor(getResources().getColor(R.color.red_rejected));
-            btnCancelBooking.setVisibility(View.GONE);
+        } else {
+            tvActionStatus.setText("Reservation Details");
+            tvActionStatus.setTextColor(getResources().getColor(R.color.slate_text_dim));
         }
 
         String refId = reservation.getId();
@@ -91,24 +114,54 @@ public class BookingSummaryActivity extends AppCompatActivity {
             refId = refId.substring(refId.length() - 8).toUpperCase();
         }
         tvSummaryId.setText("#" + refId);
-        tvSummaryNic.setText(reservation.getProsumerNic());
-        tvSummaryNode.setText(reservation.getNodeId());
-        tvSummaryCapacity.setText(reservation.getReservedEnergyKwh() + " kW/h");
-        tvSummaryTime.setText(reservation.getStartTime() + " to " + reservation.getEndTime());
-        tvSummaryStatus.setText(reservation.getStatus());
+        tvSummaryNic.setText(reservation.getProsumerNic() != null ? reservation.getProsumerNic() : "—");
+        tvSummaryNode.setText(reservation.getNodeId() != null ? reservation.getNodeId() : "—");
+        tvSummaryCapacity.setText(reservation.getReservedEnergyKwh() + " kWh");
 
-        boolean isApproved = "Approved".equalsIgnoreCase(reservation.getStatus());
-        boolean isCancelled = "Cancelled".equalsIgnoreCase(reservation.getStatus());
+        String timeWindow = reservation.getStartTime() != null ? reservation.getStartTime() : "";
+        if (reservation.getEndTime() != null && !reservation.getEndTime().isEmpty()) {
+            timeWindow += " – " + reservation.getEndTime();
+        }
+        tvSummaryTime.setText(timeWindow.isEmpty() ? "—" : timeWindow);
 
-        if (isApproved) {
-            tvSummaryStatus.setTextColor(getResources().getColor(R.color.emerald_approved));
-            btnViewQrCode.setVisibility(View.VISIBLE); // Reveal ZXing QR Code button
+        String status = reservation.getStatus() != null ? reservation.getStatus() : "Pending";
+        tvSummaryStatus.setText(status);
+
+        boolean isPending = "Pending".equalsIgnoreCase(status);
+        boolean isApproved = "Approved".equalsIgnoreCase(status);
+        boolean isCancelled = "Cancelled".equalsIgnoreCase(status);
+        boolean isRejected = "Rejected".equalsIgnoreCase(status);
+
+        android.graphics.drawable.GradientDrawable statusBg = new android.graphics.drawable.GradientDrawable();
+        statusBg.setCornerRadius(8f * getResources().getDisplayMetrics().density);
+
+        if (isPending) {
+            statusBg.setColor(0xFFFFD000);
+            tvSummaryStatus.setBackground(statusBg);
+            tvSummaryStatus.setTextColor(0xFF0A0A0C);
+            btnModifyBooking.setVisibility(View.VISIBLE);
+            btnCancelBooking.setVisibility(View.VISIBLE);
+            btnViewQrCode.setVisibility(View.GONE);
+        } else if (isApproved) {
+            statusBg.setColor(0xFF10B981);
+            tvSummaryStatus.setBackground(statusBg);
+            tvSummaryStatus.setTextColor(0xFFFFFFFF);
+            btnModifyBooking.setVisibility(View.VISIBLE);
+            btnCancelBooking.setVisibility(View.VISIBLE);
+            btnViewQrCode.setVisibility(View.VISIBLE);
         } else if (isCancelled) {
-            tvSummaryStatus.setTextColor(getResources().getColor(R.color.red_rejected));
+            statusBg.setColor(0xFF374151);
+            tvSummaryStatus.setBackground(statusBg);
+            tvSummaryStatus.setTextColor(0xFF9CA3AF);
+            btnModifyBooking.setVisibility(View.GONE);
             btnCancelBooking.setVisibility(View.GONE);
             btnViewQrCode.setVisibility(View.GONE);
-        } else {
-            tvSummaryStatus.setTextColor(getResources().getColor(R.color.amber_pending));
+        } else if (isRejected) {
+            statusBg.setColor(0xFF7F1D1D);
+            tvSummaryStatus.setBackground(statusBg);
+            tvSummaryStatus.setTextColor(0xFFFCA5A5);
+            btnModifyBooking.setVisibility(View.GONE);
+            btnCancelBooking.setVisibility(View.GONE);
             btnViewQrCode.setVisibility(View.GONE);
         }
     }
@@ -116,7 +169,7 @@ public class BookingSummaryActivity extends AppCompatActivity {
     private void confirmAndCancelReservation() {
         new AlertDialog.Builder(this)
                 .setTitle("Cancel Reservation")
-                .setMessage("Are you sure you want to cancel this booking?\n\nNote: FAT Service rule requires at least 12 hours notice prior to scheduled start time.")
+                .setMessage("Are you sure you want to cancel this booking?\n\nNote: Rule requires at least 12 hours notice prior to scheduled start time.")
                 .setPositiveButton("Yes, Cancel", (dialog, which) -> executeCancelOnServer())
                 .setNegativeButton("Keep Booking", null)
                 .show();
@@ -126,15 +179,15 @@ public class BookingSummaryActivity extends AppCompatActivity {
         if (reservation.getId() == null) return;
 
         btnCancelBooking.setEnabled(false);
-        // Bug Fix: cancel uses POST (not PUT) — matches C# API /reservations/{id}/cancel endpoint
         ApiClient.post("/reservations/" + reservation.getId() + "/cancel", "{}", new ApiClient.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 btnCancelBooking.setEnabled(true);
                 Toast.makeText(BookingSummaryActivity.this, "Reservation cancelled successfully", Toast.LENGTH_SHORT).show();
 
-                // Update local status
+                // Update local status and clear QR credentials
                 reservation.setStatus("Cancelled");
+                reservation.setQrCodePayload("");
                 dbHelper.updateReservationStatus(reservation.getId(), "Cancelled");
 
                 actionType = "CANCELLED";
@@ -144,7 +197,6 @@ public class BookingSummaryActivity extends AppCompatActivity {
             @Override
             public void onError(String errorMessage) {
                 btnCancelBooking.setEnabled(true);
-                // Displays 12-hour rule rejection message from central C# API
                 new AlertDialog.Builder(BookingSummaryActivity.this)
                         .setTitle("Cancellation Blocked")
                         .setMessage("Server Rule Violation:\n\n" + errorMessage)

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_black">
+
+    <!-- ZXing DecoratedBarcodeView fills the camera screen -->
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/barcodeScanner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Top overlay: title bar with back/cancel -->
+    <LinearLayout
+        android:id="@+id/layoutScanHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#E60B0B0E"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="16dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Operator QR Dispatch"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/outfit" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Align prosumer QR inside viewfinder"
+                android:textColor="@color/text_light_secondary"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnCancelScan"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="Close"
+            android:textColor="@color/yellow_primary"
+            android:background="@drawable/bg_pill_dark"
+            android:fontFamily="@font/outfit"
+            android:textSize="12sp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:textStyle="bold"
+            app:backgroundTint="@null" />
+    </LinearLayout>
+
+    <!-- Center guide text when active -->
+    <TextView
+        android:id="@+id/tvScanHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="120dp"
+        android:background="@drawable/bg_pill_dark"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="Point camera at Prosumer QR Code"
+        android:textColor="@color/text_white"
+        android:textSize="12sp"
+        android:fontFamily="@font/outfit" />
+
+    <!-- Bottom result overlay (hidden until scan occurs) -->
+    <LinearLayout
+        android:id="@+id/layoutScanResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:background="@drawable/bg_dark_card"
+        android:padding="24dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvScanResultStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verifying..."
+            android:textColor="@color/yellow_primary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:fontFamily="@font/outfit" />
+
+        <TextView
+            android:id="@+id/tvScanResultMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_light_secondary"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/outfit" />
+
+        <TextView
+            android:id="@+id/tvScanResultDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_white"
+            android:textSize="13sp"
+            android:lineSpacingExtra="4dp"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/outfit" />
+
+        <Button
+            android:id="@+id/btnScanAgain"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_yellow_pill"
+            android:text="Scan Next QR"
+            android:textColor="@color/text_dark_primary"
+            android:textStyle="bold"
+            android:fontFamily="@font/outfit"
+            app:backgroundTint="@null" />
+    </LinearLayout>
+</FrameLayout>

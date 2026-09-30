@@ -6,7 +6,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,9 +35,13 @@ import java.util.List;
 public class BookingListActivity extends AppCompatActivity {
 
     private EditText etSearchBookings;
-    private Button btnFilterAll, btnFilterPending, btnFilterApproved;
+    private Button btnFilterAll, btnFilterPending, btnFilterApproved, btnFilterCancelled, btnFilterRejected;
     private ProgressBar pbLoading;
     private RecyclerView rvBookings;
+    private LinearLayout layoutEmptyState;
+    private TextView tvEmptyTitle, tvEmptySubtitle;
+    private TextView tvReservationCount;
+    private Button btnRetryLoad;
     private BookingAdapter adapter;
 
     private List<Reservation> allReservations;
@@ -63,12 +69,28 @@ public class BookingListActivity extends AppCompatActivity {
         btnFilterAll = findViewById(R.id.btnFilterAll);
         btnFilterPending = findViewById(R.id.btnFilterPending);
         btnFilterApproved = findViewById(R.id.btnFilterApproved);
+        btnFilterCancelled = findViewById(R.id.btnFilterCancelled);
+        btnFilterRejected = findViewById(R.id.btnFilterRejected);
         pbLoading = findViewById(R.id.pbLoading);
         rvBookings = findViewById(R.id.rvBookings);
+        layoutEmptyState = findViewById(R.id.layoutEmptyState);
+        tvEmptyTitle = findViewById(R.id.tvEmptyTitle);
+        tvEmptySubtitle = findViewById(R.id.tvEmptySubtitle);
+        tvReservationCount = findViewById(R.id.tvReservationCount);
+        btnRetryLoad = findViewById(R.id.btnRetryLoad);
+
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         rvBookings.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BookingAdapter(this, displayedList);
         rvBookings.setAdapter(adapter);
+
+        if (btnRetryLoad != null) {
+            btnRetryLoad.setOnClickListener(v -> loadBookings());
+        }
 
         setupFilters();
         setupSearch();
@@ -84,20 +106,25 @@ public class BookingListActivity extends AppCompatActivity {
         btnFilterAll.setOnClickListener(v -> setFilter("All"));
         btnFilterPending.setOnClickListener(v -> setFilter("Pending"));
         btnFilterApproved.setOnClickListener(v -> setFilter("Approved"));
+        if (btnFilterCancelled != null) btnFilterCancelled.setOnClickListener(v -> setFilter("Cancelled"));
+        if (btnFilterRejected != null) btnFilterRejected.setOnClickListener(v -> setFilter("Rejected"));
     }
 
     private void setFilter(String filter) {
         currentFilter = filter;
-        btnFilterAll.setBackgroundColor(filter.equals("All") ? getResources().getColor(R.color.accent_solar) : getResources().getColor(R.color.slate_card));
-        btnFilterAll.setTextColor(filter.equals("All") ? 0xFF0F172A : 0xFFFFFFFF);
-
-        btnFilterPending.setBackgroundColor(filter.equals("Pending") ? getResources().getColor(R.color.accent_solar) : getResources().getColor(R.color.slate_card));
-        btnFilterPending.setTextColor(filter.equals("Pending") ? 0xFF0F172A : 0xFFFFFFFF);
-
-        btnFilterApproved.setBackgroundColor(filter.equals("Approved") ? getResources().getColor(R.color.accent_solar) : getResources().getColor(R.color.slate_card));
-        btnFilterApproved.setTextColor(filter.equals("Approved") ? 0xFF0F172A : 0xFFFFFFFF);
+        updateFilterButtonStyle(btnFilterAll, "All".equalsIgnoreCase(filter));
+        updateFilterButtonStyle(btnFilterPending, "Pending".equalsIgnoreCase(filter));
+        updateFilterButtonStyle(btnFilterApproved, "Approved".equalsIgnoreCase(filter));
+        updateFilterButtonStyle(btnFilterCancelled, "Cancelled".equalsIgnoreCase(filter));
+        updateFilterButtonStyle(btnFilterRejected, "Rejected".equalsIgnoreCase(filter));
 
         applyFilterAndSearch();
+    }
+
+    private void updateFilterButtonStyle(Button btn, boolean isSelected) {
+        if (btn == null) return;
+        btn.setBackgroundResource(isSelected ? R.drawable.bg_yellow_pill : R.drawable.bg_pill_dark);
+        btn.setTextColor(isSelected ? 0xFF0A0A0C : 0xFFA2A4AD);
     }
 
     private void setupSearch() {
@@ -115,6 +142,7 @@ public class BookingListActivity extends AppCompatActivity {
 
     private void loadBookings() {
         pbLoading.setVisibility(View.VISIBLE);
+        if (btnRetryLoad != null) btnRetryLoad.setVisibility(View.GONE);
 
         // First load from local SQLite for instant UI response
         List<Reservation> cached = dbHelper.getAllReservations();
@@ -130,7 +158,16 @@ public class BookingListActivity extends AppCompatActivity {
             public void onSuccess(String response) {
                 pbLoading.setVisibility(View.GONE);
                 try {
-                    JSONArray arr = new JSONArray(response);
+                    JSONArray arr;
+                    if (response.trim().startsWith("[")) {
+                        arr = new JSONArray(response);
+                    } else {
+                        JSONObject wrapper = new JSONObject(response);
+                        arr = wrapper.optJSONArray("value");
+                        if (arr == null) arr = wrapper.optJSONArray("data");
+                    }
+                    if (arr == null) arr = new JSONArray();
+
                     allReservations.clear();
                     List<Reservation> freshList = new ArrayList<>();
 
@@ -142,19 +179,21 @@ public class BookingListActivity extends AppCompatActivity {
                         res.setProsumerNic(obj.optString("prosumerNic", PROSUMER_NIC));
                         res.setNodeId(obj.optString("nodeId", obj.optString("microgridNodeId", "NODE-01")));
                         res.setReservedEnergyKwh(obj.optDouble("reservedEnergyKwh", 0));
-                        res.setStartTime(obj.optString("startTime", ""));
+                        res.setStartTime(obj.optString("startTime", obj.optString("reservationDate", "")));
                         res.setEndTime(obj.optString("endTime", ""));
                         res.setStatus(obj.optString("status", "Pending"));
-                        res.setQrCodePayload(obj.optString("qrCodePayload", null));
+                        res.setQrCodePayload(obj.optString("qrPayload", obj.optString("qrCodePayload", null)));
 
                         freshList.add(res);
                     }
 
-                    allReservations.addAll(freshList);
-                    // Persist to local SQLite
-                    dbHelper.saveAllReservations(freshList);
-
-                    applyFilterAndSearch();
+                    if (freshList.isEmpty()) {
+                        fetchAllReservations();
+                    } else {
+                        allReservations.addAll(freshList);
+                        dbHelper.saveAllReservations(freshList);
+                        applyFilterAndSearch();
+                    }
 
                 } catch (Exception e) {
                     Toast.makeText(BookingListActivity.this, "Failed to parse reservations", Toast.LENGTH_SHORT).show();
@@ -167,7 +206,55 @@ public class BookingListActivity extends AppCompatActivity {
                 // Graceful fallback to SQLite cached records
                 if (allReservations.isEmpty()) {
                     Toast.makeText(BookingListActivity.this, "Network offline: " + errorMessage, Toast.LENGTH_SHORT).show();
+                    if (btnRetryLoad != null) btnRetryLoad.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+    }
+
+    private void fetchAllReservations() {
+        ApiClient.get("/reservations", new ApiClient.ApiCallback() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONArray arr;
+                    if (response.trim().startsWith("[")) {
+                        arr = new JSONArray(response);
+                    } else {
+                        JSONObject wrapper = new JSONObject(response);
+                        arr = wrapper.optJSONArray("value");
+                        if (arr == null) arr = wrapper.optJSONArray("data");
+                    }
+                    if (arr == null) arr = new JSONArray();
+
+                    allReservations.clear();
+                    List<Reservation> freshList = new ArrayList<>();
+
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject obj = arr.getJSONObject(i);
+                        Reservation res = new Reservation();
+                        res.setId(obj.optString("id", obj.optString("reservationId", "")));
+                        res.setProsumerId(obj.optString("prosumerId", ""));
+                        res.setProsumerNic(obj.optString("prosumerNic", obj.optString("prosumerId", "")));
+                        res.setNodeId(obj.optString("nodeId", obj.optString("microgridNodeId", "NODE-01")));
+                        res.setReservedEnergyKwh(obj.optDouble("reservedEnergyKwh", 0));
+                        res.setStartTime(obj.optString("startTime", obj.optString("reservationDate", "")));
+                        res.setEndTime(obj.optString("endTime", ""));
+                        res.setStatus(obj.optString("status", "Pending"));
+                        res.setQrCodePayload(obj.optString("qrPayload", obj.optString("qrCodePayload", null)));
+
+                        freshList.add(res);
+                    }
+
+                    allReservations.addAll(freshList);
+                    dbHelper.saveAllReservations(freshList);
+                    applyFilterAndSearch();
+                } catch (Exception ignored) {}
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                applyFilterAndSearch();
             }
         });
     }
@@ -191,5 +278,37 @@ public class BookingListActivity extends AppCompatActivity {
         }
 
         adapter.updateList(displayedList);
+
+        if (tvReservationCount != null) {
+            int count = displayedList.size();
+            String label = count + " " + (count == 1 ? "reservation" : "reservations");
+            if (!"All".equalsIgnoreCase(currentFilter)) {
+                label += " in " + currentFilter;
+            }
+            if (!query.isEmpty()) {
+                label += " matching \"" + query + "\"";
+            }
+            tvReservationCount.setText(label);
+        }
+
+        if (layoutEmptyState != null) {
+            if (displayedList.isEmpty()) {
+                rvBookings.setVisibility(View.GONE);
+                layoutEmptyState.setVisibility(View.VISIBLE);
+
+                if (allReservations.isEmpty()) {
+                    if (tvEmptyTitle != null) tvEmptyTitle.setText("No reservations yet");
+                    if (tvEmptySubtitle != null) tvEmptySubtitle.setText("Book your first energy slot to get started.");
+                    if (btnRetryLoad != null) btnRetryLoad.setVisibility(View.GONE);
+                } else {
+                    if (tvEmptyTitle != null) tvEmptyTitle.setText("No matching reservations");
+                    if (tvEmptySubtitle != null) tvEmptySubtitle.setText("Try selecting a different filter or clearing your search.");
+                    if (btnRetryLoad != null) btnRetryLoad.setVisibility(View.GONE);
+                }
+            } else {
+                rvBookings.setVisibility(View.VISIBLE);
+                layoutEmptyState.setVisibility(View.GONE);
+            }
+        }
     }
 }

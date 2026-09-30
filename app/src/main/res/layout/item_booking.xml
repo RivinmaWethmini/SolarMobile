@@ -1,125 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="#0F172A"
-    app:cardCornerRadius="16dp"
-    android:layout_marginBottom="10dp"
-    app:cardElevation="0dp"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:background="@android:color/transparent"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!-- Left Accent Bar (status color) -->
         <View
             android:id="@+id/viewStatusBar"
-            android:layout_width="4dp"
+            android:layout_width="3dp"
             android:layout_height="match_parent"
-            android:background="@color/amber_pending"
-            android:layout_marginEnd="0dp" />
+            android:background="@color/yellow_primary" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="14dp">
+            android:paddingStart="14dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="2dp"
+            android:paddingBottom="14dp">
 
-            <!-- Top Row: ID + Status Badge -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="8dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tvCardId"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:text="#RES-SAMPLE"
-                    android:textColor="@color/accent_solar"
+                    android:ellipsize="end"
                     android:fontFamily="monospace"
-                    android:textSize="13sp"
+                    android:maxLines="1"
+                    android:text="#RES-SAMPLE"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvCardStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pending"
-                    android:textColor="#0F172A"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:background="@drawable/bg_status_pill"
+                    android:fontFamily="@font/outfit"
+                    android:paddingStart="9dp"
                     android:paddingTop="4dp"
+                    android:paddingEnd="9dp"
                     android:paddingBottom="4dp"
-                    android:background="#F59E0B"
-                    android:textAllCaps="true"
-                    android:letterSpacing="0.05" />
+                    android:text="Pending"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_dark_primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Node Name -->
             <TextView
                 android:id="@+id/tvCardNode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/outfit"
+                android:maxLines="2"
+                android:text="Colombo North Solar Hub"
+                android:textColor="@color/text_white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCardDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Colombo North Solar Hub"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/outfit"
+                android:text=""
+                android:textColor="@color/text_light_secondary"
+                android:textSize="12sp" />
 
-            <!-- Energy + Time Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tvCardEnergy"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="⚡ 25.0 kW/h"
-                    android:textColor="@color/accent_solar"
-                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit"
+                    android:text="25.0 kWh"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvCardTime"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="09:00 – 11:00"
-                    android:textColor="#475569"
-                    android:textSize="11sp" />
-            </LinearLayout>
-
-            <!-- Action Button -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="end">
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/outfit"
+                    android:maxLines="1"
+                    android:text="09:00 â€“ 11:00"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/btnCardAction"
                     android:layout_width="wrap_content"
-                    android:layout_height="34dp"
-                    android:text="Details →"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_pill_dark"
+                    android:fontFamily="@font/outfit"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="View Pass â†’"
+                    android:textColor="@color/yellow_primary"
                     android:textSize="11sp"
                     android:textStyle="bold"
-                    android:backgroundTint="#1E293B"
-                    android:textColor="#94A3B8"
-                    app:cornerRadius="8dp" />
+                    app:backgroundTint="@null" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="17dp"
+        android:background="@color/divider_dark" />
+</LinearLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Outer Track / Subtle Ring -->
+    <item>
+        <shape android:shape="oval">
+            <size android:width="200dp" android:height="200dp" />
+            <stroke
+                android:width="14dp"
+                android:color="#26FFD000" />
+            <solid android:color="#00000000" />
+        </shape>
+    </item>
+    <!-- Vibrant Yellow Progress Arc -->
+    <item>
+        <rotate
+            android:fromDegrees="135"
+            android:toDegrees="135">
+            <shape
+                android:innerRadiusRatio="2.5"
+                android:shape="ring"
+                android:thickness="14dp"
+                android:useLevel="false">
+                <gradient
+                    android:endColor="#FFA000"
+                    android:startColor="#FFD000"
+                    android:type="sweep" />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

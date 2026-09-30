@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#080D1A"
+    android:background="@color/bg_black"
     android:fillViewport="true">
 
     <LinearLayout
@@ -11,249 +11,541 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Top Header -->
+        <!-- Top Header with Solar Logo -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingStart="22dp"
             android:paddingEnd="22dp"
-            android:paddingTop="48dp"
-            android:paddingBottom="22dp"
-            android:background="#0F172A">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="← Reserve Energy Slot"
-                android:textColor="@color/accent_solar"
-                android:textSize="13sp"
-                android:textAllCaps="true"
-                android:letterSpacing="0.08"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Booking"
-                android:textColor="#FFFFFF"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:layout_marginTop="4dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select a node, date and time window"
-                android:textColor="#475569"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp" />
-        </LinearLayout>
-
-        <!-- Content -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="18dp">
-
-            <!-- 7-Day Rule Warning -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="#1A1208"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="0dp"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="14dp"
-                    android:text="⚡ 7-Day Rule: Reservations must be scheduled within 7 days from today. Bookings beyond this window will be rejected by the server."
-                    android:textColor="#D97706"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="3dp" />
-            </androidx.cardview.widget.CardView>
-
-            <!-- Section: Node -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MICROGRID NODE"
-                android:textColor="#475569"
-                android:textSize="10sp"
-                android:letterSpacing="0.12"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="#131D2E"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                android:layout_marginBottom="20dp">
-
-                <Spinner
-                    android:id="@+id/spNodeSelector"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:background="@null"
-                    android:padding="12dp"
-                    android:popupBackground="#1E293B" />
-            </androidx.cardview.widget.CardView>
-
-            <!-- Section: Date -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RESERVATION DATE"
-                android:textColor="#475569"
-                android:textSize="10sp"
-                android:letterSpacing="0.12"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-
-            <Button
-                android:id="@+id/btnSelectDate"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:backgroundTint="#131D2E"
-                android:text="📅  Pick Date"
-                android:textColor="#CBD5E1"
-                android:textStyle="bold"
-                android:gravity="start|center_vertical"
-                android:paddingStart="18dp"
-                app:cornerRadius="12dp"
-                android:layout_marginBottom="20dp" />
-
-            <!-- Section: Time Pickers -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TIME SLOT"
-                android:textColor="#475569"
-                android:textSize="10sp"
-                android:letterSpacing="0.12"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
+            android:paddingTop="36dp"
+            android:paddingBottom="20dp"
+            android:background="@color/bg_dark_surface">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:id="@+id/btnBack"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_arrow_back"
+                        android:contentDescription="Back"
+                        android:layout_marginEnd="6dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Back to Dashboard"
+                        android:textColor="@color/yellow_primary"
+                        android:textSize="13sp"
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/outfit"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:src="@drawable/ic_solar_logo"
+                    android:contentDescription="Solar Logo" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reserve Energy Slot"
+                android:textColor="@color/text_white"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/outfit"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Step-by-step reservation with real-time rule validation"
+                android:textColor="@color/text_light_secondary"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- Form Body -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- STEP 1: Microgrid Node -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Step 1 • Select Solar Station (Node)"
+                android:textColor="@color/yellow_primary"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_dark_input"
+                android:layout_marginBottom="6dp">
+
+                <Spinner
+                    android:id="@+id/spNodeSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:popupBackground="#1E1F24" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvSelectedNodeInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Active Microgrid Node • Western Grid Region"
+                android:textColor="@color/text_light_secondary"
+                android:textSize="11sp"
+                android:fontFamily="@font/outfit"
+                android:layout_marginBottom="20dp" />
+
+            <!-- STEP 2: Reservation Date -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Step 2 • Choose Trading Date"
+                android:textColor="@color/yellow_primary"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <Button
+                android:id="@+id/btnSelectDate"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_dark_input"
+                android:text="Select Date"
+                android:textColor="@color/text_white"
+                android:textStyle="bold"
+                android:fontFamily="@font/outfit"
+                android:gravity="start|center_vertical"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:textSize="14sp"
+                android:textAllCaps="false"
+                app:backgroundTint="@null" />
+
+            <TextView
+                android:id="@+id/tvDateRangeHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available: Today to next 7 days (7-Day Limit Rule)"
+                android:textColor="@color/emerald_approved"
+                android:textSize="11sp"
+                android:fontFamily="@font/outfit"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="20dp" />
+
+            <!-- STEP 3: Time Window (Presets + Custom) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Step 3 • Choose Trading Window"
+                android:textColor="@color/yellow_primary"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Preset Slot Chips -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="12dp">
+
+                <Button
+                    android:id="@+id/btnPresetMorning"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/bg_chip_selected"
+                    android:text="09:00 - 11:00"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/outfit"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/btnPresetPeak"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:text="11:00 - 13:00"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/outfit"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/btnPresetAfternoon"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:text="14:00 - 16:00"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/outfit"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+
+            <!-- Custom Start & End Time Pickers -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:weightSum="2"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="6dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginEnd="8dp">
+                    android:layout_marginEnd="6dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Start"
-                        android:textColor="#64748B"
-                        android:textSize="11sp"
-                        android:layout_marginBottom="5dp" />
+                        android:text="From (Start Time)"
+                        android:textColor="@color/text_light_muted"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/outfit"
+                        android:layout_marginBottom="4dp" />
 
                     <Button
                         android:id="@+id/btnSelectStartTime"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:backgroundTint="#131D2E"
-                        android:text="🕘 09:00"
-                        android:textColor="#CBD5E1"
+                        android:background="@drawable/bg_dark_input"
+                        android:text="09:00"
+                        android:textColor="@color/text_white"
                         android:textStyle="bold"
-                        app:cornerRadius="12dp" />
+                        android:fontFamily="@font/outfit"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        app:backgroundTint="@null" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="8dp">
+                    android:layout_marginStart="6dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="End"
-                        android:textColor="#64748B"
-                        android:textSize="11sp"
-                        android:layout_marginBottom="5dp" />
+                        android:text="To (End Time)"
+                        android:textColor="@color/text_light_muted"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/outfit"
+                        android:layout_marginBottom="4dp" />
 
                     <Button
                         android:id="@+id/btnSelectEndTime"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:backgroundTint="#131D2E"
-                        android:text="🕚 11:00"
-                        android:textColor="#CBD5E1"
+                        android:background="@drawable/bg_dark_input"
+                        android:text="11:00"
+                        android:textColor="@color/text_white"
                         android:textStyle="bold"
-                        app:cornerRadius="12dp" />
+                        android:fontFamily="@font/outfit"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        app:backgroundTint="@null" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Section: Energy Amount -->
+            <TextView
+                android:id="@+id/tvDurationBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Duration: 2 Hours (09:00 - 11:00)"
+                android:textColor="@color/text_light_secondary"
+                android:textSize="11sp"
+                android:fontFamily="@font/outfit"
+                android:layout_marginBottom="20dp" />
+
+            <!-- STEP 4: Energy Amount -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ENERGY AMOUNT (kW/h)"
-                android:textColor="#475569"
-                android:textSize="10sp"
-                android:letterSpacing="0.12"
-                android:textAllCaps="true"
+                android:text="Step 4 • Energy Amount (kWh)"
+                android:textColor="@color/yellow_primary"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
 
+            <!-- Energy Quick Chips -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginBottom="10dp">
+
+                <Button
+                    android:id="@+id/btnChip10"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:text="10 kWh"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/outfit"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/btnChip20"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/bg_chip_selected"
+                    android:text="20 kWh"
+                    android:textColor="@color/yellow_primary"
+                    android:textStyle="bold"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/outfit"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/btnChip30"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:text="30 kWh"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/outfit"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/btnChip50"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="3dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:text="50 kWh"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/outfit"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/etEnergyAmount"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_dark_input"
+                android:hint="Custom power amount (kWh)"
+                android:textColorHint="@color/text_light_muted"
+                android:textColor="@color/text_white"
+                android:text="20.0"
+                android:inputType="numberDecimal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/outfit"
+                android:layout_marginBottom="20dp" />
+
+            <!-- STEP 5: Live Booking Summary Preview -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#131D2E"
-                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/bg_dark_card"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                android:layout_marginBottom="28dp">
+                android:layout_marginBottom="16dp">
 
-                <EditText
-                    android:id="@+id/etEnergyAmount"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:background="@null"
-                    android:textColor="#FFFFFF"
-                    android:hint="e.g.  25.5"
-                    android:textColorHint="#334155"
-                    android:inputType="numberDecimal"
-                    android:padding="14dp"
-                    android:textSize="15sp" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Booking Summary Preview"
+                        android:textColor="@color/text_white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/outfit"
+                        android:layout_marginBottom="10dp" />
+
+                    <!-- Preview Row 1: Station -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Station"
+                            android:textColor="@color/text_light_secondary"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/outfit" />
+
+                        <TextView
+                            android:id="@+id/tvPreviewNode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Colombo North Solar Hub"
+                            android:textColor="@color/text_white"
+                            android:textStyle="bold"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/outfit" />
+                    </LinearLayout>
+
+                    <!-- Preview Row 2: Date & Window -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Window"
+                            android:textColor="@color/text_light_secondary"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/outfit" />
+
+                        <TextView
+                            android:id="@+id/tvPreviewWindow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today • 09:00 – 11:00"
+                            android:textColor="@color/yellow_primary"
+                            android:textStyle="bold"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/outfit" />
+                    </LinearLayout>
+
+                    <!-- Preview Row 3: Energy Amount -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Reserved Energy"
+                            android:textColor="@color/text_light_secondary"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/outfit" />
+
+                        <TextView
+                            android:id="@+id/tvPreviewEnergy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="20.0 kWh"
+                            android:textColor="@color/emerald_approved"
+                            android:textStyle="bold"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/outfit" />
+                    </LinearLayout>
+
+                    <!-- Rule Validation Tag -->
+                    <TextView
+                        android:id="@+id/tvRuleCheckBadge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_info_card"
+                        android:text="✓ Complies with 7-Day Limit and 12-Hour notice rule"
+                        android:textColor="@color/emerald_approved"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/outfit"
+                        android:padding="8dp" />
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Submit CTA Button -->
+            <!-- Submit Button (Yellow Pill) -->
             <Button
                 android:id="@+id/btnSubmitBooking"
                 android:layout_width="match_parent"
-                android:layout_height="58dp"
-                android:backgroundTint="@color/accent_solar"
-                android:text="Submit Reservation Request"
-                android:textColor="#0F172A"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_yellow_pill"
+                android:text="Confirm &amp; Reserve Energy Slot →"
+                android:textColor="@color/text_dark_primary"
                 android:textStyle="bold"
                 android:textSize="15sp"
-                app:cornerRadius="14dp" />
+                android:textAllCaps="false"
+                android:fontFamily="@font/outfit"
+                app:backgroundTint="@null"
+                android:layout_marginBottom="16dp" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:visibility="gone"
-                android:layout_marginTop="16dp" />
+                android:indeterminateTint="@color/yellow_primary" />
 
         </LinearLayout>
     </LinearLayout>

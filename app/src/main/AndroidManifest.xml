@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Network permissions for REST API connectivity -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <!-- Camera permission for QR scanning -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_solar_logo"
+        android:roundIcon="@drawable/ic_solar_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SolarMicrogrid"
         android:usesCleartextTraffic="true">
 
-        <!-- Main Dashboard Activity -->
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
@@ -30,35 +26,24 @@
 
         </activity>
 
-        <!-- Member 3: Active Solar Nodes List -->
-        <activity
-            android:name=".ui.NodeListActivity"
-            android:exported="false"
-            android:label="Active Solar Nodes"
-            android:parentActivityName=".ui.MainActivity" />
-
-        <!-- Member 4: Energy Slot Booking -->
         <activity
             android:name=".ui.BookingActivity"
             android:exported="false"
             android:label="Reserve Energy Slot"
             android:parentActivityName=".ui.MainActivity" />
 
-        <!-- Member 4: Booking List and History -->
         <activity
-            android:name=".ui.BookingListActivity"
+            android:name=".ui.ModifyBookingActivity"
             android:exported="false"
-            android:label="My Energy Reservations"
-            android:parentActivityName=".ui.MainActivity" />
+            android:label="Modify Reservation"
+            android:parentActivityName=".ui.BookingSummaryActivity" />
 
-        <!-- Member 4: Booking Summary -->
         <activity
             android:name=".ui.BookingSummaryActivity"
             android:exported="false"
             android:label="Booking Summary"
             android:parentActivityName=".ui.MainActivity" />
 
-        <!-- Member 4: QR Code Display -->
         <activity
             android:name=".ui.QrDisplayActivity"
             android:exported="false"
@@ -66,10 +51,56 @@
             android:parentActivityName=".ui.BookingListActivity" />
 
         <activity
+            android:name=".ui.BookingListActivity"
+            android:exported="false"
+            android:label="My Energy Reservations"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <activity
+            android:name=".ui.NodeListActivity"
+            android:exported="false"
+            android:label="Active Solar Nodes"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <activity
             android:name=".ui.NodeDetailsActivity"
             android:exported="false"
             android:label="Solar Node Details"
             android:parentActivityName=".ui.NodeListActivity" />
+
+        <activity
+            android:name=".ui.OperatorScanActivity"
+            android:exported="false"
+            android:label="Operator QR Scan"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <activity
+            android:name=".ui.ProsumerProfileActivity"
+            android:exported="false"
+            android:label="Prosumer Profile"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <activity
+            android:name=".ui.EditProsumerActivity"
+            android:exported="false"
+            android:label="Edit Prosumer Profile"
+            android:parentActivityName=".ui.ProsumerProfileActivity" />
+
+        <activity
+            android:name=".ui.OnboardingActivity"
+            android:exported="false"
+            android:label="Welcome to Solis" />
+
+        <activity
+            android:name=".ui.LoginActivity"
+            android:exported="false"
+            android:label="Sign In" />
+
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:exported="false"
+            android:label="Create Account" />
 
     </application>
 
