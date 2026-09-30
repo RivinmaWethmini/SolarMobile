@@ -43,7 +43,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Solarrays"
+                    android:text="SolarRays"
                     android:textColor="@color/yellow_primary"
                     android:textSize="12sp"
                     android:fontFamily="@font/outfit_bold" />
@@ -128,11 +128,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="PROSUMER ACCOUNT"
+                    android:text="Prosumer Account"
                     android:textColor="@color/yellow_primary"
                     android:textSize="11sp"
                     android:fontFamily="@font/outfit_bold"
-                    android:letterSpacing="0.08" />
+                    android:letterSpacing="0.04" />
 
                 <!-- Status Badge -->
                 <TextView
@@ -173,11 +173,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ENERGY CAPACITY &amp; HARDWARE"
+            android:text="Energy Capacity &amp; Hardware"
             android:textColor="@color/text_light_muted"
             android:textSize="11sp"
             android:fontFamily="@font/outfit_bold"
-            android:letterSpacing="0.05"
+            android:letterSpacing="0.03"
             android:layout_marginBottom="10dp" />
 
         <!-- Energy Cards Row -->
@@ -201,7 +201,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SOLAR GENERATION"
+                    android:text="Solar Generation"
                     android:textColor="@color/text_light_muted"
                     android:textSize="10sp"
                     android:fontFamily="@font/outfit_bold" />
@@ -230,7 +230,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="BATTERY STORAGE"
+                    android:text="Battery Storage"
                     android:textColor="@color/text_light_muted"
                     android:textSize="10sp"
                     android:fontFamily="@font/outfit_bold" />
@@ -259,7 +259,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="REAL-TIME DISPATCHABLE LOAD"
+                android:text="Available Dispatch Energy"
                 android:textColor="@color/text_light_muted"
                 android:textSize="10sp"
                 android:fontFamily="@font/outfit_bold" />
@@ -279,11 +279,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TRADING PARAMETERS"
+            android:text="Trading Parameters"
             android:textColor="@color/text_light_muted"
             android:textSize="11sp"
             android:fontFamily="@font/outfit_bold"
-            android:letterSpacing="0.05"
+            android:letterSpacing="0.03"
             android:layout_marginBottom="10dp" />
 
         <!-- Trading Cards Row -->
@@ -307,7 +307,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ENERGY UNIT PRICE"
+                    android:text="Energy Unit Price"
                     android:textColor="@color/text_light_muted"
                     android:textSize="10sp"
                     android:fontFamily="@font/outfit_bold" />
@@ -336,7 +336,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="GRID NODE LINK"
+                    android:text="Connected Solar Station"
                     android:textColor="@color/text_light_muted"
                     android:textSize="10sp"
                     android:fontFamily="@font/outfit_bold" />
@@ -359,11 +359,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ACCOUNT ACTIONS"
+            android:text="Account Actions"
             android:textColor="@color/text_light_muted"
             android:textSize="11sp"
             android:fontFamily="@font/outfit_bold"
-            android:letterSpacing="0.05"
+            android:letterSpacing="0.03"
             android:layout_marginBottom="10dp" />
 
         <androidx.appcompat.widget.AppCompatButton

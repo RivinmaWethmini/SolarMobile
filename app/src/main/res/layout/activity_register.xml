@@ -4,32 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_black"
+    android:fitsSystemWindows="true"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="24dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
         android:paddingTop="28dp"
-        android:paddingBottom="36dp">
+        android:paddingBottom="42dp">
 
-        <!-- Top Navigation Header -->
+        <!-- Top Header: Back Button + Clean Logo Tag -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="24dp">
+            android:layout_marginBottom="28dp">
 
-            <ImageView
-                android:id="@+id/btnRegisterBack"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:padding="8dp"
-                android:src="@drawable/ic_arrow_back"
-                android:background="@drawable/bg_dark_input"
-                android:contentDescription="Back" />
+            <TextView
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="←"
+                android:textColor="@color/text_white"
+                android:textSize="20sp"
+                android:background="@drawable/bg_pill_dark" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -41,16 +44,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Solarrays"
+                    android:text="SolarRays"
                     android:textColor="@color/yellow_primary"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:fontFamily="@font/outfit_bold" />
 
                 <TextView
                     android:id="@+id/tvStepIndicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Step 1 of 2: Participant Details"
+                    android:text="Step 1 of 2: Your details"
                     android:textColor="@color/text_light_secondary"
                     android:textSize="11sp"
                     android:fontFamily="@font/outfit" />
@@ -60,7 +63,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/ic_solar_logo"
-                android:contentDescription="Solis Logo" />
+                android:contentDescription="SolarRays Logo" />
         </LinearLayout>
 
         <!-- Headline -->
@@ -68,7 +71,7 @@
             android:id="@+id/tvRegisterTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Join Solarrays Grid"
+            android:text="Create Account"
             android:textColor="@color/text_white"
             android:textSize="32sp"
             android:fontFamily="@font/outfit_bold" />
@@ -79,14 +82,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="24dp"
-            android:text="Trade solar energy, reserve dispatch passes, and track grid capacity."
+            android:text="Join the solar energy sharing platform."
             android:textColor="@color/text_light_secondary"
             android:textSize="14sp"
             android:fontFamily="@font/outfit"
             android:lineSpacingMultiplier="1.2" />
 
         <!-- ================================================================= -->
-        <!-- STEP 1: PARTICIPANT DETAILS FORM                                   -->
+        <!-- STEP 1: REGISTRATION DETAILS FORM                                 -->
         <!-- ================================================================= -->
         <LinearLayout
             android:id="@+id/layoutRegisterStep1"
@@ -98,11 +101,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FULL NAME / ORGANIZATION"
+                android:text="Full name or organization"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:fontFamily="@font/outfit_bold"
-                android:letterSpacing="0.05"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
                 android:layout_marginBottom="6dp" />
 
             <LinearLayout
@@ -126,7 +128,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
-                    android:hint="Full Name or Organization"
+                    android:hint="Your full name"
                     android:textColorHint="@color/text_light_muted"
                     android:textColor="@color/text_white"
                     android:textSize="14sp"
@@ -139,11 +141,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="USERNAME"
+                android:text="Username"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:fontFamily="@font/outfit_bold"
-                android:letterSpacing="0.05"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
                 android:layout_marginBottom="6dp" />
 
             <LinearLayout
@@ -170,7 +171,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
-                    android:hint="Username"
+                    android:hint="Choose a username"
                     android:textColorHint="@color/text_light_muted"
                     android:textColor="@color/text_white"
                     android:textSize="14sp"
@@ -183,11 +184,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="EMAIL ADDRESS"
+                android:text="Email address"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:fontFamily="@font/outfit_bold"
-                android:letterSpacing="0.05"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
                 android:layout_marginBottom="6dp" />
 
             <LinearLayout
@@ -211,7 +211,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
-                    android:hint="Email address"
+                    android:hint="name@example.com"
                     android:textColorHint="@color/text_light_muted"
                     android:textColor="@color/text_white"
                     android:textSize="14sp"
@@ -224,11 +224,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NATIONAL IDENTITY CARD (NIC)"
+                android:text="National ID (NIC)"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:fontFamily="@font/outfit_bold"
-                android:letterSpacing="0.05"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
                 android:layout_marginBottom="6dp" />
 
             <LinearLayout
@@ -252,7 +251,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
-                    android:hint="National Identity Card (NIC)"
+                    android:hint="Enter national ID number"
                     android:textColorHint="@color/text_light_muted"
                     android:textColor="@color/text_white"
                     android:textSize="14sp"
@@ -261,15 +260,14 @@
                     android:singleLine="true" />
             </LinearLayout>
 
-            <!-- Grid Role Selection -->
+            <!-- Role Selection -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PARTICIPANT ROLE"
+                android:text="Select your role"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:fontFamily="@font/outfit_bold"
-                android:letterSpacing="0.05"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
                 android:layout_marginBottom="8dp" />
 
             <LinearLayout
@@ -310,7 +308,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Requires Admin approval"
+                        android:text="Admin approval needed"
                         android:textColor="@color/text_light_muted"
                         android:textSize="10sp"
                         android:fontFamily="@font/outfit"
@@ -340,7 +338,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Clean Energy Buyer"
+                        android:text="Energy Buyer"
                         android:textColor="@color/text_light_secondary"
                         android:textSize="11sp"
                         android:fontFamily="@font/outfit"
@@ -349,7 +347,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Instant account access"
+                        android:text="Instant access"
                         android:textColor="@color/emerald_approved"
                         android:textSize="10sp"
                         android:fontFamily="@font/outfit"
@@ -361,11 +359,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PASSWORD"
+                android:text="Password"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:fontFamily="@font/outfit_bold"
-                android:letterSpacing="0.05"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
                 android:layout_marginBottom="6dp" />
 
             <LinearLayout
@@ -402,11 +399,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CONFIRM PASSWORD"
+                android:text="Confirm password"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:fontFamily="@font/outfit_bold"
-                android:letterSpacing="0.05"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
                 android:layout_marginBottom="6dp" />
 
             <LinearLayout
@@ -430,7 +426,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
-                    android:hint="Re-enter your password"
+                    android:hint="Re-enter password"
                     android:textColorHint="@color/text_light_muted"
                     android:textColor="@color/text_white"
                     android:textSize="14sp"
@@ -446,7 +442,7 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:buttonTint="@color/yellow_primary"
-                android:text="I accept the Solarrays Microgrid Interconnection Rules and Cryptographic Dispatch Terms."
+                android:text="I agree to the SolarRays terms and conditions."
                 android:textColor="@color/text_light_secondary"
                 android:textSize="12sp"
                 android:fontFamily="@font/outfit"
@@ -462,12 +458,12 @@
                 android:textColor="@color/bg_black"
                 android:textSize="15sp"
                 android:fontFamily="@font/outfit_bold"
-                android:background="@drawable/bg_yellow_pill"
+                android:background="@drawable/btn_solar_gold"
                 android:stateListAnimator="@null" />
         </LinearLayout>
 
         <!-- ================================================================= -->
-        <!-- STEP 2: 6-DIGIT EMAIL VERIFICATION PASSCODE FORM                  -->
+        <!-- STEP 2: 6-DIGIT EMAIL VERIFICATION FORM                           -->
         <!-- ================================================================= -->
         <LinearLayout
             android:id="@+id/layoutRegisterStep2"
@@ -488,16 +484,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="VERIFY EMAIL TO COMPLETE REGISTRATION"
+                    android:text="Verify email address"
                     android:textColor="@color/yellow_primary"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:fontFamily="@font/outfit_bold" />
 
                 <TextView
                     android:id="@+id/tvRegMaskedEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Passcode dispatched to your email"
+                    android:text="Code sent to your email"
                     android:textColor="@color/text_white"
                     android:textSize="14sp"
                     android:fontFamily="@font/outfit_medium"
@@ -507,7 +503,7 @@
                     android:id="@+id/btnBackToStep1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="← Edit Registration Details"
+                    android:text="← Edit Details"
                     android:textColor="@color/yellow_primary"
                     android:textSize="12sp"
                     android:fontFamily="@font/outfit_bold"
@@ -517,10 +513,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ENTER 6-DIGIT VERIFICATION PASSCODE"
+                android:text="Enter 6-digit code"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:fontFamily="@font/outfit_bold"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
                 android:layout_gravity="center"
                 android:layout_marginBottom="12dp" />
 
@@ -610,21 +606,20 @@
                     android:fontFamily="@font/outfit_bold" />
             </LinearLayout>
 
-            <!-- Resend timer -->
             <TextView
                 android:id="@+id/tvRegResendTimer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Resend code in 60s"
-                android:textColor="@color/text_light_secondary"
+                android:textColor="@color/text_light_muted"
                 android:textSize="12sp"
                 android:fontFamily="@font/outfit"
                 android:layout_gravity="center"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginBottom="20dp" />
 
             <!-- Complete Registration Button -->
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnSubmitRegistration"
+                android:id="@+id/btnCompleteRegistration"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:text="Verify &amp; Create Account"
@@ -632,33 +627,33 @@
                 android:textColor="@color/bg_black"
                 android:textSize="15sp"
                 android:fontFamily="@font/outfit_bold"
-                android:background="@drawable/bg_yellow_pill"
+                android:background="@drawable/btn_solar_gold"
                 android:stateListAnimator="@null" />
         </LinearLayout>
 
-        <!-- Progress Indicator -->
+        <!-- Loading Spinner -->
         <ProgressBar
-            android:id="@+id/pbRegisterLoading"
+            android:id="@+id/pbRegLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:visibility="gone"
-            android:indeterminateTint="@color/yellow_primary" />
+            android:indeterminateTint="@color/yellow_primary"
+            android:visibility="gone" />
 
-        <!-- Bottom Link to Login -->
+        <!-- Footer / Sign In Link -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="28dp">
+            android:layout_marginTop="32dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Already registered?"
-                android:textColor="@color/text_light_secondary"
+                android:text="Already have an account?"
+                android:textColor="@color/text_light_muted"
                 android:textSize="13sp"
                 android:fontFamily="@font/outfit" />
 
@@ -670,7 +665,8 @@
                 android:text="Sign In"
                 android:textColor="@color/yellow_primary"
                 android:textSize="13sp"
-                android:fontFamily="@font/outfit_bold" />
+                android:fontFamily="@font/outfit_bold"
+                android:padding="4dp" />
         </LinearLayout>
 
     </LinearLayout>

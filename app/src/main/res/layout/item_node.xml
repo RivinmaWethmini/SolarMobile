@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:fontFamily="monospace"
-                android:text="#NODE-ID"
+                android:text="#Node-01"
                 android:textColor="@color/text_light_muted"
                 android:textSize="11sp" />
 
@@ -82,7 +82,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/outfit"
                 android:maxLines="1"
-                android:text="ðŸ“ 0.0000, 0.0000"
+                android:text="0.0000, 0.0000"
                 android:textColor="@color/text_light_primary"
                 android:textSize="13sp" />
 
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/outfit"
-                    android:text="âš¡ 0 kWh"
+                    android:text="⚡ 0 kWh"
                     android:textColor="@color/yellow_primary"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -110,7 +110,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/outfit"
                     android:gravity="end"
-                    android:text="ðŸ”‹ 0 slots"
+                    android:text="🔋 0 slots"
                     android:textColor="@color/text_light_primary"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -131,7 +131,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/outfit"
                     android:maxLines="1"
-                    android:text="ðŸ•’ Schedule not specified"
+                    android:text="🕒 Schedule not specified"
                     android:textColor="@color/text_light_secondary"
                     android:textSize="12sp" />
 
@@ -144,7 +144,7 @@
                     android:minWidth="0dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:text="Details â†’"
+                    android:text="Details →"
                     android:textAllCaps="false"
                     android:textColor="@color/yellow_primary"
                     android:textSize="12sp"
@@ -160,3 +160,4 @@
         android:layout_marginStart="17dp"
         android:background="@color/divider_dark" />
 </LinearLayout>
+

@@ -131,7 +131,10 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
 
         boolean isActive = "Active".equalsIgnoreCase(status);
 
-        holder.tvNodeStatus.setText(status.toUpperCase(Locale.US));
+        String cleanStatus = status != null && !status.isEmpty()
+                ? status.substring(0, 1).toUpperCase(Locale.US) + status.substring(1).toLowerCase(Locale.US)
+                : "Active";
+        holder.tvNodeStatus.setText(cleanStatus);
 
         int accentColor;
         int statusColor;
@@ -176,6 +179,8 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
         Intent intent = new Intent(context, NodeDetailsActivity.class);
 
         intent.putExtra("nodeId", node.getId());
+        intent.putExtra("nodeCode", node.getNodeCode());
+        intent.putExtra("region", node.getRegion());
         intent.putExtra("nodeName", node.getName());
         intent.putExtra("latitude", node.getLatitude());
         intent.putExtra("longitude", node.getLongitude());

@@ -16,6 +16,8 @@ public class NodeDetailsActivity extends AppCompatActivity {
 
     private String nodeId;
     private String nodeName;
+    private String nodeCode;
+    private String region;
     private double latitude;
     private double longitude;
     private double capacityKWh;
@@ -40,7 +42,9 @@ public class NodeDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         nodeId = intent.getStringExtra("nodeId");
+        nodeCode = intent.getStringExtra("nodeCode");
         nodeName = intent.getStringExtra("nodeName");
+        region = intent.getStringExtra("region");
         latitude = intent.getDoubleExtra("latitude", 0);
         longitude = intent.getDoubleExtra("longitude", 0);
         capacityKWh = intent.getDoubleExtra("capacityKWh", 0);
@@ -49,19 +53,23 @@ public class NodeDetailsActivity extends AppCompatActivity {
         status = intent.getStringExtra("status");
 
         if (nodeId == null || nodeId.trim().isEmpty()) {
-            nodeId = "Unknown";
+            nodeId = "Station-01";
         }
 
         if (nodeName == null || nodeName.trim().isEmpty()) {
-            nodeName = "Unnamed Node";
+            nodeName = "Solar Microgrid Station";
         }
 
-        if (schedule == null || schedule.trim().isEmpty()) {
-            schedule = "Schedule not specified";
+        if (region == null || region.trim().isEmpty()) {
+            region = "Colombo Western Region";
+        }
+
+        if (schedule == null || schedule.trim().isEmpty() || schedule.contains("not specified")) {
+            schedule = "06:00 - 18:00 Daily";
         }
 
         if (status == null || status.trim().isEmpty()) {
-            status = "Inactive";
+            status = "Active";
         }
     }
 
@@ -72,28 +80,39 @@ public class NodeDetailsActivity extends AppCompatActivity {
         TextView tvDetailsStatus = findViewById(R.id.tvDetailsStatus);
         TextView tvDetailsLocation = findViewById(R.id.tvDetailsLocation);
         TextView tvDetailsCapacity = findViewById(R.id.tvDetailsCapacity);
-        TextView tvDetailsBatterySlots = findViewById(
-                R.id.tvDetailsBatterySlots
-        );
-        TextView tvDetailsSchedule = findViewById(
-                R.id.tvDetailsSchedule
-        );
-        AppCompatButton btnBookNode = findViewById(
-                R.id.btnBookNode
-        );
+        TextView tvDetailsBatterySlots = findViewById(R.id.tvDetailsBatterySlots);
+        TextView tvDetailsSchedule = findViewById(R.id.tvDetailsSchedule);
+        AppCompatButton btnBookNode = findViewById(R.id.btnBookNode);
 
         tvDetailsNodeName.setText(nodeName);
-        tvDetailsNodeId.setText(nodeId);
-        tvDetailsStatus.setText(status.toUpperCase(Locale.US));
 
-        tvDetailsLocation.setText(
-                String.format(
-                        Locale.US,
-                        "%.4f, %.4f",
-                        latitude,
-                        longitude
-                )
-        );
+        if (nodeCode != null && !nodeCode.trim().isEmpty()) {
+            tvDetailsNodeId.setText("Station: " + nodeCode);
+        } else if (nodeId.length() > 8) {
+            tvDetailsNodeId.setText("Station #" + nodeId.substring(nodeId.length() - 8).toUpperCase(Locale.US));
+        } else {
+            tvDetailsNodeId.setText("Station #" + nodeId);
+        }
+
+        // Clean Title Case for status (Strictly NO ALL-CAPS)
+        String cleanStatus = status != null && !status.isEmpty()
+                ? status.substring(0, 1).toUpperCase(Locale.US) + status.substring(1).toLowerCase(Locale.US)
+                : "Active";
+        tvDetailsStatus.setText(cleanStatus);
+
+        if (latitude != 0 || longitude != 0) {
+            tvDetailsLocation.setText(
+                    String.format(
+                            Locale.US,
+                            "%.4f, %.4f (%s)",
+                            latitude,
+                            longitude,
+                            region
+                    )
+            );
+        } else {
+            tvDetailsLocation.setText(region);
+        }
 
         if (capacityKWh >= 1000) {
             tvDetailsCapacity.setText(
@@ -142,7 +161,7 @@ public class NodeDetailsActivity extends AppCompatActivity {
             }
 
             btnBookNode.setEnabled(false);
-            btnBookNode.setText("Node Currently Inactive");
+            btnBookNode.setText("Station Currently Inactive");
         }
 
         btnBack.setOnClickListener(view -> finish());

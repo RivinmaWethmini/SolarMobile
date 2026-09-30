@@ -23,7 +23,7 @@
             android:fontFamily="@font/outfit"
             android:gravity="center_vertical"
             android:paddingEnd="12dp"
-            android:text="&#8592;  Back to Nodes"
+            android:text="←  Back to Stations"
             android:textColor="@color/yellow_primary"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:fontFamily="@font/outfit"
-            android:text="Solar Microgrid"
+            android:text="Solar Station"
             android:textColor="@color/yellow_primary"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/outfit"
-            android:text="Microgrid Node"
+            android:text="Solar Station"
             android:textColor="@color/text_white"
             android:textSize="28sp"
             android:textStyle="bold" />
@@ -63,9 +63,9 @@
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:fontFamily="monospace"
+                android:fontFamily="@font/outfit"
                 android:maxLines="1"
-                android:text="Node ID"
+                android:text="Station ID"
                 android:textColor="@color/text_light_secondary"
                 android:textSize="12sp" />
 
@@ -91,7 +91,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/outfit"
-            android:text="Node details"
+            android:text="Station details"
             android:textColor="@color/text_white"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -112,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit"
-                android:text="GPS Location"
+                android:text="Station Location"
                 android:textColor="@color/text_light_muted"
                 android:textSize="12sp" />
 
@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/outfit"
-                android:text="0.0000, 0.0000"
+                android:text="Colombo Microgrid Hub"
                 android:textColor="@color/text_white"
                 android:textSize="17sp"
                 android:textStyle="bold" />

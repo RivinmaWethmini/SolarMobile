@@ -43,7 +43,7 @@
                     android:ellipsize="end"
                     android:fontFamily="monospace"
                     android:maxLines="1"
-                    android:text="#RES-SAMPLE"
+                    android:text="#Reservation"
                     android:textColor="@color/yellow_primary"
                     android:textSize="12sp"
                     android:textStyle="bold" />

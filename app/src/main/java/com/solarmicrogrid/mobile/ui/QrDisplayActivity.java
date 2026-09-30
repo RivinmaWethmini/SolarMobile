@@ -144,8 +144,8 @@ public class QrDisplayActivity extends AppCompatActivity {
         } else {
             // SECURITY: Never generate a fake client QR payload
             ivQrCode.setImageBitmap(null);
-            tvRawPayload.setText("QR Dispatch Code Unavailable\n\nOnly server-approved reservations possess an authentic cryptographic dispatch signature.");
-            Toast.makeText(this, "QR payload unavailable. Reservation must be Approved by operator.", Toast.LENGTH_LONG).show();
+            tvRawPayload.setText("QR Pass Unavailable\n\nYour reservation must be approved by the solar operator before the QR pass is generated.");
+            Toast.makeText(this, "Reservation must be approved by operator to view QR pass.", Toast.LENGTH_LONG).show();
         }
     }
 

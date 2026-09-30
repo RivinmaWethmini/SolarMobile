@@ -33,7 +33,7 @@ import org.json.JSONObject;
  */
 public class RegisterActivity extends AppCompatActivity {
 
-    private ImageView btnRegisterBack;
+    private TextView btnRegisterBack;
     private TextView tvStepIndicator, tvRegisterTitle, tvRegisterSubtitle;
     private ProgressBar pbRegisterLoading;
     private TextView btnGoToLogin;
@@ -84,11 +84,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnRegisterBack = findViewById(R.id.btnRegisterBack);
+        btnRegisterBack = findViewById(R.id.btnBack);
         tvStepIndicator = findViewById(R.id.tvStepIndicator);
         tvRegisterTitle = findViewById(R.id.tvRegisterTitle);
         tvRegisterSubtitle = findViewById(R.id.tvRegisterSubtitle);
-        pbRegisterLoading = findViewById(R.id.pbRegisterLoading);
+        pbRegisterLoading = findViewById(R.id.pbRegLoading);
         btnGoToLogin = findViewById(R.id.btnGoToLogin);
 
         // Step 1
@@ -111,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
         tvRegMaskedEmail = findViewById(R.id.tvRegMaskedEmail);
         btnBackToStep1 = findViewById(R.id.btnBackToStep1);
         tvRegResendTimer = findViewById(R.id.tvRegResendTimer);
-        btnSubmitRegistration = findViewById(R.id.btnSubmitRegistration);
+        btnSubmitRegistration = findViewById(R.id.btnCompleteRegistration);
 
         regOtpDigits[0] = findViewById(R.id.regOtpDigit1);
         regOtpDigits[1] = findViewById(R.id.regOtpDigit2);
@@ -359,7 +359,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (authUser != null && authUser.isPendingApproval()) {
                             Toast.makeText(RegisterActivity.this, "Registration verified! Prosumer accounts require Operator verification before energy injection.", Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(RegisterActivity.this, "☀️ Welcome to Solis Microgrid, " + (authUser != null ? authUser.getDisplayName() : "Participant") + "!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this, "☀️ Welcome to SolarRays, " + (authUser != null ? authUser.getDisplayName() : "Participant") + "!", Toast.LENGTH_LONG).show();
                         }
 
                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);

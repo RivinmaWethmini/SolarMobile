@@ -227,9 +227,9 @@ public class OperatorScanActivity extends AppCompatActivity {
     private void sendToVerificationApi(String scannedPayload) {
         if (layoutBottomGuide != null) layoutBottomGuide.setVisibility(View.GONE);
         layoutScanResult.setVisibility(View.VISIBLE);
-        tvScanResultStatus.setText("VERIFYING PASS...");
+        tvScanResultStatus.setText("Verifying energy pass...");
         tvScanResultStatus.setTextColor(ContextCompat.getColor(this, R.color.yellow_primary));
-        tvScanResultMessage.setText("Validating cryptographic signature with microgrid server...");
+        tvScanResultMessage.setText("Checking reservation pass details with solar server...");
         tvScanResultDetails.setText("");
 
         try {
@@ -250,23 +250,23 @@ public class OperatorScanActivity extends AppCompatActivity {
                         String reservationDate = json.optString("reservationDate", "");
 
                         if (success) {
-                            tvScanResultStatus.setText("✓ DISPATCH AUTHORIZED");
+                            tvScanResultStatus.setText("✓ Pass Verified & Authorized");
                             tvScanResultStatus.setTextColor(ContextCompat.getColor(OperatorScanActivity.this, R.color.emerald_approved));
                             tvScanResultMessage.setText(message);
                             tvScanResultDetails.setText(
                                     "Prosumer NIC: " + prosumerId + "\n" +
-                                    "Node ID: " + nodeId + "\n" +
-                                    "Energy Injection: " + energy + " kWh\n" +
-                                    "Trading Slot: " + reservationDate
+                                    "Station: " + nodeId + "\n" +
+                                    "Energy Amount: " + energy + " kWh\n" +
+                                    "Slot Date: " + reservationDate
                             );
                         } else {
-                            tvScanResultStatus.setText("✗ VERIFICATION REJECTED");
+                            tvScanResultStatus.setText("✗ Verification Failed");
                             tvScanResultStatus.setTextColor(ContextCompat.getColor(OperatorScanActivity.this, R.color.red_rejected));
                             tvScanResultMessage.setText(message);
-                            tvScanResultDetails.setText("Dispatch transfer has been denied by security checks.");
+                            tvScanResultDetails.setText("Energy pass could not be verified.");
                         }
                     } catch (Exception e) {
-                        showError("Failed to parse verification response: " + e.getMessage());
+                        showError("Failed to read server response: " + e.getMessage());
                     }
                 }
 
@@ -281,7 +281,7 @@ public class OperatorScanActivity extends AppCompatActivity {
     }
 
     private void showError(String message) {
-        tvScanResultStatus.setText("✗ VERIFICATION RESULT");
+        tvScanResultStatus.setText("Verification Result");
         tvScanResultStatus.setTextColor(ContextCompat.getColor(this, R.color.red_rejected));
         tvScanResultMessage.setText(message);
         tvScanResultDetails.setText("Check network connection or try scanning again.");

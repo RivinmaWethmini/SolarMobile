@@ -4,17 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_black"
+    android:fitsSystemWindows="true"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="24dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
         android:paddingTop="28dp"
-        android:paddingBottom="36dp">
+        android:paddingBottom="42dp">
 
-        <!-- Top Navigation & Brand Header -->
+        <!-- Top Header: Back Button + Clean Logo Tag -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,14 +24,15 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="28dp">
 
-            <ImageView
+            <TextView
                 android:id="@+id/btnBack"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:padding="8dp"
-                android:src="@drawable/ic_arrow_back"
-                android:background="@drawable/bg_dark_input"
-                android:contentDescription="Back" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="←"
+                android:textColor="@color/text_white"
+                android:textSize="20sp"
+                android:background="@drawable/bg_pill_dark" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -41,15 +44,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Solarrays"
+                    android:text="SolarRays"
                     android:textColor="@color/yellow_primary"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:fontFamily="@font/outfit_bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Authentication Console"
+                    android:text="Sign In"
                     android:textColor="@color/text_light_secondary"
                     android:textSize="11sp"
                     android:fontFamily="@font/outfit" />
@@ -59,7 +62,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/ic_solar_logo"
-                android:contentDescription="Solis Logo" />
+                android:contentDescription="SolarRays Logo" />
         </LinearLayout>
 
         <!-- Headline & Subtitle -->
@@ -76,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="24dp"
-            android:text="Sign in to dispatch energy slots, monitor nodes, and verify trading passes."
+            android:text="Sign in to view your energy slots, stations, and passes."
             android:textColor="@color/text_light_secondary"
             android:textSize="14sp"
             android:fontFamily="@font/outfit"
@@ -129,11 +132,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="EMAIL OR USERNAME"
+                android:text="Email or username"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:fontFamily="@font/outfit_bold"
-                android:letterSpacing="0.05"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
                 android:layout_marginBottom="6dp" />
 
             <LinearLayout
@@ -170,11 +172,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PASSWORD"
+                android:text="Password"
                 android:textColor="@color/text_light_muted"
-                android:textSize="11sp"
-                android:fontFamily="@font/outfit_bold"
-                android:letterSpacing="0.05"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
                 android:layout_marginBottom="6dp" />
 
             <LinearLayout
@@ -199,7 +200,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
-                    android:hint="Enter your password"
+                    android:hint="Enter password"
                     android:textColorHint="@color/text_light_muted"
                     android:textColor="@color/text_white"
                     android:textSize="14sp"
@@ -210,30 +211,34 @@
                 <TextView
                     android:id="@+id/btnTogglePassword"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="Show"
                     android:textColor="@color/yellow_primary"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:fontFamily="@font/outfit_bold"
-                    android:padding="6dp" />
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:clickable="true"
+                    android:focusable="true" />
             </LinearLayout>
 
-            <!-- Sign In Submit Button -->
+            <!-- Submit Button -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSubmitPasswordLogin"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:text="Sign In to Grid Console"
+                android:text="Sign In"
                 android:textAllCaps="false"
                 android:textColor="@color/bg_black"
                 android:textSize="15sp"
                 android:fontFamily="@font/outfit_bold"
-                android:background="@drawable/bg_yellow_pill"
+                android:background="@drawable/btn_solar_gold"
                 android:stateListAnimator="@null" />
         </LinearLayout>
 
         <!-- ================================================================= -->
-        <!-- CONTAINER 2: EMAIL PASSCODE (OTP) LOGIN FORM                      -->
+        <!-- CONTAINER 2: EMAIL OTP LOGIN FORM                                 -->
         <!-- ================================================================= -->
         <LinearLayout
             android:id="@+id/layoutOtpForm"
@@ -252,11 +257,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="REGISTERED EMAIL OR USERNAME"
+                    android:text="Registered email or username"
                     android:textColor="@color/text_light_muted"
-                    android:textSize="11sp"
-                    android:fontFamily="@font/outfit_bold"
-                    android:letterSpacing="0.05"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit_medium"
                     android:layout_marginBottom="6dp" />
 
                 <LinearLayout
@@ -293,12 +297,12 @@
                     android:id="@+id/btnSendOtp"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:text="Send Passcode to Registered Email"
+                    android:text="Send Passcode to Email"
                     android:textAllCaps="false"
                     android:textColor="@color/bg_black"
                     android:textSize="15sp"
                     android:fontFamily="@font/outfit_bold"
-                    android:background="@drawable/bg_yellow_pill"
+                    android:background="@drawable/btn_solar_gold"
                     android:stateListAnimator="@null" />
             </LinearLayout>
 
@@ -322,16 +326,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PASSCODE DISPATCHED"
+                        android:text="Code Sent"
                         android:textColor="@color/yellow_primary"
-                        android:textSize="10sp"
+                        android:textSize="12sp"
                         android:fontFamily="@font/outfit_bold" />
 
                     <TextView
                         android:id="@+id/tvMaskedEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dispatched to: sa•••••a@gmail.com"
+                        android:text="Sent to: sa•••••a@gmail.com"
                         android:textColor="@color/text_white"
                         android:textSize="13sp"
                         android:fontFamily="@font/outfit_medium"
@@ -352,10 +356,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ENTER 6-DIGIT PASSCODE"
+                    android:text="Enter 6-digit code"
                     android:textColor="@color/text_light_muted"
-                    android:textSize="11sp"
-                    android:fontFamily="@font/outfit_bold"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit_medium"
                     android:layout_gravity="center"
                     android:layout_marginBottom="12dp" />
 
@@ -444,44 +448,43 @@
                         android:fontFamily="@font/outfit_bold" />
                 </LinearLayout>
 
-                <!-- Resend countdown -->
                 <TextView
                     android:id="@+id/tvResendTimer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Resend code in 60s"
-                    android:textColor="@color/text_light_secondary"
+                    android:textColor="@color/text_light_muted"
                     android:textSize="12sp"
                     android:fontFamily="@font/outfit"
                     android:layout_gravity="center"
                     android:layout_marginBottom="20dp" />
 
-                <!-- Verify Passcode Button -->
+                <!-- Verify Button -->
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnVerifyOtp"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:text="Verify Passcode &amp; Sign In"
+                    android:text="Verify &amp; Sign In"
                     android:textAllCaps="false"
                     android:textColor="@color/bg_black"
                     android:textSize="15sp"
                     android:fontFamily="@font/outfit_bold"
-                    android:background="@drawable/bg_yellow_pill"
+                    android:background="@drawable/btn_solar_gold"
                     android:stateListAnimator="@null" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Progress Indicator -->
+        <!-- Loading Spinner -->
         <ProgressBar
             android:id="@+id/pbLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:visibility="gone"
-            android:indeterminateTint="@color/yellow_primary" />
+            android:indeterminateTint="@color/yellow_primary"
+            android:visibility="gone" />
 
-        <!-- Bottom Link to Register -->
+        <!-- Footer / Register Link -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -492,8 +495,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Don't have a microgrid account?"
-                android:textColor="@color/text_light_secondary"
+                android:text="Don't have an account?"
+                android:textColor="@color/text_light_muted"
                 android:textSize="13sp"
                 android:fontFamily="@font/outfit" />
 
@@ -505,7 +508,8 @@
                 android:text="Create Account"
                 android:textColor="@color/yellow_primary"
                 android:textSize="13sp"
-                android:fontFamily="@font/outfit_bold" />
+                android:fontFamily="@font/outfit_bold"
+                android:padding="4dp" />
         </LinearLayout>
 
     </LinearLayout>

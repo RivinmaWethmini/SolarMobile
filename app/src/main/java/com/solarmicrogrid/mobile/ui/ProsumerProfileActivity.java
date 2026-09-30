@@ -100,7 +100,7 @@ public class ProsumerProfileActivity extends AppCompatActivity {
             activeNic = "200224700740"; // Active seeded Prosumer
             if (layoutRoleNotice != null) {
                 layoutRoleNotice.setVisibility(View.VISIBLE);
-                tvNoticeTitle.setText("ℹ️ " + user.getRole().toUpperCase(Locale.US) + " VIEW");
+                tvNoticeTitle.setText("ℹ️ " + user.getRole() + " View");
                 tvNoticeMessage.setText("Logged in as " + user.getDisplayName() + ". Showing live registered Prosumer profile for SunPower Station A (NIC: 200224700740).");
                 btnNoticeAction.setText("Switch to Solar Prosumer Account");
                 btnNoticeAction.setOnClickListener(v -> switchToProsumer());

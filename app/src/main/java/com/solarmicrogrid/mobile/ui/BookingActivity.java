@@ -1,5 +1,6 @@
 package com.solarmicrogrid.mobile.ui;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -21,10 +22,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
 import com.solarmicrogrid.mobile.R;
+import com.solarmicrogrid.mobile.auth.SessionManager;
 import com.solarmicrogrid.mobile.database.DatabaseHelper;
+import com.solarmicrogrid.mobile.models.AuthUser;
 import com.solarmicrogrid.mobile.models.MicrogridNode;
 import com.solarmicrogrid.mobile.models.Reservation;
 import com.solarmicrogrid.mobile.network.ApiClient;
@@ -34,37 +38,53 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * Enhanced, user-friendly Energy Slot Booking Screen with Step-by-Step Guidance,
- * Preset Trading Window Chips, Energy Chips, and Real-Time Summary Preview.
- * Enforces Member 4 rules: 7-Day booking limit and 12-Hour cancellation notice.
+ * 4-Step Interactive Wizard for Energy Slot Booking:
+ * Step 1: Select Solar Station (Node)
+ * Step 2: Choose Trading Date (+ 7-Day & 12-Hour Rule Help Dialog)
+ * Step 3: Choose Trading Window (Presets + Custom Times)
+ * Step 4: Energy Amount & Final Confirmation Review
  */
 public class BookingActivity extends AppCompatActivity {
 
+    // Step Progress Views
+    private TextView tvStepProgressTitle, tvHeaderBackLabel;
+    private View indicatorStep1, indicatorStep2, indicatorStep3, indicatorStep4;
+    private TextView tvIndicator1, tvIndicator2, tvIndicator3, tvIndicator4;
+    private int currentStep = 1;
+
+    // Step 1 Views
+    private View layoutStep1;
     private Spinner spNodeSelector;
     private TextView tvSelectedNodeInfo;
-    private Button btnSelectDate;
-    private TextView tvDateRangeHint;
+    private AppCompatButton btnStep1Next;
 
-    // Time Pickers & Presets
+    // Step 2 Views
+    private View layoutStep2;
+    private Button btnSelectDate;
+    private TextView tvDateRangeHint, tvRuleCheckBadgeDate, btnRuleHelp;
+    private AppCompatButton btnStep2Prev, btnStep2Next;
+
+    // Step 3 Views
+    private View layoutStep3;
     private Button btnPresetMorning, btnPresetPeak, btnPresetAfternoon;
     private Button btnSelectStartTime, btnSelectEndTime;
     private TextView tvDurationBadge;
+    private AppCompatButton btnStep3Prev, btnStep3Next;
 
-    // Energy Chips & Input
+    // Step 4 Views
+    private View layoutStep4;
     private Button btnChip10, btnChip20, btnChip30, btnChip50;
     private EditText etEnergyAmount;
-
-    // Live Preview Card
     private TextView tvPreviewNode, tvPreviewWindow, tvPreviewEnergy, tvRuleCheckBadge;
-
+    private AppCompatButton btnStep4Prev;
     private Button btnSubmitBooking;
     private ProgressBar progressBar;
 
+    // State Variables
     private Calendar selectedCalendar;
     private int startHour = 9, startMinute = 0;
     private int endHour = 11, endMinute = 0;
@@ -88,26 +108,86 @@ public class BookingActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
         selectedCalendar = Calendar.getInstance();
 
-        // Read user NIC with fallback
-        android.content.SharedPreferences prefs = getSharedPreferences("solar_session", MODE_PRIVATE);
-        String nic = prefs.getString("prosumer_nic", null);
-        if (nic == null) nic = prefs.getString("nic", null);
-        if (nic == null) nic = prefs.getString("username", null);
-        PROSUMER_NIC = (nic != null && !nic.trim().isEmpty()) ? nic : "200012345678";
+        // Read authenticated user NIC with fallback
+        AuthUser activeUser = SessionManager.getInstance(this).getUser();
+        if (activeUser != null && activeUser.getNic() != null && !activeUser.getNic().trim().isEmpty()) {
+            PROSUMER_NIC = activeUser.getNic();
+        } else {
+            android.content.SharedPreferences prefs = getSharedPreferences("solar_session", MODE_PRIVATE);
+            String nic = prefs.getString("prosumer_nic", null);
+            if (nic == null) nic = prefs.getString("nic", null);
+            if (nic == null) nic = prefs.getString("username", null);
+            PROSUMER_NIC = (nic != null && !nic.trim().isEmpty()) ? nic : "200224700740";
+        }
 
-        // Bind Views
+        bindViews();
+        setupStepNavigation();
+        setupNodeSpinner();
+        setupPickers();
+        setupPresetChips();
+        setupEnergyChips();
+        setupRuleHelp();
+
+        etEnergyAmount.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int count, int after) { updateLivePreview(); }
+            @Override public void afterTextChanged(Editable s) {}
+        });
+
+        btnSubmitBooking.setOnClickListener(v -> submitBookingRequest());
+
+        goToStep(1);
+        updateLivePreview();
+    }
+
+    private void bindViews() {
+        // Header
+        tvStepProgressTitle = findViewById(R.id.tvStepProgressTitle);
+        tvHeaderBackLabel = findViewById(R.id.tvHeaderBackLabel);
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> handleBack());
+        }
+
+        // Indicators
+        indicatorStep1 = findViewById(R.id.indicatorStep1);
+        indicatorStep2 = findViewById(R.id.indicatorStep2);
+        indicatorStep3 = findViewById(R.id.indicatorStep3);
+        indicatorStep4 = findViewById(R.id.indicatorStep4);
+
+        tvIndicator1 = findViewById(R.id.tvIndicator1);
+        tvIndicator2 = findViewById(R.id.tvIndicator2);
+        tvIndicator3 = findViewById(R.id.tvIndicator3);
+        tvIndicator4 = findViewById(R.id.tvIndicator4);
+
+        // Step 1
+        layoutStep1 = findViewById(R.id.layoutStep1);
         spNodeSelector = findViewById(R.id.spNodeSelector);
         tvSelectedNodeInfo = findViewById(R.id.tvSelectedNodeInfo);
+        btnStep1Next = findViewById(R.id.btnStep1Next);
+
+        // Step 2
+        layoutStep2 = findViewById(R.id.layoutStep2);
         btnSelectDate = findViewById(R.id.btnSelectDate);
         tvDateRangeHint = findViewById(R.id.tvDateRangeHint);
+        tvRuleCheckBadgeDate = findViewById(R.id.tvRuleCheckBadgeDate);
+        btnRuleHelp = findViewById(R.id.btnRuleHelp);
+        btnStep2Prev = findViewById(R.id.btnStep2Prev);
+        btnStep2Next = findViewById(R.id.btnStep2Next);
 
+        // Step 3
+        layoutStep3 = findViewById(R.id.layoutStep3);
         btnPresetMorning = findViewById(R.id.btnPresetMorning);
         btnPresetPeak = findViewById(R.id.btnPresetPeak);
         btnPresetAfternoon = findViewById(R.id.btnPresetAfternoon);
         btnSelectStartTime = findViewById(R.id.btnSelectStartTime);
         btnSelectEndTime = findViewById(R.id.btnSelectEndTime);
         tvDurationBadge = findViewById(R.id.tvDurationBadge);
+        btnStep3Prev = findViewById(R.id.btnStep3Prev);
+        btnStep3Next = findViewById(R.id.btnStep3Next);
 
+        // Step 4
+        layoutStep4 = findViewById(R.id.layoutStep4);
         btnChip10 = findViewById(R.id.btnChip10);
         btnChip20 = findViewById(R.id.btnChip20);
         btnChip30 = findViewById(R.id.btnChip30);
@@ -119,28 +199,129 @@ public class BookingActivity extends AppCompatActivity {
         tvPreviewEnergy = findViewById(R.id.tvPreviewEnergy);
         tvRuleCheckBadge = findViewById(R.id.tvRuleCheckBadge);
 
+        btnStep4Prev = findViewById(R.id.btnStep4Prev);
         btnSubmitBooking = findViewById(R.id.btnSubmitBooking);
         progressBar = findViewById(R.id.progressBar);
+    }
 
-        View btnBack = findViewById(R.id.btnBack);
-        if (btnBack != null) {
-            btnBack.setOnClickListener(v -> finish());
-        }
+    private void setupStepNavigation() {
+        btnStep1Next.setOnClickListener(v -> goToStep(2));
 
-        setupNodeSpinner();
-        setupPickers();
-        setupPresetChips();
-        setupEnergyChips();
-
-        etEnergyAmount.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int count, int after) { updateLivePreview(); }
-            @Override public void afterTextChanged(Editable s) {}
+        btnStep2Prev.setOnClickListener(v -> goToStep(1));
+        btnStep2Next.setOnClickListener(v -> {
+            // Validation before proceeding to Step 3
+            Calendar maxLimit = Calendar.getInstance();
+            maxLimit.add(Calendar.DAY_OF_YEAR, 7);
+            if (selectedCalendar.after(maxLimit)) {
+                Toast.makeText(this, "Please choose a date within 7 days", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            goToStep(3);
         });
 
-        btnSubmitBooking.setOnClickListener(v -> submitBookingRequest());
+        btnStep3Prev.setOnClickListener(v -> goToStep(2));
+        btnStep3Next.setOnClickListener(v -> {
+            int durationMinutes = (endHour * 60 + endMinute) - (startHour * 60 + startMinute);
+            if (durationMinutes <= 0) {
+                Toast.makeText(this, "End time must be after start time", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            goToStep(4);
+        });
 
+        btnStep4Prev.setOnClickListener(v -> goToStep(3));
+    }
+
+    private void goToStep(int step) {
+        currentStep = step;
+
+        layoutStep1.setVisibility(step == 1 ? View.VISIBLE : View.GONE);
+        layoutStep2.setVisibility(step == 2 ? View.VISIBLE : View.GONE);
+        layoutStep3.setVisibility(step == 3 ? View.VISIBLE : View.GONE);
+        layoutStep4.setVisibility(step == 4 ? View.VISIBLE : View.GONE);
+
+        // Smooth fade-in on active layout
+        View activeLayout = (step == 1) ? layoutStep1 : (step == 2) ? layoutStep2 : (step == 3) ? layoutStep3 : layoutStep4;
+        activeLayout.setAlpha(0f);
+        activeLayout.animate().alpha(1f).setDuration(200).start();
+
+        // Update Header Titles
+        switch (step) {
+            case 1:
+                tvStepProgressTitle.setText("Step 1 of 4: Select Solar Station");
+                tvHeaderBackLabel.setText("Dashboard");
+                break;
+            case 2:
+                tvStepProgressTitle.setText("Step 2 of 4: Choose Trading Date");
+                tvHeaderBackLabel.setText("Station");
+                break;
+            case 3:
+                tvStepProgressTitle.setText("Step 3 of 4: Choose Trading Window");
+                tvHeaderBackLabel.setText("Date");
+                break;
+            case 4:
+                tvStepProgressTitle.setText("Step 4 of 4: Energy Amount & Review");
+                tvHeaderBackLabel.setText("Time");
+                break;
+        }
+
+        updateBreadcrumbStyles(step);
         updateLivePreview();
+    }
+
+    private void updateBreadcrumbStyles(int step) {
+        View[] indicators = {indicatorStep1, indicatorStep2, indicatorStep3, indicatorStep4};
+        TextView[] textViews = {tvIndicator1, tvIndicator2, tvIndicator3, tvIndicator4};
+        String[] labels = {"1 Station", "2 Date", "3 Time", "4 Confirm"};
+
+        for (int i = 0; i < 4; i++) {
+            int stepNum = i + 1;
+            if (stepNum == step) {
+                indicators[i].setBackgroundResource(R.drawable.bg_tab_selected);
+                textViews[i].setTextColor(ContextCompat.getColor(this, R.color.bg_black));
+                textViews[i].setText(labels[i]);
+            } else if (stepNum < step) {
+                indicators[i].setBackgroundResource(R.drawable.bg_pill_dark);
+                textViews[i].setTextColor(ContextCompat.getColor(this, R.color.emerald_approved));
+                textViews[i].setText("✓ " + labels[i].substring(2));
+            } else {
+                indicators[i].setBackgroundResource(R.drawable.bg_dark_input);
+                textViews[i].setTextColor(ContextCompat.getColor(this, R.color.text_light_secondary));
+                textViews[i].setText(labels[i]);
+            }
+        }
+    }
+
+    private void handleBack() {
+        if (currentStep > 1) {
+            goToStep(currentStep - 1);
+        } else {
+            finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (currentStep > 1) {
+            goToStep(currentStep - 1);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void setupRuleHelp() {
+        btnRuleHelp.setOnClickListener(v -> {
+            new AlertDialog.Builder(this)
+                    .setTitle("Microgrid Schedule Rules")
+                    .setMessage("📅 7-Day Advance Schedule:\n"
+                            + "You can book energy slots up to 7 days in advance. This ensures accurate solar generation forecasts.\n\n"
+                            + "⏱️ 12-Hour Advance Notice:\n"
+                            + "Reservations must be submitted at least 12 hours before slot start time so microgrid operators can prepare dispatch safely.\n\n"
+                            + "⚠️ Cancellation Restriction:\n"
+                            + "Reservations scheduled with less than 12 hours notice cannot be modified or cancelled later.")
+                    .setPositiveButton("Understood", null)
+                    .show();
+        });
     }
 
     private void setupNodeSpinner() {
@@ -163,9 +344,9 @@ public class BookingActivity extends AppCompatActivity {
                             JSONObject obj = arr.getJSONObject(i);
                             nodesList.add(new MicrogridNode(
                                     obj.optString("id", obj.optString("nodeCode", "node-" + i)),
-                                    obj.optString("nodeCode", "NODE-" + i),
-                                    obj.optString("name", "Solar Node " + i),
-                                    obj.optString("region", "Grid"),
+                                    obj.optString("nodeCode", "Station-" + (i + 1)),
+                                    obj.optString("name", "Solar Station " + (i + 1)),
+                                    obj.optString("region", "Colombo Region"),
                                     obj.optDouble("totalCapacityKw", 500)
                             ));
                         }
@@ -187,10 +368,10 @@ public class BookingActivity extends AppCompatActivity {
 
     private void loadFallbackNodes() {
         if (nodesList.isEmpty()) {
-            nodesList.add(new MicrogridNode("node-01", "NODE-COL-01", "Colombo North Solar Hub", "Western", 500));
-            nodesList.add(new MicrogridNode("node-02", "NODE-COL-02", "Kaduwela Microgrid Substation", "Western", 350));
-            nodesList.add(new MicrogridNode("node-03", "NODE-KND-01", "Kandy Central Solar Station", "Central", 400));
-            nodesList.add(new MicrogridNode("node-04", "NODE-GAL-01", "Galle Coastal Solar Array", "Southern", 600));
+            nodesList.add(new MicrogridNode("node-01", "Station-01", "Colombo North Solar Hub", "Western", 500));
+            nodesList.add(new MicrogridNode("node-02", "Station-02", "Kaduwela Microgrid Station", "Western", 350));
+            nodesList.add(new MicrogridNode("node-03", "Station-03", "Kandy Central Solar Station", "Central", 400));
+            nodesList.add(new MicrogridNode("node-04", "Station-04", "Galle Coastal Solar Array", "Southern", 600));
             updateSpinnerAdapter();
         }
     }
@@ -227,7 +408,7 @@ public class BookingActivity extends AppCompatActivity {
                 if (position >= 0 && position < nodesList.size()) {
                     MicrogridNode n = nodesList.get(position);
                     if (tvSelectedNodeInfo != null) {
-                        tvSelectedNodeInfo.setText(n.getName() + " • " + n.getRegion() + " Region (" + String.format(Locale.getDefault(), "%.0f kW Capacity)", n.getTotalCapacityKw()));
+                        tvSelectedNodeInfo.setText(n.getName() + " • " + n.getRegion() + " (" + String.format(Locale.getDefault(), "%.0f kW Capacity)", n.getTotalCapacityKw()));
                     }
                 }
                 updateLivePreview();
@@ -255,7 +436,6 @@ public class BookingActivity extends AppCompatActivity {
     }
 
     private void setupPickers() {
-        // Date Picker
         btnSelectDate.setOnClickListener(v -> {
             Calendar now = Calendar.getInstance();
             DatePickerDialog datePicker = new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
@@ -268,17 +448,13 @@ public class BookingActivity extends AppCompatActivity {
                 updateLivePreview();
             }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
 
-            // Set Min Date = Today
             datePicker.getDatePicker().setMinDate(now.getTimeInMillis());
-            // Set Max Date = Today + 7 Days (7-Day Booking Limit Rule)
             Calendar maxLimit = Calendar.getInstance();
             maxLimit.add(Calendar.DAY_OF_YEAR, 7);
             datePicker.getDatePicker().setMaxDate(maxLimit.getTimeInMillis());
-
             datePicker.show();
         });
 
-        // Start Time Picker
         btnSelectStartTime.setOnClickListener(v -> {
             TimePickerDialog timePicker = new TimePickerDialog(this, (view, hourOfDay, minute) -> {
                 startHour = hourOfDay;
@@ -290,7 +466,6 @@ public class BookingActivity extends AppCompatActivity {
             timePicker.show();
         });
 
-        // End Time Picker
         btnSelectEndTime.setOnClickListener(v -> {
             TimePickerDialog timePicker = new TimePickerDialog(this, (view, hourOfDay, minute) -> {
                 endHour = hourOfDay;
@@ -302,7 +477,6 @@ public class BookingActivity extends AppCompatActivity {
             timePicker.show();
         });
 
-        // Set default date text
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd MMM yyyy", Locale.getDefault());
         btnSelectDate.setText(sdf.format(selectedCalendar.getTime()));
 
@@ -378,12 +552,16 @@ public class BookingActivity extends AppCompatActivity {
     }
 
     private void updateLivePreview() {
-        // Node
         if (spNodeSelector != null && spNodeSelector.getSelectedItem() instanceof MicrogridNode) {
             MicrogridNode node = (MicrogridNode) spNodeSelector.getSelectedItem();
-            tvPreviewNode.setText(node.getName() + " (" + node.getNodeCode() + ")");
+            String code = node.getNodeCode();
+            if (code != null && !code.trim().isEmpty()) {
+                tvPreviewNode.setText(node.getName() + " (" + code + ")");
+            } else {
+                tvPreviewNode.setText(node.getName());
+            }
         } else {
-            tvPreviewNode.setText("Colombo North Solar Hub");
+            tvPreviewNode.setText("Solar Microgrid Station");
         }
 
         // Window & Duration
@@ -400,7 +578,7 @@ public class BookingActivity extends AppCompatActivity {
             tvDurationBadge.setText("Duration: " + durStr.trim() + " (" + timeStr + ")");
             tvDurationBadge.setTextColor(Color.parseColor("#9496A1"));
         } else {
-            tvDurationBadge.setText("Invalid: End time must be after Start time");
+            tvDurationBadge.setText("Invalid: End time must be after start time");
             tvDurationBadge.setTextColor(Color.parseColor("#EF4444"));
         }
 
@@ -420,19 +598,28 @@ public class BookingActivity extends AppCompatActivity {
         startCal.set(Calendar.SECOND, 0);
 
         long diffHours = (startCal.getTimeInMillis() - now.getTimeInMillis()) / (1000 * 60 * 60);
+        String ruleNotice;
+        int ruleColor;
         if (diffHours < 12) {
-            tvRuleCheckBadge.setText("⚠️ Notice: Booking is less than 12h in advance (Cancellation restriction applies)");
-            tvRuleCheckBadge.setTextColor(Color.parseColor("#FFD000"));
+            ruleNotice = "⚠️ Notice: Less than 12h advance notice (Cannot be modified after booking)";
+            ruleColor = Color.parseColor("#FFD000");
         } else {
-            tvRuleCheckBadge.setText("✓ Complies with 7-Day Limit and 12-Hour notice rule");
-            tvRuleCheckBadge.setTextColor(Color.parseColor("#10B981"));
+            ruleNotice = "✓ Complies with 7-Day Limit and 12-Hour notice rule";
+            ruleColor = Color.parseColor("#10B981");
+        }
+
+        tvRuleCheckBadge.setText(ruleNotice);
+        tvRuleCheckBadge.setTextColor(ruleColor);
+        if (tvRuleCheckBadgeDate != null) {
+            tvRuleCheckBadgeDate.setText(ruleNotice);
+            tvRuleCheckBadgeDate.setTextColor(ruleColor);
         }
     }
 
     private void submitBookingRequest() {
         String energyStr = etEnergyAmount.getText().toString().trim();
         if (energyStr.isEmpty()) {
-            Toast.makeText(this, "Please enter reserved energy amount (kW/h)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter reserved energy amount (kWh)", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -448,7 +635,6 @@ public class BookingActivity extends AppCompatActivity {
             return;
         }
 
-        // Build start & end DateTimes
         Calendar startCal = (Calendar) selectedCalendar.clone();
         startCal.set(Calendar.HOUR_OF_DAY, startHour);
         startCal.set(Calendar.MINUTE, startMinute);
@@ -459,13 +645,11 @@ public class BookingActivity extends AppCompatActivity {
         endCal.set(Calendar.MINUTE, endMinute);
         endCal.set(Calendar.SECOND, 0);
 
-        // Validation: End time must be after start time
         if (endCal.getTimeInMillis() <= startCal.getTimeInMillis()) {
             Toast.makeText(this, "End time must be after start time", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Validation (7-Day Booking Limit Rule on client)
         Calendar maxAllowed = Calendar.getInstance();
         maxAllowed.add(Calendar.DAY_OF_YEAR, 7);
         if (startCal.after(maxAllowed)) {
@@ -474,18 +658,16 @@ public class BookingActivity extends AppCompatActivity {
         }
 
         MicrogridNode selectedNode = (MicrogridNode) spNodeSelector.getSelectedItem();
-        String nodeId = selectedNode != null ? selectedNode.getNodeCode() : "NODE-COL-01";
+        String nodeId = selectedNode != null ? selectedNode.getNodeCode() : "Station-01";
 
         SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
         isoFormat.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
         String startIso = isoFormat.format(startCal.getTime());
         String endIso = isoFormat.format(endCal.getTime());
 
-        // Build JSON Payload for C# Web API
         JSONObject payload = new JSONObject();
         try {
             payload.put("prosumerId", PROSUMER_NIC);
-            payload.put("prosumerNic", PROSUMER_NIC);
             payload.put("nodeId", nodeId);
             payload.put("reservedEnergyKwh", energy);
             payload.put("reservationDate", startIso);
@@ -500,7 +682,6 @@ public class BookingActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         btnSubmitBooking.setEnabled(false);
 
-        // Send to central C# Web API
         ApiClient.post("/reservations", payload.toString(), new ApiClient.ApiCallback() {
             @Override
             public void onSuccess(String response) {
@@ -520,10 +701,8 @@ public class BookingActivity extends AppCompatActivity {
                     reservation.setEndTime(endIso);
                     reservation.setStatus("Pending");
 
-                    // Save locally in SQLite for offline persistence
                     dbHelper.saveReservation(reservation);
 
-                    // Navigate to Summary Screen
                     Intent intent = new Intent(BookingActivity.this, BookingSummaryActivity.class);
                     intent.putExtra("reservation", reservation);
                     intent.putExtra("actionType", "CREATED");
@@ -531,7 +710,7 @@ public class BookingActivity extends AppCompatActivity {
                     finish();
 
                 } catch (Exception e) {
-                    Toast.makeText(BookingActivity.this, "Booking created! (Saved locally)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BookingActivity.this, "Booking created!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

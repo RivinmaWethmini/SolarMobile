@@ -153,29 +153,40 @@ public class ApiClient {
 
     // ─── INTERNAL HTTP EXECUTION ────────────────────────────────────────────────
 
+    private static final String[] CANDIDATES = new String[] {
+            USB_ADB_URL,
+            LAN_WIFI_URL,
+            EMULATOR_URL
+    };
+
+    private static volatile String activeBaseUrl = null;
+
     private static void sendRequest(String method, String endpoint, String jsonBody, ApiCallback callback, boolean attachToken) {
         executor.execute(() -> {
-            String primaryBase = BASE_URL;
-            String secondaryBase = primaryBase.equals(USB_ADB_URL) ? LAN_WIFI_URL : USB_ADB_URL;
-
-            try {
-                executeHttp(primaryBase, method, endpoint, jsonBody, callback, attachToken);
-            } catch (Exception primaryEx) {
-                // If primary endpoint is unreachable, auto-failover to secondary
+            // 1. Try cached working URL first if available
+            String cached = activeBaseUrl;
+            if (cached != null) {
                 try {
-                    executeHttp(secondaryBase, method, endpoint, jsonBody, callback, attachToken);
-                    BASE_URL = secondaryBase;
-                } catch (Exception secondaryEx) {
-                    try {
-                        // Failover 3: Emulator loopback 10.0.2.2
-                        executeHttp(EMULATOR_URL, method, endpoint, jsonBody, callback, attachToken);
-                        BASE_URL = EMULATOR_URL;
-                    } catch (Exception tertiaryEx) {
-                        String msg = "Connection error: " + primaryEx.getMessage();
-                        mainHandler.post(() -> callback.onError(msg));
-                    }
+                    executeHttp(cached, method, endpoint, jsonBody, callback, attachToken);
+                    return;
+                } catch (Exception ex) {
+                    activeBaseUrl = null; // Cache invalidated, probe candidates
                 }
             }
+
+            // 2. Fast probe across all candidates
+            for (String candidate : CANDIDATES) {
+                try {
+                    executeHttp(candidate, method, endpoint, jsonBody, callback, attachToken);
+                    activeBaseUrl = candidate;
+                    return;
+                } catch (Exception ignored) {
+                    // Try next candidate
+                }
+            }
+
+            // 3. If all candidates fail to establish connection
+            mainHandler.post(() -> callback.onError("Unable to connect to server. Please check your network or USB connection."));
         });
     }
 
@@ -198,7 +209,7 @@ public class ApiClient {
 
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             conn.setRequestProperty("Accept", "application/json");
-            conn.setConnectTimeout(4000);
+            conn.setConnectTimeout(1500);
             conn.setReadTimeout(5000);
 
             // Automatically inject JWT Bearer token if session exists
@@ -234,20 +245,68 @@ public class ApiClient {
             if (statusCode >= 200 && statusCode < 300) {
                 mainHandler.post(() -> callback.onSuccess(responseStr));
             } else {
-                String errorMsg = "HTTP " + statusCode;
-                try {
-                    JSONObject errJson = new JSONObject(responseStr);
-                    if (errJson.has("message")) {
-                        errorMsg = errJson.getString("message");
-                    }
-                } catch (Exception ignored) {}
-                String finalError = errorMsg;
-                mainHandler.post(() -> callback.onError(finalError));
+                String friendlyMsg = parseFriendlyErrorMessage(statusCode, responseStr);
+                mainHandler.post(() -> callback.onError(friendlyMsg));
             }
         } finally {
             if (conn != null) {
                 conn.disconnect();
             }
+        }
+    }
+
+    private static String parseFriendlyErrorMessage(int statusCode, String responseBody) {
+        String serverMessage = null;
+        if (responseBody != null && !responseBody.trim().isEmpty()) {
+            try {
+                JSONObject json = new JSONObject(responseBody);
+                if (json.has("message") && !json.isNull("message")) {
+                    serverMessage = json.getString("message");
+                } else if (json.has("errors") && !json.isNull("errors")) {
+                    JSONObject errorsObj = json.getJSONObject("errors");
+                    java.util.Iterator<String> keys = errorsObj.keys();
+                    if (keys.hasNext()) {
+                        String key = keys.next();
+                        JSONArray arr = errorsObj.optJSONArray(key);
+                        if (arr != null && arr.length() > 0) {
+                            serverMessage = arr.getString(0);
+                        } else {
+                            serverMessage = errorsObj.optString(key, null);
+                        }
+                    }
+                } else if (json.has("error") && !json.isNull("error")) {
+                    serverMessage = json.getString("error");
+                } else if (json.has("title") && !json.isNull("title")) {
+                    String title = json.getString("title");
+                    if (!"One or more validation errors occurred.".equalsIgnoreCase(title)) {
+                        serverMessage = title;
+                    }
+                }
+            } catch (Exception ignored) {}
+        }
+
+        if (serverMessage != null && !serverMessage.trim().isEmpty()) {
+            serverMessage = serverMessage.replace('_', ' ');
+            return serverMessage;
+        }
+
+        switch (statusCode) {
+            case 400:
+                return "Please check your entered details and try again.";
+            case 401:
+                return "Incorrect email or password. Please try again.";
+            case 403:
+                return "Access restricted. Your account may be pending approval.";
+            case 404:
+                return "Requested account or service was not found.";
+            case 429:
+                return "Too many requests. Please wait a moment.";
+            case 500:
+            case 502:
+            case 503:
+                return "Server is currently unavailable. Please try again in a few moments.";
+            default:
+                return "Request failed (Error " + statusCode + "). Please try again.";
         }
     }
 }

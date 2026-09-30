@@ -34,7 +34,7 @@ import org.json.JSONObject;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private ImageView btnBack;
+    private TextView btnBack;
     private TextView tabPassword, tabOtp;
     private LinearLayout layoutPasswordForm, layoutOtpForm;
     private ProgressBar pbLoading;
@@ -272,7 +272,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     JSONObject json = new JSONObject(response);
                     String masked = json.optString("maskedEmail", "your registered email");
-                    tvMaskedEmail.setText("Dispatched to: " + masked);
+                    tvMaskedEmail.setText("Sent to: " + masked);
 
                     layoutOtpStep1.setVisibility(View.GONE);
                     layoutOtpStep2.setVisibility(View.VISIBLE);
