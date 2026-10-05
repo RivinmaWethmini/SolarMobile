@@ -25,11 +25,13 @@ public class SessionManager {
     private static final String KEY_LEGACY_PROSUMER_NIC = "prosumer_nic";
 
     private static SessionManager instance;
+    private final Context context;
     private final SharedPreferences prefs;
     private final SharedPreferences legacyPrefs;
 
     private SessionManager(Context context) {
         Context appCtx = context.getApplicationContext();
+        this.context = appCtx;
         this.prefs = appCtx.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         this.legacyPrefs = appCtx.getSharedPreferences(LEGACY_PREF_NAME, Context.MODE_PRIVATE);
     }
@@ -59,6 +61,13 @@ public class SessionManager {
                 legacyPrefs.edit().putString(KEY_LEGACY_PROSUMER_NIC, user.getNic()).apply();
             } else if (user.getUsername() != null) {
                 legacyPrefs.edit().putString(KEY_LEGACY_PROSUMER_NIC, user.getUsername()).apply();
+            }
+
+            // Sync user session with SQLite database
+            try {
+                com.solarmicrogrid.mobile.database.DatabaseHelper db = new com.solarmicrogrid.mobile.database.DatabaseHelper(context);
+                db.saveUserSession(user.getNic(), user.getFullName(), user.getRole());
+            } catch (Exception ignored) {
             }
         }
         editor.putBoolean(KEY_IS_LOGGED_IN, true);
@@ -117,6 +126,11 @@ public class SessionManager {
     public void clearSession() {
         prefs.edit().clear().apply();
         legacyPrefs.edit().clear().apply();
+        try {
+            com.solarmicrogrid.mobile.database.DatabaseHelper db = new com.solarmicrogrid.mobile.database.DatabaseHelper(context);
+            db.clearUserSession();
+        } catch (Exception ignored) {
+        }
     }
 
     public void logout() {

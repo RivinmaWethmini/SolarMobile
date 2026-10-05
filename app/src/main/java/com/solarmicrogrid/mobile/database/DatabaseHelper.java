@@ -153,4 +153,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return res;
     }
+
+    // =========================================================================
+    // Member 2 Task: SQLite Session Storage Helper Methods
+    // =========================================================================
+
+    /**
+     * Saves or updates authenticated user session in local SQLite database.
+     */
+    public void saveUserSession(String nic, String name, String role) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("nic", nic != null ? nic : "");
+        values.put("name", name != null ? name : "");
+        values.put("role", role != null ? role : "Prosumer");
+        db.insertWithOnConflict(TABLE_USER_SESSION, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+    }
+
+    /**
+     * Retrieves active user session from local SQLite database.
+     * Returns array [nic, name, role] or null if no session stored.
+     */
+    public String[] getUserSession() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT nic, name, role FROM " + TABLE_USER_SESSION + " LIMIT 1", null);
+        String[] session = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            session = new String[]{
+                    cursor.getString(0),
+                    cursor.getString(1),
+                    cursor.getString(2)
+            };
+            cursor.close();
+        }
+        return session;
+    }
+
+    /**
+     * Clears user session from local SQLite database on logout.
+     */
+    public void clearUserSession() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_USER_SESSION, null, null);
+    }
 }
+
