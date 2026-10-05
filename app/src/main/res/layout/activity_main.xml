@@ -16,7 +16,9 @@
         android:paddingTop="18dp"
         android:paddingBottom="42dp">
 
-        <!-- Top Header Bar (Avatar + Dynamic Greeting + Role Switcher + Logout) -->
+        <!-- =================================================================== -->
+        <!-- TOP HEADER: Emblem + Greeting + Live Online Badge + Sign Out        -->
+        <!-- =================================================================== -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,107 +26,129 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!-- Profile Avatar & Greeting -->
+            <!-- Emblem Frame -->
+            <FrameLayout
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bg_dark_input"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_solar_logo"
+                    android:contentDescription="SolarRays Emblem" />
+            </FrameLayout>
+
+            <!-- Greeting & User / Role -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <!-- Solar Logo Frame -->
-                <FrameLayout
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:background="@drawable/bg_dark_input"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_solar_logo"
-                        android:contentDescription="SolarRays Logo" />
-                </FrameLayout>
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="6dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <!-- Brand / Time Greeting -->
                     <TextView
                         android:id="@+id/tvGreeting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SolarRays • Afternoon"
+                        android:text="SolarRays • Platform"
                         android:textColor="@color/yellow_primary"
                         android:textSize="11sp"
                         android:letterSpacing="0.04"
                         android:fontFamily="@font/outfit_bold" />
 
-                    <!-- User Name & Role Badge -->
+                    <!-- Live Online Status Indicator -->
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_pill_dark"
+                        android:paddingHorizontal="7dp"
+                        android:paddingVertical="2dp"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="2dp">
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="6dp"
+                            android:layout_height="6dp"
+                            android:background="@drawable/bg_circle_yellow"
+                            android:backgroundTint="@color/emerald_approved" />
 
                         <TextView
-                            android:id="@+id/tvUserNic"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="SunPower Station A"
-                            android:textColor="@color/text_white"
-                            android:textSize="16sp"
-                            android:singleLine="true"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/outfit_bold" />
-
-                        <TextView
-                            android:id="@+id/tvUserRoleBadge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:text="☀️ Prosumer"
+                            android:layout_marginStart="4dp"
+                            android:text="Online"
                             android:textColor="@color/emerald_approved"
                             android:textSize="10sp"
-                            android:fontFamily="@font/outfit_bold"
-                            android:background="@drawable/bg_pill_dark"
-                            android:paddingHorizontal="7dp"
-                            android:paddingVertical="3dp"
-                            android:singleLine="true" />
+                            android:fontFamily="@font/outfit_bold" />
                     </LinearLayout>
+                </LinearLayout>
+
+                <!-- User Name & Role Badge -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="3dp">
+
+                    <TextView
+                        android:id="@+id/tvUserNic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Solar Participant"
+                        android:textColor="@color/text_white"
+                        android:textSize="16sp"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/outfit_bold" />
+
+                    <TextView
+                        android:id="@+id/tvUserRoleBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="☀️ Participant"
+                        android:textColor="@color/yellow_primary"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/outfit_bold"
+                        android:background="@drawable/bg_pill_dark"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="3dp"
+                        android:singleLine="true" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Action Buttons: Quick QR Scanner & Logout -->
+            <!-- Refresh & Logout Header Buttons -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <!-- Quick QR Scanner Header Button -->
                 <ImageView
-                    android:id="@+id/btnQuickScanHeader"
+                    android:id="@+id/btnRefreshStats"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginStart="8dp"
-                    android:src="@drawable/ic_camera"
+                    android:src="@drawable/ic_refresh_arrow"
                     android:background="@drawable/bg_pill_dark"
                     android:padding="8dp"
                     app:tint="@color/yellow_primary"
-                    android:contentDescription="Quick QR Scan"
+                    android:contentDescription="Refresh Telemetry"
                     android:clickable="true"
                     android:focusable="true" />
 
-                <!-- Logout Header Button -->
                 <ImageView
                     android:id="@+id/btnHeaderLogout"
                     android:layout_width="36dp"
@@ -140,739 +164,675 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Role Mode Switcher Tabs Bar (Hidden - Roles strictly enforced by authenticated login) -->
-        <HorizontalScrollView
+        <!-- =================================================================== -->
+        <!-- HERO CARD: Live Solar (4.8 kW) + Battery (86%) + Today (32.1 kWh)   -->
+        <!-- =================================================================== -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:visibility="gone"
-            android:layout_marginBottom="18dp">
+            android:orientation="vertical"
+            android:background="@drawable/bg_glass_card"
+            android:padding="18dp"
+            android:layout_marginBottom="20dp">
 
+            <!-- Card Header -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="14dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="⚡ LIVE MICROGRID TELEMETRY"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.06"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phase Sync • 50.0 Hz"
+                    android:textColor="@color/emerald_approved"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/outfit_semibold"
+                    android:background="@drawable/bg_pill_dark"
+                    android:paddingHorizontal="7dp"
+                    android:paddingVertical="3dp" />
+            </LinearLayout>
+
+            <!-- 3-Pillar Telemetry Grid -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <!-- Tab 1: Prosumer -->
-                <TextView
-                    android:id="@+id/tabRoleProsumer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="34dp"
-                    android:text="☀️ Prosumer"
-                    android:textColor="@color/bg_black"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/outfit_bold"
-                    android:gravity="center"
-                    android:paddingHorizontal="14dp"
-                    android:background="@drawable/bg_role_tab_active"
-                    android:clickable="true"
-                    android:focusable="true" />
-
-                <!-- Tab 2: Operator -->
-                <TextView
-                    android:id="@+id/tabRoleOperator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="34dp"
-                    android:layout_marginStart="8dp"
-                    android:text="👷‍♂️ Operator"
-                    android:textColor="@color/text_light_secondary"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/outfit_medium"
-                    android:gravity="center"
-                    android:paddingHorizontal="14dp"
-                    android:background="@drawable/bg_role_tab_inactive"
-                    android:clickable="true"
-                    android:focusable="true" />
-
-                <!-- Tab 3: Consumer -->
-                <TextView
-                    android:id="@+id/tabRoleConsumer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="34dp"
-                    android:layout_marginStart="8dp"
-                    android:text="💡 Consumer"
-                    android:textColor="@color/text_light_secondary"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/outfit_medium"
-                    android:gravity="center"
-                    android:paddingHorizontal="14dp"
-                    android:background="@drawable/bg_role_tab_inactive"
-                    android:clickable="true"
-                    android:focusable="true" />
-
-                <!-- Tab 4: Admin / Backoffice -->
-                <TextView
-                    android:id="@+id/tabRoleAdmin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="34dp"
-                    android:layout_marginStart="8dp"
-                    android:text="🛡️ Admin"
-                    android:textColor="@color/text_light_secondary"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/outfit_medium"
-                    android:gravity="center"
-                    android:paddingHorizontal="14dp"
-                    android:background="@drawable/bg_role_tab_inactive"
-                    android:clickable="true"
-                    android:focusable="true" />
-            </LinearLayout>
-        </HorizontalScrollView>
-
-        <!-- =================================================================== -->
-        <!-- ROLE VIEW 1: PROSUMER CONSOLE (Generation, Listed Tariff, Bookings) -->
-        <!-- =================================================================== -->
-        <LinearLayout
-            android:id="@+id/layoutViewProsumer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible">
-
-            <!-- Prosumer Generation Hero Card -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/bg_glass_card"
-                android:padding="16dp"
-                android:layout_marginBottom="16dp">
-
+                <!-- 1. Live Solar Generation (4.8 kW) -->
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_dark_input"
+                    android:padding="12dp"
+                    android:layout_marginEnd="5dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="☀️ Prosumer Telemetry"
+                        android:text="Solar Output"
+                        android:textColor="@color/text_light_muted"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/outfit" />
+
+                    <TextView
+                        android:id="@+id/tvHeroSolarKw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="4.8 kW"
                         android:textColor="@color/yellow_primary"
-                        android:textSize="11sp"
-                        android:letterSpacing="0.04"
+                        android:textSize="17sp"
                         android:fontFamily="@font/outfit_bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Grid Linked"
+                        android:layout_marginTop="2dp"
+                        android:text="☀️ Peak Gen"
                         android:textColor="@color/emerald_approved"
-                        android:textSize="11sp"
+                        android:textSize="9sp"
                         android:fontFamily="@font/outfit_medium" />
                 </LinearLayout>
 
-                <!-- 2x2 Telemetry Grid -->
+                <!-- 2. Circular Battery Gauge (86% Charged) -->
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_weight="1.2"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_dark_input"
+                    android:padding="12dp"
+                    android:gravity="center_horizontal"
+                    android:layout_marginHorizontal="3dp">
 
-                    <!-- Solar Inverter Capacity -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:background="@drawable/bg_dark_input"
-                        android:padding="12dp"
-                        android:layout_marginEnd="6dp">
+                    <!-- Visual Battery Ring / Gauge Frame -->
+                    <FrameLayout
+                        android:layout_width="48dp"
+                        android:layout_height="48dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Solar Inverter"
-                            android:textColor="@color/text_light_muted"
-                            android:textSize="11sp"
-                            android:fontFamily="@font/outfit" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_circular_gauge" />
 
                         <TextView
-                            android:id="@+id/tvProsumerSolarCap"
+                            android:id="@+id/tvHeroBatteryPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="25.0 kW"
+                            android:layout_gravity="center"
+                            android:text="86%"
                             android:textColor="@color/text_white"
-                            android:textSize="18sp"
+                            android:textSize="12sp"
                             android:fontFamily="@font/outfit_bold" />
-                    </LinearLayout>
-
-                    <!-- Battery Capacity -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:background="@drawable/bg_dark_input"
-                        android:padding="12dp"
-                        android:layout_marginStart="6dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Battery Storage"
-                            android:textColor="@color/text_light_muted"
-                            android:textSize="11sp"
-                            android:fontFamily="@font/outfit" />
-
-                        <TextView
-                            android:id="@+id/tvProsumerBatteryCap"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="50.0 kWh"
-                            android:textColor="@color/emerald_approved"
-                            android:textSize="18sp"
-                            android:fontFamily="@font/outfit_bold" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <!-- Available Energy Listed -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:background="@drawable/bg_dark_input"
-                        android:padding="12dp"
-                        android:layout_marginEnd="6dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Energy Listed"
-                            android:textColor="@color/text_light_muted"
-                            android:textSize="11sp"
-                            android:fontFamily="@font/outfit" />
-
-                        <TextView
-                            android:id="@+id/tvProsumerAvailableEnergy"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="15.0 kW"
-                            android:textColor="@color/yellow_primary"
-                            android:textSize="18sp"
-                            android:fontFamily="@font/outfit_bold" />
-                    </LinearLayout>
-
-                    <!-- Feed-In Tariff -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:background="@drawable/bg_dark_input"
-                        android:padding="12dp"
-                        android:layout_marginStart="6dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Energy Tariff"
-                            android:textColor="@color/text_light_muted"
-                            android:textSize="11sp"
-                            android:fontFamily="@font/outfit" />
-
-                        <TextView
-                            android:id="@+id/tvProsumerTariff"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Rs 45.00/kWh"
-                            android:textColor="@color/text_white"
-                            android:textSize="17sp"
-                            android:fontFamily="@font/outfit_bold" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Prosumer Primary Actions -->
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnProsumerProfile"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="☀️ Manage Solar Capacity &amp; Profile"
-                android:textAllCaps="false"
-                android:textColor="@color/bg_black"
-                android:textSize="14sp"
-                android:fontFamily="@font/outfit_bold"
-                android:background="@drawable/btn_solar_gold"
-                android:layout_marginBottom="10dp" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnViewBookings"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="📋 Review Capacity Bookings &amp; Passes"
-                android:textAllCaps="false"
-                android:textColor="@color/text_light_primary"
-                android:textSize="14sp"
-                android:fontFamily="@font/outfit_semibold"
-                android:background="@drawable/btn_dark_tactile"
-                android:layout_marginBottom="16dp" />
-        </LinearLayout>
-
-        <!-- =================================================================== -->
-        <!-- ROLE VIEW 2: OPERATOR CONSOLE (QR Scanner, Substation Verification) -->
-        <!-- =================================================================== -->
-        <LinearLayout
-            android:id="@+id/layoutViewOperator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <!-- High Visibility QR Dispatch Card -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/bg_glass_card"
-                android:padding="20dp"
-                android:layout_marginBottom="16dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/bg_pill_dark"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="4dp"
-                    android:layout_marginBottom="12dp">
-
-                    <View
-                        android:layout_width="6dp"
-                        android:layout_height="6dp"
-                        android:background="@drawable/bg_circle_yellow" />
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:text="Solar Station • Pass Scanner Ready"
-                        android:textColor="@color/yellow_primary"
-                        android:textSize="11sp"
-                        android:fontFamily="@font/outfit_semibold" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Solar Station QR Scanner"
-                    android:textColor="@color/text_white"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/outfit_bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Scan consumer QR passes to verify energy reservations and confirm scheduled energy slots."
-                    android:textColor="@color/text_light_secondary"
-                    android:textSize="12sp"
-                    android:lineSpacingMultiplier="1.2"
-                    android:fontFamily="@font/outfit"
-                    android:layout_marginBottom="16dp" />
-
-                <!-- Huge Golden Action Button for Operator -->
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnOperatorScan"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:text="📷 Scan Dispatch QR Code"
-                    android:textAllCaps="false"
-                    android:textColor="@color/bg_black"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/outfit_bold"
-                    android:background="@drawable/btn_solar_gold" />
-            </LinearLayout>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnOperatorViewBookings"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="📋 View All Scheduled Energy Slots"
-                android:textAllCaps="false"
-                android:textColor="@color/text_light_primary"
-                android:textSize="14sp"
-                android:fontFamily="@font/outfit_semibold"
-                android:background="@drawable/btn_dark_tactile"
-                android:layout_marginBottom="16dp" />
-        </LinearLayout>
-
-        <!-- =================================================================== -->
-        <!-- ROLE VIEW 3: CONSUMER CONSOLE (Reserve Slots, Active QR Passes)     -->
-        <!-- =================================================================== -->
-        <LinearLayout
-            android:id="@+id/layoutViewConsumer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <!-- Next Approved Slot Card (If Consumer has an active pass) -->
-            <LinearLayout
-                android:id="@+id/cardNextSlot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/bg_glass_card"
-                android:padding="16dp"
-                android:layout_marginBottom="14dp"
-                android:visibility="visible">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="🎟️ Active Energy Pass"
-                        android:textColor="@color/emerald_approved"
-                        android:textSize="11sp"
-                        android:letterSpacing="0.04"
-                        android:fontFamily="@font/outfit_bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Approved"
-                        android:textColor="@color/emerald_approved"
+                        android:layout_marginTop="4dp"
+                        android:text="Battery Storage"
+                        android:textColor="@color/text_light_muted"
                         android:textSize="10sp"
-                        android:fontFamily="@font/outfit_bold"
-                        android:background="@drawable/bg_pill_dark"
-                        android:paddingHorizontal="7dp"
-                        android:paddingVertical="2dp" />
+                        android:fontFamily="@font/outfit" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔋 86% Charged"
+                        android:textColor="@color/emerald_approved"
+                        android:textSize="9sp"
+                        android:fontFamily="@font/outfit_medium" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvNextSlotNode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="SunPower Station A • Colombo Solar Station"
-                    android:textColor="@color/text_white"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/outfit_bold" />
-
+                <!-- 3. Today's Yield (32.1 kWh) -->
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="12dp">
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_dark_input"
+                    android:padding="12dp"
+                    android:layout_marginStart="5dp">
 
                     <TextView
-                        android:id="@+id/tvNextSlotDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tomorrow, Oct 1"
-                        android:textColor="@color/text_light_secondary"
-                        android:textSize="12sp"
+                        android:text="Today's Yield"
+                        android:textColor="@color/text_light_muted"
+                        android:textSize="10sp"
                         android:fontFamily="@font/outfit" />
 
                     <TextView
+                        android:id="@+id/tvHeroTodayYield"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" · "
-                        android:textColor="@color/text_light_muted" />
-
-                    <TextView
-                        android:id="@+id/tvNextSlotTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="10:00 - 12:00"
-                        android:textColor="@color/text_light_secondary"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/outfit" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" · "
-                        android:textColor="@color/text_light_muted" />
-
-                    <TextView
-                        android:id="@+id/tvNextSlotEnergy"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="10.0 kWh"
-                        android:textColor="@color/yellow_primary"
-                        android:textSize="12sp"
+                        android:layout_marginTop="3dp"
+                        android:text="32.1 kWh"
+                        android:textColor="@color/text_white"
+                        android:textSize="17sp"
                         android:fontFamily="@font/outfit_bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="📈 +14% vs avg"
+                        android:textColor="@color/yellow_primary"
+                        android:textSize="9sp"
+                        android:fontFamily="@font/outfit_medium" />
                 </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnNextSlotQr"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:text="Show Substation QR Pass"
-                    android:textAllCaps="false"
-                    android:textColor="@color/bg_black"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/outfit_bold"
-                    android:background="@drawable/btn_solar_gold" />
-            </LinearLayout>
-
-            <!-- Book Energy Slot CTA (7-Day advance booking rule) -->
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnBookSlot"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="⚡ Reserve Solar Energy Slot"
-                android:textAllCaps="false"
-                android:textColor="@color/bg_black"
-                android:textSize="14sp"
-                android:fontFamily="@font/outfit_bold"
-                android:background="@drawable/btn_solar_gold"
-                android:layout_marginBottom="10dp" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnConsumerBookings"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="🎟️ My Bookings &amp; QR History"
-                android:textAllCaps="false"
-                android:textColor="@color/text_light_primary"
-                android:textSize="14sp"
-                android:fontFamily="@font/outfit_semibold"
-                android:background="@drawable/btn_dark_tactile"
-                android:layout_marginBottom="16dp" />
-        </LinearLayout>
-
-        <!-- =================================================================== -->
-        <!-- ROLE VIEW 4: ADMIN CONSOLE (KYC Governance, Substation Oversight)   -->
-        <!-- =================================================================== -->
-        <LinearLayout
-            android:id="@+id/layoutViewAdmin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/bg_glass_card"
-                android:padding="16dp"
-                android:layout_marginBottom="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Member &amp; Account Management"
-                    android:textColor="@color/yellow_primary"
-                    android:textSize="11sp"
-                    android:letterSpacing="0.04"
-                    android:fontFamily="@font/outfit_bold"
-                    android:layout_marginBottom="10dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="SolarRays Microgrid Administration"
-                    android:textColor="@color/text_white"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/outfit_bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Supervise prosumer registrations, audit energy reservations, and maintain regional substation nodes."
-                    android:textColor="@color/text_light_secondary"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/outfit"
-                    android:layout_marginBottom="14dp" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnAdminProsumerApp"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:text="👥 Manage Prosumers &amp; KYC Status"
-                    android:textAllCaps="false"
-                    android:textColor="@color/bg_black"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/outfit_bold"
-                    android:background="@drawable/btn_solar_gold"
-                    android:layout_marginBottom="8dp" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnAdminManageNodes"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:text="🔌 Substation Node Inventory"
-                    android:textAllCaps="false"
-                    android:textColor="@color/text_light_primary"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/outfit_semibold"
-                    android:background="@drawable/btn_dark_tactile" />
             </LinearLayout>
         </LinearLayout>
 
         <!-- =================================================================== -->
-        <!-- LIVE GRID METRICS SECTION (C# API /reservations/stats)              -->
+        <!-- SECTION TITLE: ACTION GRID                                          -->
         <!-- =================================================================== -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
             android:layout_marginBottom="12dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Live Network Overview"
+                android:text="OPERATIONS &amp; SERVICES"
                 android:textColor="@color/text_light_secondary"
-                android:textSize="12sp"
-                android:letterSpacing="0.04"
+                android:textSize="11sp"
+                android:letterSpacing="0.05"
                 android:fontFamily="@font/outfit_bold" />
 
-            <!-- Sync Button with Tactile Feedback -->
-            <LinearLayout
-                android:id="@+id/btnRefreshStats"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:background="@drawable/bg_pill_dark"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:src="@drawable/ic_refresh_arrow"
-                    app:tint="@color/yellow_primary"
-                    android:contentDescription="Refresh metrics" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Sync"
-                    android:textColor="@color/yellow_primary"
-                    android:textSize="11sp"
-                    android:fontFamily="@font/outfit_bold" />
-            </LinearLayout>
+                android:text="4 Core Actions"
+                android:textColor="@color/text_light_muted"
+                android:textSize="11sp"
+                android:fontFamily="@font/outfit" />
         </LinearLayout>
 
-        <!-- 3 KPIs Row (Total, Approved Future, Pending) -->
+        <!-- =================================================================== -->
+        <!-- ACTION GRID: 2x2 Clean Cyber-Energy Layout                         -->
+        <!-- =================================================================== -->
+        <!-- Row 1: Action 1 (Book Slot) & Action 2 (My Reservations) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="22dp">
+            android:layout_marginBottom="12dp">
 
-            <!-- Approved Future -->
+            <!-- Card 1: Book Energy Slot (7-day rule) -->
             <LinearLayout
+                android:id="@+id/btnBookSlot"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:background="@drawable/bg_glass_card"
-                android:padding="12dp"
-                android:layout_marginEnd="5dp">
+                android:background="@drawable/bg_action_card"
+                android:padding="16dp"
+                android:layout_marginEnd="6dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <FrameLayout
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_dark_input"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_energy_bolt"
+                            app:tint="@color/yellow_primary"
+                            android:contentDescription="Book Slot" />
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="7-Day"
+                        android:textColor="@color/yellow_primary"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/outfit_bold"
+                        android:background="@drawable/bg_pill_dark"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="2dp" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Active Ahead"
-                    android:textColor="@color/text_light_muted"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/outfit" />
-
-                <TextView
-                    android:id="@+id/tvApprovedFutureCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="0"
-                    android:textColor="@color/emerald_approved"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/outfit_bold" />
-            </LinearLayout>
-
-            <!-- Pending -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@drawable/bg_glass_card"
-                android:padding="12dp"
-                android:layout_marginHorizontal="2.5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pending"
-                    android:textColor="@color/text_light_muted"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/outfit" />
-
-                <TextView
-                    android:id="@+id/tvPendingCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="0"
-                    android:textColor="@color/yellow_primary"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/outfit_bold" />
-            </LinearLayout>
-
-            <!-- Total Reservations -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@drawable/bg_glass_card"
-                android:padding="12dp"
-                android:layout_marginStart="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Total Ledger"
-                    android:textColor="@color/text_light_muted"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/outfit" />
-
-                <TextView
-                    android:id="@+id/tvTotalCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="0"
+                    android:text="Book Energy Slot"
                     android:textColor="@color/text_white"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Reserve trading slot with 7-day rule check"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="11sp"
+                    android:lineSpacingMultiplier="1.1"
+                    android:fontFamily="@font/outfit" />
+            </LinearLayout>
+
+            <!-- Card 2: My Reservations (12h rule) -->
+            <LinearLayout
+                android:id="@+id/btnViewBookings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/bg_action_card"
+                android:padding="16dp"
+                android:layout_marginStart="6dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <FrameLayout
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_dark_input"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_calendar_slot"
+                            app:tint="@color/emerald_approved"
+                            android:contentDescription="Reservations" />
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Queue"
+                        android:textColor="@color/emerald_approved"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/outfit_bold"
+                        android:background="@drawable/bg_pill_dark"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="2dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Reservations"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Active bookings, history &amp; 12h cancellation"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="11sp"
+                    android:lineSpacingMultiplier="1.1"
+                    android:fontFamily="@font/outfit" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Row 2: Action 3 (Microgrid Nodes) & Action 4 (Operator QR Scanner) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+
+            <!-- Card 3: Microgrid Nodes -->
+            <LinearLayout
+                android:id="@+id/btnViewNodes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/bg_action_card"
+                android:padding="16dp"
+                android:layout_marginEnd="6dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <FrameLayout
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_dark_input"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_grid_nodes"
+                            app:tint="#38BDF8"
+                            android:contentDescription="Nodes" />
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Grid"
+                        android:textColor="#38BDF8"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/outfit_bold"
+                        android:background="@drawable/bg_pill_dark"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="2dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Microgrid Nodes"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Explore connected solar substations &amp; slots"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="11sp"
+                    android:lineSpacingMultiplier="1.1"
+                    android:fontFamily="@font/outfit" />
+            </LinearLayout>
+
+            <!-- Card 4: Operator QR Scanner -->
+            <LinearLayout
+                android:id="@+id/btnOperatorScan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/bg_action_card"
+                android:padding="16dp"
+                android:layout_marginStart="6dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <FrameLayout
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_dark_input"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_camera"
+                            app:tint="@color/yellow_primary"
+                            android:contentDescription="Operator Scanner" />
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Scan"
+                        android:textColor="@color/yellow_primary"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/outfit_bold"
+                        android:background="@drawable/bg_pill_dark"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="2dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Operator Scanner"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Camera scanner for physical energy dispatch"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="11sp"
+                    android:lineSpacingMultiplier="1.1"
+                    android:fontFamily="@font/outfit" />
             </LinearLayout>
         </LinearLayout>
 
         <!-- =================================================================== -->
-        <!-- MICROGRID SOLAR NODES SECTION (Member 3 - C# API /microgridnodes)   -->
+        <!-- CONTEXTUAL CARD: PROSUMER HARDWARE SPECS (Manuga Prosumer Module)   -->
+        <!-- =================================================================== -->
+        <LinearLayout
+            android:id="@+id/btnProsumerProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_dark_card"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="☀️ Prosumer Solar Registry"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View / Edit Specs ›"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/outfit_semibold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Manage your connected solar hardware array, battery storage capacity (kWh), listed trading tariff, and deactivation status."
+                android:textColor="@color/text_light_secondary"
+                android:textSize="11sp"
+                android:lineSpacingMultiplier="1.2"
+                android:fontFamily="@font/outfit" />
+        </LinearLayout>
+
+        <!-- =================================================================== -->
+        <!-- BOTTOM INDICATOR CARD: Next Upcoming Confirmed Energy Slot          -->
+        <!-- =================================================================== -->
+        <LinearLayout
+            android:id="@+id/cardNextSlot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_confirmed_slot_card"
+            android:padding="18dp"
+            android:layout_marginBottom="22dp"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="⚡ NEXT CONFIRMED ENERGY SLOT"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.06"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="✓ CONFIRMED PASS"
+                    android:textColor="@color/emerald_approved"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:background="@drawable/bg_pill_dark"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp" />
+            </LinearLayout>
+
+            <!-- Slot Station & Timing Information -->
+            <TextView
+                android:id="@+id/tvNextSlotNode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Colombo Central Grid Substation (Station-01)"
+                android:textColor="@color/text_white"
+                android:textSize="15sp"
+                android:fontFamily="@font/outfit_bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="14dp">
+
+                <TextView
+                    android:id="@+id/tvNextSlotDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Today, Active"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit_medium" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" • "
+                    android:textColor="@color/text_light_muted" />
+
+                <TextView
+                    android:id="@+id/tvNextSlotTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14:00 - 16:00 (Slot #3)"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit_semibold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" • "
+                    android:textColor="@color/text_light_muted" />
+
+                <TextView
+                    android:id="@+id/tvNextSlotEnergy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="25.0 kWh"
+                    android:textColor="@color/emerald_approved"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit_bold" />
+            </LinearLayout>
+
+            <!-- Quick Action: VIEW QR PASS Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnNextSlotQr"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="VIEW QR DISPATCH PASS"
+                android:textAllCaps="false"
+                android:textColor="@color/bg_black"
+                android:textSize="13sp"
+                android:fontFamily="@font/outfit_bold"
+                android:background="@drawable/btn_solar_gold"
+                android:elevation="4dp"
+                android:stateListAnimator="@null" />
+        </LinearLayout>
+
+        <!-- =================================================================== -->
+        <!-- LIVE CONNECTED SUBSTATIONS LIST PREVIEW                             -->
         <!-- =================================================================== -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -887,8 +847,8 @@
                 android:layout_weight="1"
                 android:text="Active Solar Stations"
                 android:textColor="@color/text_light_secondary"
-                android:textSize="12sp"
-                android:letterSpacing="0.04"
+                android:textSize="11sp"
+                android:letterSpacing="0.05"
                 android:fontFamily="@font/outfit_bold" />
 
             <TextView
@@ -904,7 +864,7 @@
                 android:paddingVertical="3dp" />
         </LinearLayout>
 
-        <!-- Active Nodes Vertical List Container -->
+        <!-- Active Nodes Dynamic Container -->
         <LinearLayout
             android:id="@+id/layoutNodesContainer"
             android:layout_width="match_parent"
@@ -912,31 +872,30 @@
             android:orientation="vertical"
             android:layout_marginBottom="16dp" />
 
-        <!-- View All Nodes Full List Button -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnViewNodes"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="🗺️ Browse All Microgrid Stations &amp; Battery Slots"
-            android:textAllCaps="false"
-            android:textColor="@color/text_light_primary"
-            android:textSize="13sp"
-            android:fontFamily="@font/outfit_semibold"
-            android:background="@drawable/btn_dark_tactile"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Hidden layout reference for compatibility with existing code -->
+        <!-- =================================================================== -->
+        <!-- HIDDEN COMPATIBILITY VIEWS (Preserve all existing Java references)  -->
+        <!-- =================================================================== -->
         <LinearLayout
-            android:id="@+id/layoutOperatorScan"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="gone" />
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/tvActiveNodesCount"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
+            <TextView android:id="@+id/tvPendingCount" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/tvApprovedFutureCount" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/tvTotalCount" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/tvActiveNodesCount" android:layout_width="0dp" android:layout_height="0dp" />
+
+            <TextView android:id="@+id/tabRoleProsumer" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/tabRoleOperator" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/tabRoleConsumer" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/tabRoleAdmin" android:layout_width="0dp" android:layout_height="0dp" />
+
+            <LinearLayout android:id="@+id/layoutViewProsumer" android:layout_width="0dp" android:layout_height="0dp" />
+            <LinearLayout android:id="@+id/layoutViewOperator" android:layout_width="0dp" android:layout_height="0dp" />
+            <LinearLayout android:id="@+id/layoutViewConsumer" android:layout_width="0dp" android:layout_height="0dp" />
+            <LinearLayout android:id="@+id/layoutViewAdmin" android:layout_width="0dp" android:layout_height="0dp" />
+            <LinearLayout android:id="@+id/layoutOperatorScan" android:layout_width="0dp" android:layout_height="0dp" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
