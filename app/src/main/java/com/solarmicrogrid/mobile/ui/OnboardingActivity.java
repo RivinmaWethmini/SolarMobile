@@ -28,7 +28,7 @@ import org.json.JSONObject;
 public class OnboardingActivity extends AppCompatActivity {
 
     private TextView tvSlideHeadline, tvSlideDescription;
-    private TextView btnNextSlide, btnPrevSlide, btnTopSignIn, btnFastDemoProsumer;
+    private TextView btnNextSlide, btnPrevSlide, btnTopSignIn;
     private View dot0, dot1, dot2;
     private Button btnGetStarted, btnSignIn;
     private LinearLayout layoutSlideContent;
@@ -75,7 +75,6 @@ public class OnboardingActivity extends AppCompatActivity {
 
         btnGetStarted = findViewById(R.id.btnGetStarted);
         btnSignIn = findViewById(R.id.btnSignIn);
-        btnFastDemoProsumer = findViewById(R.id.btnFastDemoProsumer);
 
         applySlideData(0);
         updateDotIndicators(0, false);
@@ -116,10 +115,6 @@ public class OnboardingActivity extends AppCompatActivity {
 
         btnSignIn.setOnClickListener(goToLogin);
         btnTopSignIn.setOnClickListener(goToLogin);
-
-        if (btnFastDemoProsumer != null) {
-            btnFastDemoProsumer.setOnClickListener(v -> performFastProsumerLogin());
-        }
     }
 
     private void transitionToSlide(int targetSlide, boolean isForward) {
@@ -193,40 +188,5 @@ public class OnboardingActivity extends AppCompatActivity {
                 dot.setLayoutParams(lp);
             }
         }
-    }
-
-    private void performFastProsumerLogin() {
-        Toast.makeText(this, "Connecting as Prosumer...", Toast.LENGTH_SHORT).show();
-        ApiClient.login("prosumer@solar.com", "Prosumer@12345", new ApiClient.ApiCallback() {
-            @Override
-            public void onSuccess(String response) {
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String accessToken = json.optString("accessToken", "");
-                    String refreshToken = json.optString("refreshToken", "");
-                    JSONObject userObj = json.optJSONObject("user");
-
-                    AuthUser authUser = null;
-                    if (userObj != null) {
-                        authUser = AuthUser.fromJson(userObj);
-                    }
-
-                    SessionManager.getInstance(OnboardingActivity.this).saveSession(accessToken, refreshToken, authUser);
-                    Toast.makeText(OnboardingActivity.this, "Welcome back!", Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(OnboardingActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
-                } catch (Exception e) {
-                    Toast.makeText(OnboardingActivity.this, "Sign in error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                Toast.makeText(OnboardingActivity.this, errorMessage, Toast.LENGTH_LONG).show();
-            }
-        });
     }
 }
