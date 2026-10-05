@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_black"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="42dp">
+
+        <!-- Top Header Bar with Back Button & Brand -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:id="@+id/btnProfileBack"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_arrow_back"
+                android:background="@drawable/bg_dark_input"
+                android:contentDescription="Back" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SolarRays"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prosumer Solar Registry"
+                    android:textColor="@color/text_white"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/outfit_bold" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_solar_logo"
+                android:contentDescription="Logo" />
+        </LinearLayout>
+
+        <!-- Role / Preview Notice Banner (Shown when admin or non-prosumer views this screen) -->
+        <LinearLayout
+            android:id="@+id/layoutRoleNotice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_dark_card"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvNoticeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ℹ️ Active Solar Prosumer Record"
+                android:textColor="@color/yellow_primary"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_bold" />
+
+            <TextView
+                android:id="@+id/tvNoticeMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Displaying live prosumer profile for SunPower Station A (NIC: 200224700740)."
+                android:textColor="@color/text_light_secondary"
+                android:textSize="12sp"
+                android:lineSpacingMultiplier="1.2"
+                android:fontFamily="@font/outfit" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnNoticeAction"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginTop="10dp"
+                android:text="Switch to Prosumer Role"
+                android:textAllCaps="false"
+                android:textColor="@color/bg_black"
+                android:textSize="11sp"
+                android:fontFamily="@font/outfit_bold"
+                android:background="@drawable/bg_yellow_pill"
+                android:paddingHorizontal="14dp" />
+        </LinearLayout>
+
+        <!-- Profile Overview Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@drawable/bg_dark_card"
+            android:layout_marginBottom="18dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Prosumer Account"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:letterSpacing="0.04" />
+
+                <!-- Status Badge -->
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available"
+                    android:textColor="@color/emerald_approved"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:background="@drawable/bg_pill_dark" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loading prosumer..."
+                android:textColor="@color/text_white"
+                android:textSize="20sp"
+                android:fontFamily="@font/outfit_bold"
+                android:layout_marginTop="12dp" />
+
+            <TextView
+                android:id="@+id/tvNic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NIC: --"
+                android:textColor="@color/text_light_secondary"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/outfit" />
+        </LinearLayout>
+
+        <!-- Energy Information Section Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Energy Capacity &amp; Hardware"
+            android:textColor="@color/text_light_muted"
+            android:textSize="11sp"
+            android:fontFamily="@font/outfit_bold"
+            android:letterSpacing="0.03"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Energy Cards Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:layout_marginBottom="12dp">
+
+            <!-- Solar Capacity Card -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_dark_card"
+                android:layout_marginEnd="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Solar Generation"
+                    android:textColor="@color/text_light_muted"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:id="@+id/tvSolarCapacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-- kW"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- Battery Capacity Card -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_dark_card"
+                android:layout_marginStart="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Battery Storage"
+                    android:textColor="@color/text_light_muted"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:id="@+id/tvBatteryCapacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-- kWh"
+                    android:textColor="@color/text_white"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Available Energy Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/bg_dark_card"
+            android:layout_marginBottom="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available Dispatch Energy"
+                android:textColor="@color/text_light_muted"
+                android:textSize="10sp"
+                android:fontFamily="@font/outfit_bold" />
+
+            <TextView
+                android:id="@+id/tvAvailableEnergy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Available: 0 kW"
+                android:textColor="@color/text_white"
+                android:textSize="15sp"
+                android:fontFamily="@font/outfit_bold"
+                android:layout_marginTop="6dp" />
+        </LinearLayout>
+
+        <!-- Energy Trading Section Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trading Parameters"
+            android:textColor="@color/text_light_muted"
+            android:textSize="11sp"
+            android:fontFamily="@font/outfit_bold"
+            android:letterSpacing="0.03"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Trading Cards Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:layout_marginBottom="24dp">
+
+            <!-- Unit Price -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_dark_card"
+                android:layout_marginEnd="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Energy Unit Price"
+                    android:textColor="@color/text_light_muted"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-- / kWh"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:layout_marginTop="6dp" />
+            </LinearLayout>
+
+            <!-- Substation Location -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_dark_card"
+                android:layout_marginStart="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Connected Solar Station"
+                    android:textColor="@color/text_light_muted"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:id="@+id/tvLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Node: Colombo North"
+                    android:textColor="@color/text_white"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/outfit_medium"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:layout_marginTop="6dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Account Actions -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account Actions"
+            android:textColor="@color/text_light_muted"
+            android:textSize="11sp"
+            android:fontFamily="@font/outfit_bold"
+            android:letterSpacing="0.03"
+            android:layout_marginBottom="10dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnEditProfile"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Edit Hardware &amp; Price Specs"
+            android:textAllCaps="false"
+            android:textColor="@color/bg_black"
+            android:textSize="14sp"
+            android:fontFamily="@font/outfit_bold"
+            android:background="@drawable/bg_yellow_pill"
+            android:stateListAnimator="@null"
+            android:layout_marginBottom="12dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDeactivateProfile"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Request Account Deactivation"
+            android:textAllCaps="false"
+            android:textColor="@color/red_rejected"
+            android:textSize="14sp"
+            android:fontFamily="@font/outfit_medium"
+            android:background="@drawable/bg_pill_dark"
+            android:stateListAnimator="@null" />
+
+    </LinearLayout>
+</ScrollView>

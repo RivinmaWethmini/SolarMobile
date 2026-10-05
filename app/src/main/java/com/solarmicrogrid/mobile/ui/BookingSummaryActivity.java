@@ -51,6 +51,11 @@ public class BookingSummaryActivity extends AppCompatActivity {
         btnCancelBooking = findViewById(R.id.btnCancelBooking);
         btnBackHome = findViewById(R.id.btnBackHome);
 
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
         reservation = (Reservation) getIntent().getSerializableExtra("reservation");
         if (getIntent().hasExtra("actionType")) {
             actionType = getIntent().getStringExtra("actionType");
@@ -58,7 +63,12 @@ public class BookingSummaryActivity extends AppCompatActivity {
 
         populateDetails();
 
-        btnBackHome.setOnClickListener(v -> finish());
+        btnBackHome.setOnClickListener(v -> {
+            Intent homeIntent = new Intent(BookingSummaryActivity.this, MainActivity.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(homeIntent);
+            finish();
+        });
 
         // Modify Reservation (Subject to 12-Hour Notice Rule)
         btnModifyBooking.setOnClickListener(v -> {
@@ -104,29 +114,52 @@ public class BookingSummaryActivity extends AppCompatActivity {
             refId = refId.substring(refId.length() - 8).toUpperCase();
         }
         tvSummaryId.setText("#" + refId);
-        tvSummaryNic.setText(reservation.getProsumerNic());
-        tvSummaryNode.setText(reservation.getNodeId());
-        tvSummaryCapacity.setText(reservation.getReservedEnergyKwh() + " kW/h");
-        tvSummaryTime.setText(reservation.getStartTime() + " to " + reservation.getEndTime());
-        tvSummaryStatus.setText(reservation.getStatus());
+        tvSummaryNic.setText(reservation.getProsumerNic() != null ? reservation.getProsumerNic() : "—");
+        tvSummaryNode.setText(reservation.getNodeId() != null ? reservation.getNodeId() : "—");
+        tvSummaryCapacity.setText(reservation.getReservedEnergyKwh() + " kWh");
 
-        boolean isPending = "Pending".equalsIgnoreCase(reservation.getStatus());
-        boolean isApproved = "Approved".equalsIgnoreCase(reservation.getStatus());
-        boolean isCancelled = "Cancelled".equalsIgnoreCase(reservation.getStatus());
-        boolean isRejected = "Rejected".equalsIgnoreCase(reservation.getStatus());
+        String timeWindow = reservation.getStartTime() != null ? reservation.getStartTime() : "";
+        if (reservation.getEndTime() != null && !reservation.getEndTime().isEmpty()) {
+            timeWindow += " – " + reservation.getEndTime();
+        }
+        tvSummaryTime.setText(timeWindow.isEmpty() ? "—" : timeWindow);
+
+        String status = reservation.getStatus() != null ? reservation.getStatus() : "Pending";
+        tvSummaryStatus.setText(status);
+
+        boolean isPending = "Pending".equalsIgnoreCase(status);
+        boolean isApproved = "Approved".equalsIgnoreCase(status);
+        boolean isCancelled = "Cancelled".equalsIgnoreCase(status);
+        boolean isRejected = "Rejected".equalsIgnoreCase(status);
+
+        android.graphics.drawable.GradientDrawable statusBg = new android.graphics.drawable.GradientDrawable();
+        statusBg.setCornerRadius(8f * getResources().getDisplayMetrics().density);
 
         if (isPending) {
-            tvSummaryStatus.setTextColor(getResources().getColor(R.color.amber_pending));
+            statusBg.setColor(0xFFFFD000);
+            tvSummaryStatus.setBackground(statusBg);
+            tvSummaryStatus.setTextColor(0xFF0A0A0C);
             btnModifyBooking.setVisibility(View.VISIBLE);
             btnCancelBooking.setVisibility(View.VISIBLE);
             btnViewQrCode.setVisibility(View.GONE);
         } else if (isApproved) {
-            tvSummaryStatus.setTextColor(getResources().getColor(R.color.emerald_approved));
+            statusBg.setColor(0xFF10B981);
+            tvSummaryStatus.setBackground(statusBg);
+            tvSummaryStatus.setTextColor(0xFFFFFFFF);
             btnModifyBooking.setVisibility(View.VISIBLE);
             btnCancelBooking.setVisibility(View.VISIBLE);
             btnViewQrCode.setVisibility(View.VISIBLE);
-        } else if (isCancelled || isRejected) {
-            tvSummaryStatus.setTextColor(getResources().getColor(R.color.red_rejected));
+        } else if (isCancelled) {
+            statusBg.setColor(0xFF374151);
+            tvSummaryStatus.setBackground(statusBg);
+            tvSummaryStatus.setTextColor(0xFF9CA3AF);
+            btnModifyBooking.setVisibility(View.GONE);
+            btnCancelBooking.setVisibility(View.GONE);
+            btnViewQrCode.setVisibility(View.GONE);
+        } else if (isRejected) {
+            statusBg.setColor(0xFF7F1D1D);
+            tvSummaryStatus.setBackground(statusBg);
+            tvSummaryStatus.setTextColor(0xFFFCA5A5);
             btnModifyBooking.setVisibility(View.GONE);
             btnCancelBooking.setVisibility(View.GONE);
             btnViewQrCode.setVisibility(View.GONE);

@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_black"
+    android:fitsSystemWindows="true"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="28dp"
+        android:paddingBottom="42dp">
+
+        <!-- Top Header: Back Button + Clean Logo Tag -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="28dp">
+
+            <TextView
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="←"
+                android:textColor="@color/text_white"
+                android:textSize="20sp"
+                android:background="@drawable/bg_pill_dark" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SolarRays"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:id="@+id/tvStepIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Step 1 of 2: Your details"
+                    android:textColor="@color/text_light_secondary"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/outfit" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_solar_logo"
+                android:contentDescription="SolarRays Logo" />
+        </LinearLayout>
+
+        <!-- Headline -->
+        <TextView
+            android:id="@+id/tvRegisterTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Account"
+            android:textColor="@color/text_white"
+            android:textSize="32sp"
+            android:fontFamily="@font/outfit_bold" />
+
+        <TextView
+            android:id="@+id/tvRegisterSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="24dp"
+            android:text="Join the solar energy sharing platform."
+            android:textColor="@color/text_light_secondary"
+            android:textSize="14sp"
+            android:fontFamily="@font/outfit"
+            android:lineSpacingMultiplier="1.2" />
+
+        <!-- ================================================================= -->
+        <!-- STEP 1: REGISTRATION DETAILS FORM                                 -->
+        <!-- ================================================================= -->
+        <LinearLayout
+            android:id="@+id/layoutRegisterStep1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Full Name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Full name or organization"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_dark_input"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_user"
+                    android:contentDescription="User" />
+
+                <EditText
+                    android:id="@+id/etFullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Your full name"
+                    android:textColorHint="@color/text_light_muted"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/outfit"
+                    android:inputType="textPersonName"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <!-- Username -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_dark_input"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="@"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:gravity="center" />
+
+                <EditText
+                    android:id="@+id/etUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Choose a username"
+                    android:textColorHint="@color/text_light_muted"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/outfit"
+                    android:inputType="text"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <!-- Email -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email address"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_dark_input"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_mail"
+                    android:contentDescription="Mail" />
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:hint="name@example.com"
+                    android:textColorHint="@color/text_light_muted"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/outfit"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <!-- National Identity Card (NIC) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="National ID (NIC)"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_dark_input"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_shield"
+                    android:contentDescription="NIC" />
+
+                <EditText
+                    android:id="@+id/etNic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Enter national ID number"
+                    android:textColorHint="@color/text_light_muted"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/outfit"
+                    android:inputType="textCapCharacters"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <!-- Role Selection -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select your role"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+                <!-- Prosumer Role Card -->
+                <LinearLayout
+                    android:id="@+id/cardRoleProsumer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_dark_input"
+                    android:orientation="vertical"
+                    android:padding="14dp"
+                    android:layout_marginEnd="6dp">
+
+                    <TextView
+                        android:id="@+id/tvRoleProsumerTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="☀️ Prosumer"
+                        android:textColor="@color/yellow_primary"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/outfit_bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Solar Generator"
+                        android:textColor="@color/text_light_secondary"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/outfit"
+                        android:layout_marginTop="2dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Admin approval needed"
+                        android:textColor="@color/text_light_muted"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/outfit"
+                        android:layout_marginTop="6dp" />
+                </LinearLayout>
+
+                <!-- Consumer Role Card -->
+                <LinearLayout
+                    android:id="@+id/cardRoleConsumer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_dark_input"
+                    android:orientation="vertical"
+                    android:padding="14dp"
+                    android:layout_marginStart="6dp">
+
+                    <TextView
+                        android:id="@+id/tvRoleConsumerTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="💡 Consumer"
+                        android:textColor="@color/text_white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/outfit_bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Energy Buyer"
+                        android:textColor="@color/text_light_secondary"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/outfit"
+                        android:layout_marginTop="2dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Instant access"
+                        android:textColor="@color/emerald_approved"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/outfit"
+                        android:layout_marginTop="6dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Password -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_dark_input"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_lock"
+                    android:contentDescription="Password" />
+
+                <EditText
+                    android:id="@+id/etRegPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Minimum 6 characters"
+                    android:textColorHint="@color/text_light_muted"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/outfit"
+                    android:inputType="textPassword"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <!-- Confirm Password -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirm password"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_dark_input"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_lock"
+                    android:contentDescription="Confirm Password" />
+
+                <EditText
+                    android:id="@+id/etConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Re-enter password"
+                    android:textColorHint="@color/text_light_muted"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/outfit"
+                    android:inputType="textPassword"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <!-- Terms & Conditions Checkbox -->
+            <CheckBox
+                android:id="@+id/cbTerms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:buttonTint="@color/yellow_primary"
+                android:text="I agree to the SolarRays terms and conditions."
+                android:textColor="@color/text_light_secondary"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Step 1 Continue Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnContinueToOtp"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Continue &amp; Verify Email"
+                android:textAllCaps="false"
+                android:textColor="@color/bg_black"
+                android:textSize="15sp"
+                android:fontFamily="@font/outfit_bold"
+                android:background="@drawable/btn_solar_gold"
+                android:stateListAnimator="@null" />
+        </LinearLayout>
+
+        <!-- ================================================================= -->
+        <!-- STEP 2: 6-DIGIT EMAIL VERIFICATION FORM                           -->
+        <!-- ================================================================= -->
+        <LinearLayout
+            android:id="@+id/layoutRegisterStep2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- Dispatched summary card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_dark_input"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Verify email address"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <TextView
+                    android:id="@+id/tvRegMaskedEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Code sent to your email"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/outfit_medium"
+                    android:layout_marginTop="4dp" />
+
+                <TextView
+                    android:id="@+id/btnBackToStep1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="← Edit Details"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter 6-digit code"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
+                android:layout_gravity="center"
+                android:layout_marginBottom="12dp" />
+
+            <!-- 6 Passcode Digit Inputs -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="20dp">
+
+                <EditText
+                    android:id="@+id/regOtpDigit1"
+                    android:layout_width="44dp"
+                    android:layout_height="54dp"
+                    android:background="@drawable/bg_otp_digit"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <EditText
+                    android:id="@+id/regOtpDigit2"
+                    android:layout_width="44dp"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_otp_digit"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <EditText
+                    android:id="@+id/regOtpDigit3"
+                    android:layout_width="44dp"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_otp_digit"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <EditText
+                    android:id="@+id/regOtpDigit4"
+                    android:layout_width="44dp"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_otp_digit"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <EditText
+                    android:id="@+id/regOtpDigit5"
+                    android:layout_width="44dp"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_otp_digit"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/outfit_bold" />
+
+                <EditText
+                    android:id="@+id/regOtpDigit6"
+                    android:layout_width="44dp"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_otp_digit"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/outfit_bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvRegResendTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resend code in 60s"
+                android:textColor="@color/text_light_muted"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Complete Registration Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCompleteRegistration"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Verify &amp; Create Account"
+                android:textAllCaps="false"
+                android:textColor="@color/bg_black"
+                android:textSize="15sp"
+                android:fontFamily="@font/outfit_bold"
+                android:background="@drawable/btn_solar_gold"
+                android:stateListAnimator="@null" />
+        </LinearLayout>
+
+        <!-- Loading Spinner -->
+        <ProgressBar
+            android:id="@+id/pbRegLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:indeterminateTint="@color/yellow_primary"
+            android:visibility="gone" />
+
+        <!-- Footer / Sign In Link -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="32dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already have an account?"
+                android:textColor="@color/text_light_muted"
+                android:textSize="13sp"
+                android:fontFamily="@font/outfit" />
+
+            <TextView
+                android:id="@+id/btnGoToLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Sign In"
+                android:textColor="@color/yellow_primary"
+                android:textSize="13sp"
+                android:fontFamily="@font/outfit_bold"
+                android:padding="4dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

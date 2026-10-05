@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Prosumer Profile"
+            android:textColor="@color/text_white"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+        
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_light_secondary"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etSolarCapacity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Solar Capacity (kW)"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_light_secondary"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etBatteryCapacity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Battery Capacity (kWh)"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_light_secondary"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etAvailableEnergy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Available Energy (kW)"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_light_secondary"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Price per kWh"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_light_secondary"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Location"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_light_secondary"
+            android:inputType="text"
+            android:layout_marginBottom="20dp" />
+
+        <Button
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Save Changes"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</ScrollView>
