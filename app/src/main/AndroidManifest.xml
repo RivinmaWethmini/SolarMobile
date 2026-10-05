@@ -106,7 +106,7 @@
         <!-- Authentication Flow: Onboarding, Login, Register -->
         <activity
             android:name=".ui.OnboardingActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="SolarRays" />
 
         <activity

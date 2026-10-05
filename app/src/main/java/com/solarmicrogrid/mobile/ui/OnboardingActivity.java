@@ -2,7 +2,10 @@ package com.solarmicrogrid.mobile.ui;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.solarmicrogrid.mobile.R;
 import com.solarmicrogrid.mobile.auth.SessionManager;
@@ -23,13 +27,14 @@ import org.json.JSONObject;
 
 /**
  * OnboardingActivity - Friendly introduction to SolarRays.
- * Clean, user-friendly headlines and smooth transitions.
+ * Clean, user-friendly headlines and smooth transitions matching reference design.
  */
 public class OnboardingActivity extends AppCompatActivity {
 
     private TextView tvSlideHeadline, tvSlideDescription;
     private TextView btnNextSlide, btnPrevSlide, btnTopSignIn;
     private View dot0, dot1, dot2;
+    private View dash0, dash1, dash2;
     private Button btnGetStarted, btnSignIn;
     private LinearLayout layoutSlideContent;
 
@@ -37,14 +42,14 @@ public class OnboardingActivity extends AppCompatActivity {
     private final int TOTAL_SLIDES = 3;
 
     private final String[] headlines = {
-            "Share clean solar power with your community",
-            "Quick and secure QR pass check-in",
-            "Live solar station updates & battery info"
+            "<font color='#FFD000'>Solar panels</font><br/><font color='#FFFFFF'>reduce climate change</font>",
+            "<font color='#FFD000'>Smart Battery</font><br/><font color='#FFFFFF'>storage &amp; microgrid</font>",
+            "<font color='#FFD000'>Clean Energy</font><br/><font color='#FFFFFF'>trade with community</font>"
     };
     private final String[] descriptions = {
-            "Connect your solar panels or buy green energy easily from your mobile phone.",
-            "Get an instant digital pass to check in at any solar station without paperwork.",
-            "Check station availability, battery slots, and rates in real-time."
+            "Solar panel monitoring systems gather data from various sensors and meters installed within the solar PV system.",
+            "Real-time automated phase synchronization, zero fossil fuel backup, and secure QR-verified dispatch.",
+            "Connect your solar panels, reserve battery capacity, and earn green credits seamlessly from your phone."
     };
 
     @Override
@@ -53,7 +58,8 @@ public class OnboardingActivity extends AppCompatActivity {
 
         ApiClient.init(this);
 
-        if (SessionManager.getInstance(this).isLoggedIn()) {
+        boolean isPreview = getIntent().getBooleanExtra("preview", false);
+        if (!isPreview && SessionManager.getInstance(this).isLoggedIn()) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
             return;
@@ -72,6 +78,10 @@ public class OnboardingActivity extends AppCompatActivity {
         dot0 = findViewById(R.id.dot0);
         dot1 = findViewById(R.id.dot1);
         dot2 = findViewById(R.id.dot2);
+
+        dash0 = findViewById(R.id.dash0);
+        dash1 = findViewById(R.id.dash1);
+        dash2 = findViewById(R.id.dash2);
 
         btnGetStarted = findViewById(R.id.btnGetStarted);
         btnSignIn = findViewById(R.id.btnSignIn);
@@ -145,7 +155,11 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void applySlideData(int index) {
-        tvSlideHeadline.setText(headlines[index]);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            tvSlideHeadline.setText(Html.fromHtml(headlines[index], Html.FROM_HTML_MODE_LEGACY));
+        } else {
+            tvSlideHeadline.setText(Html.fromHtml(headlines[index]));
+        }
         tvSlideDescription.setText(descriptions[index]);
 
         if (index == 0) {
@@ -168,6 +182,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
         for (int i = 0; i < dots.length; i++) {
             final View dot = dots[i];
+            if (dot == null) continue;
             boolean isActive = (i == activeIndex);
             int targetWidth = isActive ? activeWidth : inactiveWidth;
 
@@ -186,6 +201,16 @@ public class OnboardingActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams lp = dot.getLayoutParams();
                 lp.width = targetWidth;
                 dot.setLayoutParams(lp);
+            }
+        }
+
+        // Also update top stories dash indicators
+        View[] dashes = {dash0, dash1, dash2};
+        int yellowColor = ContextCompat.getColor(this, R.color.yellow_primary);
+        int inactiveDashColor = 0x55FFFFFF;
+        for (int i = 0; i < dashes.length; i++) {
+            if (dashes[i] != null) {
+                dashes[i].setBackgroundTintList(ColorStateList.valueOf(i == activeIndex ? yellowColor : inactiveDashColor));
             }
         }
     }

@@ -167,13 +167,16 @@
         <!-- =================================================================== -->
         <!-- HERO CARD: Live Solar (4.8 kW) + Battery (86%) + Today (32.1 kWh)   -->
         <!-- =================================================================== -->
+        <!-- =================================================================== -->
+        <!-- HERO CARD: Large Circular Battery Gauge + Dynamic Live Telemetry    -->
+        <!-- =================================================================== -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/bg_glass_card"
-            android:padding="18dp"
-            android:layout_marginBottom="20dp">
+            android:padding="20dp"
+            android:layout_marginBottom="22dp">
 
             <!-- Card Header -->
             <LinearLayout
@@ -181,7 +184,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="14dp">
+                android:layout_marginBottom="16dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -205,13 +208,80 @@
                     android:paddingVertical="3dp" />
             </LinearLayout>
 
-            <!-- 3-Pillar Telemetry Grid -->
+            <!-- Center Hero: Prominent Circular Battery Gauge (Matches Reference Image) -->
+            <FrameLayout
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_circular_gauge"
+                android:layout_marginBottom="10dp">
+
+                <!-- Inner Content: Title & Huge Bold Percentage -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="STORAGE LEVEL"
+                        android:textColor="@color/text_light_muted"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.08"
+                        android:fontFamily="@font/outfit_bold" />
+
+                    <TextView
+                        android:id="@+id/tvHeroBatteryPercent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="85%"
+                        android:textColor="@color/text_white"
+                        android:textSize="38sp"
+                        android:fontFamily="@font/outfit_bold" />
+                </LinearLayout>
+
+                <!-- Attached Bottom Circular Badge with Lightning Bolt -->
+                <FrameLayout
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/bg_circle_yellow"
+                    android:elevation="2dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_energy_bolt"
+                        app:tint="@color/bg_black"
+                        android:contentDescription="Charging" />
+                </FrameLayout>
+            </FrameLayout>
+
+            <!-- Dynamic Battery Storage Capacity Subtext -->
+            <TextView
+                android:id="@+id/tvHeroBatterySubtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="🔋 85% Active • 380 kWh Microgrid Capacity"
+                android:textColor="@color/emerald_approved"
+                android:textSize="12sp"
+                android:fontFamily="@font/outfit_medium"
+                android:layout_marginBottom="16dp" />
+
+            <!-- 2-Pillar Telemetry Strip: Solar Output + Today's Yield -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <!-- 1. Live Solar Generation (4.8 kW) -->
+                <!-- 1. Live Solar Generation -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -219,14 +289,14 @@
                     android:orientation="vertical"
                     android:background="@drawable/bg_dark_input"
                     android:padding="12dp"
-                    android:layout_marginEnd="5dp">
+                    android:layout_marginEnd="6dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Solar Output"
                         android:textColor="@color/text_light_muted"
-                        android:textSize="10sp"
+                        android:textSize="11sp"
                         android:fontFamily="@font/outfit" />
 
                     <TextView
@@ -236,7 +306,7 @@
                         android:layout_marginTop="3dp"
                         android:text="4.8 kW"
                         android:textColor="@color/yellow_primary"
-                        android:textSize="17sp"
+                        android:textSize="19sp"
                         android:fontFamily="@font/outfit_bold" />
 
                     <TextView
@@ -245,61 +315,11 @@
                         android:layout_marginTop="2dp"
                         android:text="☀️ Peak Gen"
                         android:textColor="@color/emerald_approved"
-                        android:textSize="9sp"
-                        android:fontFamily="@font/outfit_medium" />
-                </LinearLayout>
-
-                <!-- 2. Circular Battery Gauge (86% Charged) -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.2"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_dark_input"
-                    android:padding="12dp"
-                    android:gravity="center_horizontal"
-                    android:layout_marginHorizontal="3dp">
-
-                    <!-- Visual Battery Ring / Gauge Frame -->
-                    <FrameLayout
-                        android:layout_width="48dp"
-                        android:layout_height="48dp">
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/bg_circular_gauge" />
-
-                        <TextView
-                            android:id="@+id/tvHeroBatteryPercent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="86%"
-                            android:textColor="@color/text_white"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/outfit_bold" />
-                    </FrameLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Battery Storage"
-                        android:textColor="@color/text_light_muted"
                         android:textSize="10sp"
-                        android:fontFamily="@font/outfit" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🔋 86% Charged"
-                        android:textColor="@color/emerald_approved"
-                        android:textSize="9sp"
                         android:fontFamily="@font/outfit_medium" />
                 </LinearLayout>
 
-                <!-- 3. Today's Yield (32.1 kWh) -->
+                <!-- 2. Today's Yield -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -307,14 +327,14 @@
                     android:orientation="vertical"
                     android:background="@drawable/bg_dark_input"
                     android:padding="12dp"
-                    android:layout_marginStart="5dp">
+                    android:layout_marginStart="6dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Today's Yield"
                         android:textColor="@color/text_light_muted"
-                        android:textSize="10sp"
+                        android:textSize="11sp"
                         android:fontFamily="@font/outfit" />
 
                     <TextView
@@ -324,7 +344,7 @@
                         android:layout_marginTop="3dp"
                         android:text="32.1 kWh"
                         android:textColor="@color/text_white"
-                        android:textSize="17sp"
+                        android:textSize="19sp"
                         android:fontFamily="@font/outfit_bold" />
 
                     <TextView
@@ -333,14 +353,14 @@
                         android:layout_marginTop="2dp"
                         android:text="📈 +14% vs avg"
                         android:textColor="@color/yellow_primary"
-                        android:textSize="9sp"
+                        android:textSize="10sp"
                         android:fontFamily="@font/outfit_medium" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
         <!-- =================================================================== -->
-        <!-- SECTION TITLE: ACTION GRID                                          -->
+        <!-- SECTION TITLE: OPERATIONS & SERVICES                                -->
         <!-- =================================================================== -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -369,23 +389,23 @@
         </LinearLayout>
 
         <!-- =================================================================== -->
-        <!-- ACTION GRID: 2x2 Clean Cyber-Energy Layout                         -->
+        <!-- ACTION GRID: High-Contrast Colorful Palette Matching Reference      -->
         <!-- =================================================================== -->
-        <!-- Row 1: Action 1 (Book Slot) & Action 2 (My Reservations) -->
+        <!-- Row 1: Action 1 (Book Slot - Cream) & Action 2 (My Reservations - Dark) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="12dp">
 
-            <!-- Card 1: Book Energy Slot (7-day rule) -->
+            <!-- Card 1: Book Energy Slot (Warm Cream / Off-White Card) -->
             <LinearLayout
                 android:id="@+id/btnBookSlot"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:background="@drawable/bg_action_card"
+                android:background="@drawable/bg_card_cream"
                 android:padding="16dp"
                 android:layout_marginEnd="6dp"
                 android:clickable="true"
@@ -401,14 +421,14 @@
                     <FrameLayout
                         android:layout_width="38dp"
                         android:layout_height="38dp"
-                        android:background="@drawable/bg_dark_input"
+                        android:background="#EAE6D6"
                         android:padding="8dp">
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:src="@drawable/ic_energy_bolt"
-                            app:tint="@color/yellow_primary"
+                            app:tint="#121214"
                             android:contentDescription="Book Slot" />
                     </FrameLayout>
 
@@ -433,7 +453,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Book Energy Slot"
-                    android:textColor="@color/text_white"
+                    android:textColor="@color/text_dark_primary"
                     android:textSize="14sp"
                     android:fontFamily="@font/outfit_bold" />
 
@@ -442,13 +462,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Reserve trading slot with 7-day rule check"
-                    android:textColor="@color/text_light_secondary"
+                    android:textColor="@color/text_dark_secondary"
                     android:textSize="11sp"
                     android:lineSpacingMultiplier="1.1"
                     android:fontFamily="@font/outfit" />
             </LinearLayout>
 
-            <!-- Card 2: My Reservations (12h rule) -->
+            <!-- Card 2: My Reservations (Cyber Dark Card) -->
             <LinearLayout
                 android:id="@+id/btnViewBookings"
                 android:layout_width="0dp"
@@ -519,14 +539,14 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Row 2: Action 3 (Microgrid Nodes) & Action 4 (Operator QR Scanner) -->
+        <!-- Row 2: Action 3 (Microgrid Nodes - Cyber Dark Cyan) & Action 4 (Operator QR Scanner - Solid Yellow) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="20dp">
 
-            <!-- Card 3: Microgrid Nodes -->
+            <!-- Card 3: Microgrid Nodes (Cyber Dark Cyan Accent) -->
             <LinearLayout
                 android:id="@+id/btnViewNodes"
                 android:layout_width="0dp"
@@ -596,14 +616,14 @@
                     android:fontFamily="@font/outfit" />
             </LinearLayout>
 
-            <!-- Card 4: Operator QR Scanner -->
+            <!-- Card 4: Operator QR Scanner (Solid Vibrant Solar Yellow Matching Reference Image) -->
             <LinearLayout
                 android:id="@+id/btnOperatorScan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:background="@drawable/bg_action_card"
+                android:background="@drawable/bg_card_yellow"
                 android:padding="16dp"
                 android:layout_marginStart="6dp"
                 android:clickable="true"
@@ -619,14 +639,14 @@
                     <FrameLayout
                         android:layout_width="38dp"
                         android:layout_height="38dp"
-                        android:background="@drawable/bg_dark_input"
+                        android:background="#26000000"
                         android:padding="8dp">
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:src="@drawable/ic_camera"
-                            app:tint="@color/yellow_primary"
+                            app:tint="#121214"
                             android:contentDescription="Operator Scanner" />
                     </FrameLayout>
 
@@ -638,7 +658,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Scan"
+                        android:text="Fast Scan"
                         android:textColor="@color/yellow_primary"
                         android:textSize="10sp"
                         android:fontFamily="@font/outfit_bold"
@@ -651,7 +671,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Operator Scanner"
-                    android:textColor="@color/text_white"
+                    android:textColor="#121214"
                     android:textSize="14sp"
                     android:fontFamily="@font/outfit_bold" />
 
@@ -660,7 +680,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Camera scanner for physical energy dispatch"
-                    android:textColor="@color/text_light_secondary"
+                    android:textColor="#3D382B"
                     android:textSize="11sp"
                     android:lineSpacingMultiplier="1.1"
                     android:fontFamily="@font/outfit" />
