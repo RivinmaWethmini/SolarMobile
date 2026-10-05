@@ -102,8 +102,9 @@ public class ProsumerProfileActivity extends AppCompatActivity {
                 layoutRoleNotice.setVisibility(View.VISIBLE);
                 tvNoticeTitle.setText("ℹ️ " + user.getRole() + " View");
                 tvNoticeMessage.setText("Logged in as " + user.getDisplayName() + ". Showing live registered Prosumer profile for SunPower Station A (NIC: 200224700740).");
-                btnNoticeAction.setText("Switch to Solar Prosumer Account");
-                btnNoticeAction.setOnClickListener(v -> switchToProsumer());
+                if (btnNoticeAction != null) {
+                    btnNoticeAction.setVisibility(View.GONE);
+                }
             }
         } else if (user != null && user.getNic() != null && !user.getNic().trim().isEmpty()) {
             activeNic = user.getNic();
@@ -168,33 +169,6 @@ public class ProsumerProfileActivity extends AppCompatActivity {
                     tvName.setText("Offline / Network Error");
                     Toast.makeText(ProsumerProfileActivity.this, "Failed: " + errorMessage, Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-    }
-
-    private void switchToProsumer() {
-        Toast.makeText(this, "☀️ Switching to SunPower Prosumer...", Toast.LENGTH_SHORT).show();
-        ApiClient.login("prosumer@solar.com", "Prosumer@12345", new ApiClient.ApiCallback() {
-            @Override
-            public void onSuccess(String response) {
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String accessToken = json.optString("accessToken", "");
-                    String refreshToken = json.optString("refreshToken", "");
-                    JSONObject userObj = json.optJSONObject("user");
-                    AuthUser authUser = userObj != null ? AuthUser.fromJson(userObj) : null;
-
-                    SessionManager.getInstance(ProsumerProfileActivity.this).saveSession(accessToken, refreshToken, authUser);
-                    determineNicAndLoadProfile();
-                    Toast.makeText(ProsumerProfileActivity.this, "✓ Switched to Prosumer: " + (authUser != null ? authUser.getDisplayName() : "SunPower"), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Toast.makeText(ProsumerProfileActivity.this, "Switch failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                Toast.makeText(ProsumerProfileActivity.this, "Login failed: " + errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -217,19 +217,7 @@
             android:fontFamily="@font/outfit_medium"
             android:background="@drawable/btn_dark_tactile"
             android:stateListAnimator="@null" />
-
-        <!-- 1-Tap Demo Access -->
-        <TextView
-            android:id="@+id/btnFastDemoProsumer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="12dp"
-            android:text="☀️ 1-Tap Prosumer Login (Viva Demo)"
-            android:textColor="@color/yellow_primary"
-            android:textSize="12sp"
-            android:fontFamily="@font/outfit_bold"
-            android:padding="6dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
