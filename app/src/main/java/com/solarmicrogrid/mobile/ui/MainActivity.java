@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         if (btnHeaderLogout != null) {
             btnHeaderLogout.setOnClickListener(v -> {
                 SessionManager.getInstance(MainActivity.this).logout();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, OnboardingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
@@ -265,18 +265,18 @@ public class MainActivity extends AppCompatActivity {
             if (tvUserRoleBadge != null) {
                 tvUserRoleBadge.setVisibility(View.VISIBLE);
                 String role = user.getRole();
-                if (user.isAdmin()) {
-                    tvUserRoleBadge.setText("🛡️ Admin");
-                    tvUserRoleBadge.setTextColor(getColor(R.color.yellow_primary));
-                    selectRoleView("Admin");
-                } else if (user.isProsumer()) {
+                if (user.isProsumer()) {
                     tvUserRoleBadge.setText("☀️ Prosumer");
                     tvUserRoleBadge.setTextColor(getColor(R.color.emerald_approved));
                     selectRoleView("Prosumer");
-                } else if (role != null && role.toLowerCase(Locale.US).contains("operator")) {
+                } else if (user.isGridOperator()) {
                     tvUserRoleBadge.setText("👷‍♂️ Operator");
                     tvUserRoleBadge.setTextColor(getColor(R.color.yellow_primary));
                     selectRoleView("Operator");
+                } else if (user.isAdmin()) {
+                    tvUserRoleBadge.setText("🛡️ Admin");
+                    tvUserRoleBadge.setTextColor(getColor(R.color.yellow_primary));
+                    selectRoleView("Admin");
                 } else {
                     tvUserRoleBadge.setText("💡 Consumer");
                     tvUserRoleBadge.setTextColor(getColor(R.color.text_light_secondary));

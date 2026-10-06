@@ -58,13 +58,6 @@ public class OnboardingActivity extends AppCompatActivity {
 
         ApiClient.init(this);
 
-        boolean isPreview = getIntent().getBooleanExtra("preview", false);
-        if (!isPreview && SessionManager.getInstance(this).isLoggedIn()) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-            return;
-        }
-
         setContentView(R.layout.activity_onboarding);
 
         layoutSlideContent = findViewById(R.id.layoutSlideContent);

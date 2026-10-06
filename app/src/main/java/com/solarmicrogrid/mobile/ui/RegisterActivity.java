@@ -62,13 +62,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ApiClient.init(this);
 
-        // If already logged in, navigate straight to Dashboard
-        if (SessionManager.getInstance(this).isLoggedIn()) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-            return;
-        }
-
         setContentView(R.layout.activity_register);
 
         initViews();

@@ -139,7 +139,11 @@ public class AuthUser implements Serializable {
     }
 
     public boolean isAdmin() {
-        return "Admin".equalsIgnoreCase(role) || "GridOperator".equalsIgnoreCase(role);
+        return "Admin".equalsIgnoreCase(role) || "Backoffice".equalsIgnoreCase(role);
+    }
+
+    public boolean isGridOperator() {
+        return "GridOperator".equalsIgnoreCase(role) || "Operator".equalsIgnoreCase(role);
     }
 
     public boolean isProsumer() {

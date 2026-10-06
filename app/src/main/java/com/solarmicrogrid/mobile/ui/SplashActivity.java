@@ -145,13 +145,7 @@ public class SplashActivity extends AppCompatActivity {
         if (isNavigated) return;
         isNavigated = true;
 
-        Intent destination;
-        if (SessionManager.getInstance(this).isLoggedIn()) {
-            destination = new Intent(SplashActivity.this, MainActivity.class);
-        } else {
-            destination = new Intent(SplashActivity.this, OnboardingActivity.class);
-        }
-
+        Intent destination = new Intent(SplashActivity.this, OnboardingActivity.class);
         startActivity(destination);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         finish();
